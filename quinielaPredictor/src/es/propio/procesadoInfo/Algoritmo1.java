@@ -50,6 +50,8 @@ public class Algoritmo1 {
 			Jornada jornadaAPredecir = null;
 			for (Jornada jornada : temporada.getJornadas()) {
 				if (jornada != null && jornada.getNumeroJornada() != null) {
+					System.out.println("Tenemos información de la jornada: "
+							+ jornada.getNumeroJornada());
 					if (jornada.getNumeroJornada().equals(numeroJornada)) {
 						jornadaAPredecir = jornada;
 					}
