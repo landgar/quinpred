@@ -3,6 +3,7 @@ package es.propio.test.lectorxml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import org.xml.sax.SAXException;
 
@@ -13,7 +14,9 @@ public class HandlerXMLPronosticosTest {
 	public static void main(String[] args) throws FileNotFoundException,
 			IOException, SAXException {
 		HandlerXMLPronosticos lector = new HandlerXMLPronosticos();
-		lector.leer(new File("pronosticos_quinielista/prediccion15.xml"));
+//		lector.leer(new File("pronosticos_quinielista/prediccion15.xml"));
+		
+			lector.leer(new URL("https://www.quinielista.es/xml/concurso2.asp?jornada=18"));
 		System.out.println("Número de jornada: "
 				+ lector.getPronostico().getNumeroJornada());
 		for (PronosticoPartido pronostico : lector.getPronostico()

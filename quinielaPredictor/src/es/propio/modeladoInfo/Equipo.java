@@ -2,49 +2,67 @@ package es.propio.modeladoInfo;
 
 public class Equipo {
 
+	/**
+	 * @uml.property  name="valor"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private EquipoValor valor;
-	private Float pesoGanados, pesoEmpatados, pesoPerdidos;
+	/**
+	 * @uml.property  name="pesoGanados"
+	 */
+	private Float pesoGanados;
+	/**
+	 * @uml.property  name="pesoEmpatados"
+	 */
+	private Float pesoEmpatados;
+	/**
+	 * @uml.property  name="pesoPerdidos"
+	 */
+	private Float pesoPerdidos;
 
 	/**
-	 * @return the pesoGanados
+	 * @return  the pesoGanados
+	 * @uml.property  name="pesoGanados"
 	 */
 	public Float getPesoGanados() {
 		return pesoGanados;
 	}
 
 	/**
-	 * @param pesoGanados
-	 *            the pesoGanados to set
+	 * @param pesoGanados  the pesoGanados to set
+	 * @uml.property  name="pesoGanados"
 	 */
 	public void setPesoGanados(Float pesoGanados) {
 		this.pesoGanados = pesoGanados;
 	}
 
 	/**
-	 * @return the pesoEmpatados
+	 * @return  the pesoEmpatados
+	 * @uml.property  name="pesoEmpatados"
 	 */
 	public Float getPesoEmpatados() {
 		return pesoEmpatados;
 	}
 
 	/**
-	 * @param pesoEmpatados
-	 *            the pesoEmpatados to set
+	 * @param pesoEmpatados  the pesoEmpatados to set
+	 * @uml.property  name="pesoEmpatados"
 	 */
 	public void setPesoEmpatados(Float pesoEmpatados) {
 		this.pesoEmpatados = pesoEmpatados;
 	}
 
 	/**
-	 * @return the pesoPerdidos
+	 * @return  the pesoPerdidos
+	 * @uml.property  name="pesoPerdidos"
 	 */
 	public Float getPesoPerdidos() {
 		return pesoPerdidos;
 	}
 
 	/**
-	 * @param pesoPerdidos
-	 *            the pesoPerdidos to set
+	 * @param pesoPerdidos  the pesoPerdidos to set
+	 * @uml.property  name="pesoPerdidos"
 	 */
 	public void setPesoPerdidos(Float pesoPerdidos) {
 		this.pesoPerdidos = pesoPerdidos;
@@ -71,15 +89,16 @@ public class Equipo {
 	}
 
 	/**
-	 * @return the valor
+	 * @return  the valor
+	 * @uml.property  name="valor"
 	 */
 	public EquipoValor getValor() {
 		return valor;
 	}
 
 	/**
-	 * @param valor
-	 *            the valor to set
+	 * @param valor  the valor to set
+	 * @uml.property  name="valor"
 	 */
 	public void setValor(EquipoValor valor) {
 		this.valor = valor;

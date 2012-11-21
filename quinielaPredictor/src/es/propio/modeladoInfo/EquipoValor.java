@@ -27,6 +27,9 @@ public enum EquipoValor {
 			"MELILLA"), CACEREÑO("CACEREÑO"), ALMERIA("ALMERIA"), SANTANDREU(
 			"SANT ANDREU"), PRIMERA("PRIMERA"), SEGUNDA("SEGUNDA");
 
+	/**
+	 * @uml.property  name="nombre"
+	 */
 	private String nombre;
 
 	private EquipoValor(String nombre) {
@@ -34,15 +37,16 @@ public enum EquipoValor {
 	}
 
 	/**
-	 * @return the nombre
+	 * @return  the nombre
+	 * @uml.property  name="nombre"
 	 */
 	public String getNombre() {
 		return nombre;
 	}
 
 	/**
-	 * @param nombre
-	 *            the nombre to set
+	 * @param nombre  the nombre to set
+	 * @uml.property  name="nombre"
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;

@@ -4,9 +4,24 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class Jornada {
+
+	static final Logger logger = Logger.getLogger(Jornada.class);
+	/**
+	 * @uml.property name="fecha"
+	 */
 	private Date fecha;
+	/**
+	 * @uml.property name="partidos"
+	 * @uml.associationEnd multiplicity="(0 -1)"
+	 *                     elementType="es.propio.modeladoInfo.Partido"
+	 */
 	private Set<Partido> partidos;
+	/**
+	 * @uml.property name="numeroJornada"
+	 */
 	private Integer numeroJornada;
 
 	public Jornada() {
@@ -16,6 +31,7 @@ public class Jornada {
 
 	/**
 	 * @return the fecha
+	 * @uml.property name="fecha"
 	 */
 	public Date getFecha() {
 		return fecha;
@@ -24,6 +40,7 @@ public class Jornada {
 	/**
 	 * @param fecha
 	 *            the fecha to set
+	 * @uml.property name="fecha"
 	 */
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
@@ -46,6 +63,7 @@ public class Jornada {
 
 	/**
 	 * @return the numeroJornada
+	 * @uml.property name="numeroJornada"
 	 */
 	public Integer getNumeroJornada() {
 		return numeroJornada;
@@ -54,6 +72,7 @@ public class Jornada {
 	/**
 	 * @param numeroJornada
 	 *            the numeroJornada to set
+	 * @uml.property name="numeroJornada"
 	 */
 	public void setNumeroJornada(Integer numeroJornada) {
 		this.numeroJornada = numeroJornada;
@@ -78,7 +97,7 @@ public class Jornada {
 			}
 		}
 		if (jornadaMasProxima == null) {
-			System.out.println("ERROR: jornada más próxima a "
+			logger.error("ERROR: jornada más próxima a "
 					+ this.getFecha().toString() + " no encontrada.");
 		}
 		return jornadaMasProxima;
@@ -96,8 +115,8 @@ public class Jornada {
 				}
 		}
 		if (partido == null) {
-			System.out.println("WARNING: no hay partidos de "
-					+ equipo.getValor() + " en la jornada " + this.getFecha()
+			logger.warn("WARNING: no hay partidos de " + equipo.getValor()
+					+ " en la jornada " + this.getFecha()
 					+ " con número de jornada: " + this.getNumeroJornada());
 		}
 		return partido;

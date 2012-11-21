@@ -11,6 +11,9 @@ import java.util.Set;
  */
 public class Temporada {
 
+	/**
+	 * @uml.property  name="jornadas"
+	 */
 	private Set<Jornada> jornadas;
 
 	/**

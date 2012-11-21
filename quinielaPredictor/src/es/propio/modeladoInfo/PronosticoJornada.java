@@ -11,7 +11,14 @@ import java.util.Set;
  * 
  */
 public class PronosticoJornada {
+	/**
+	 * @uml.property  name="pronosticoPartidos"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="es.propio.modeladoInfo.PronosticoPartido"
+	 */
 	private Set<PronosticoPartido> pronosticoPartidos;
+	/**
+	 * @uml.property  name="numeroJornada"
+	 */
 	private Integer numeroJornada;
 
 	public PronosticoJornada() {
@@ -20,15 +27,16 @@ public class PronosticoJornada {
 	}
 
 	/**
-	 * @return the numeroJornada
+	 * @return  the numeroJornada
+	 * @uml.property  name="numeroJornada"
 	 */
 	public Integer getNumeroJornada() {
 		return numeroJornada;
 	}
 
 	/**
-	 * @param numeroJornada
-	 *            the numeroJornada to set
+	 * @param numeroJornada  the numeroJornada to set
+	 * @uml.property  name="numeroJornada"
 	 */
 	public void setNumeroJornada(Integer numeroJornada) {
 		this.numeroJornada = numeroJornada;

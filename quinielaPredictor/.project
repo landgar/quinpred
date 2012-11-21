@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>quinielaPredictor</name>
-	<comment></comment>
+	<comment>@key 32303037303533312D3130207175696E69656C61507265646963746F722F693363617361 </comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -10,8 +10,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.soyatec.additional.Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.soyatec.additional.Nature</nature>
 	</natures>
 </projectDescription>

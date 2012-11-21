@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import es.propio.handlerDatos.CargadorDatosPronosticos;
 import es.propio.handlerDatos.CombinadorInfoJornadas;
 import es.propio.modeladoInfo.Equipo;
@@ -22,6 +24,7 @@ import es.propio.modeladoInfo.Temporada;
  * 
  */
 public class Algoritmo1 {
+	static final Logger logger = Logger.getLogger(Algoritmo1.class);
 
 	public static <T extends Comparable<? super T>> List<T> asSortedList(
 			Collection<T> c) {
@@ -46,11 +49,11 @@ public class Algoritmo1 {
 		temporada.setJornadas(CombinadorInfoJornadas.obtenerTodaInfoJornadas());
 		for (PronosticoJornada pronosticoJornada : pronosticos) {
 			Integer numeroJornada = pronosticoJornada.getNumeroJornada();
-			System.out.println("Pronóstico de la jornada: " + numeroJornada);
+			logger.info("Pronóstico de la jornada: " + numeroJornada);
 			Jornada jornadaAPredecir = null;
 			for (Jornada jornada : temporada.getJornadas()) {
 				if (jornada != null && jornada.getNumeroJornada() != null) {
-					System.out.println("Tenemos información de la jornada: "
+					logger.debug("Tenemos información de la jornada: "
 							+ jornada.getNumeroJornada());
 					if (jornada.getNumeroJornada().equals(numeroJornada)) {
 						jornadaAPredecir = jornada;
@@ -66,13 +69,13 @@ public class Algoritmo1 {
 								+ pronosticoPartido.getPosicionPartido());
 						// Se busca qué equipo es el local del partido actual
 						pronosticoPartido.setLocal(partido.getEquipoLocal());
-						System.out.println("Local: "
-								+ pronosticoPartido.getLocal().getValor());
+
 						// Se busca qué equipo es el visitante del partido
 						// actual
 						pronosticoPartido.setVisitante(partido
 								.getEquipoVisitante());
-						System.out.println("Visitante: "
+						logger.info(pronosticoPartido.getLocal().getValor()
+								+ " - "
 								+ pronosticoPartido.getVisitante().getValor());
 
 						// Para cada equipo, se buscarán sus resultados
@@ -88,15 +91,14 @@ public class Algoritmo1 {
 								.getPorcentajeX()) {
 							if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
 									.getPorcentaje2()) {
-								System.out.println("Predicción: 1");
+								logger.info("Predicción: 1");
 							} else {
-								System.out.println("Predicción: 2");
+								logger.info("Predicción: 2");
 							}
 						} else {
-							System.out.println("Predicción: X");
+							logger.info("Predicción: X");
 						}
-						System.out
-								.println("----------------------------------");
+						logger.info("----------------------------------");
 					}
 				}
 			}

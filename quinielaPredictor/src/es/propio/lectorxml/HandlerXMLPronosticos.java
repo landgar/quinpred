@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -18,7 +19,17 @@ import es.propio.modeladoInfo.PronosticoPartido;
 
 public class HandlerXMLPronosticos extends DefaultHandler {
 
+	static final Logger logger = Logger.getLogger(HandlerXMLPronosticos.class);
+	
+	/**
+	 * @uml.property  name="xr"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private final XMLReader xr;
+	/**
+	 * @uml.property  name="pronosticoJornada"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private PronosticoJornada pronosticoJornada;
 
 	public HandlerXMLPronosticos() throws SAXException {
@@ -63,8 +74,7 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 				}
 				if (atts.getLocalName(i).equals("error")
 						&& atts.getValue(i) == "1") {
-					System.out
-							.println("ERROR: fichero de pronósticos no válido.");
+					logger.error("ERROR: fichero de pronósticos no válido.");
 					break;
 				}
 			}
@@ -122,7 +132,8 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 	}
 
 	/**
-	 * @return the xr
+	 * @return  the xr
+	 * @uml.property  name="xr"
 	 */
 	public XMLReader getXr() {
 		return xr;

@@ -13,6 +13,10 @@ import es.propio.modeladoInfo.ResultadoQuiniela;
 
 public class HandlerTxtResultados {
 
+	/**
+	 * @uml.property  name="jornada"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private Jornada jornada;
 
 	public HandlerTxtResultados() throws Exception {
@@ -68,15 +72,16 @@ public class HandlerTxtResultados {
 	}
 
 	/**
-	 * @return the jornada
+	 * @return  the jornada
+	 * @uml.property  name="jornada"
 	 */
 	public Jornada getJornada() {
 		return jornada;
 	}
 
 	/**
-	 * @param jornada
-	 *            the jornada to set
+	 * @param jornada  the jornada to set
+	 * @uml.property  name="jornada"
 	 */
 	public void setJornada(Jornada jornada) {
 		this.jornada = jornada;

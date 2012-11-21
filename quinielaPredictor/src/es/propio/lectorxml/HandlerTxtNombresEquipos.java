@@ -13,6 +13,10 @@ import es.propio.modeladoInfo.Partido;
 
 public class HandlerTxtNombresEquipos {
 
+	/**
+	 * @uml.property  name="jornada"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private Jornada jornada;
 
 	public HandlerTxtNombresEquipos() throws Exception {
@@ -115,15 +119,16 @@ public class HandlerTxtNombresEquipos {
 	}
 
 	/**
-	 * @return the jornada
+	 * @return  the jornada
+	 * @uml.property  name="jornada"
 	 */
 	public Jornada getJornada() {
 		return jornada;
 	}
 
 	/**
-	 * @param jornada
-	 *            the jornada to set
+	 * @param jornada  the jornada to set
+	 * @uml.property  name="jornada"
 	 */
 	public void setJornada(Jornada jornada) {
 		this.jornada = jornada;
