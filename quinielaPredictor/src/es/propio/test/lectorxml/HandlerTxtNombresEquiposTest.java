@@ -23,8 +23,8 @@ public class HandlerTxtNombresEquiposTest {
 			System.out.println("Jornada: " + jornada.getNumeroJornada());
 			for (Partido partido : jornada.getPartidos()) {
 				System.out.println(partido.getPosicion() + ";"
-						+ partido.getEquipoLocal().getValor().getNombre() + ";"
-						+ partido.getEquipoVisitante().getValor().getNombre());
+						+ partido.getEquipoLocal().getNombre() + ";"
+						+ partido.getEquipoVisitante().getNombre());
 			}
 		}
 	}

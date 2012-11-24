@@ -12,12 +12,23 @@ import java.util.Set;
 public class Temporada {
 
 	/**
-	 * @uml.property  name="jornadas"
+	 * @uml.property name="jornadas"
 	 */
 	private Set<Jornada> jornadas;
+	private Division division;
+
+	public Temporada() {
+		super();
+	}
+
+	public Temporada(Set<Jornada> jornadas, Division division) {
+		super();
+		this.jornadas = jornadas;
+		this.division = division;
+	}
 
 	/**
-	 * @return the jornadas
+	 * @return the jornadasD
 	 */
 	public Set<Jornada> getJornadas() {
 		return jornadas;
@@ -31,6 +42,19 @@ public class Temporada {
 		this.jornadas = jornadas;
 	}
 
-	
+	/**
+	 * @return the division
+	 */
+	public Division getDivision() {
+		return division;
+	}
+
+	/**
+	 * @param division
+	 *            the division to set
+	 */
+	public void setDivision(Division division) {
+		this.division = division;
+	}
 
 }

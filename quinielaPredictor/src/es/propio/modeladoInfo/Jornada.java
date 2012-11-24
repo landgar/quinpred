@@ -107,15 +107,15 @@ public class Jornada {
 		Partido partido = null;
 		for (Partido partido_i : getPartidos()) {
 			if (partido_i.getEquipoLocal() != null)
-				if (partido_i.getEquipoLocal().getValor()
-						.equals(equipo.getValor())
-						|| partido_i.getEquipoVisitante().getValor()
-								.equals(equipo.getValor())) {
+				if (partido_i.getEquipoLocal().getNombre()
+						.equals(equipo.getNombre())
+						|| partido_i.getEquipoVisitante().getNombre()
+								.equals(equipo.getNombre())) {
 					partido = partido_i;
 				}
 		}
 		if (partido == null) {
-			logger.warn("WARNING: no hay partidos de " + equipo.getValor()
+			logger.warn("WARNING: no hay partidos de " + equipo.getNombre()
 					+ " en la jornada " + this.getFecha()
 					+ " con número de jornada: " + this.getNumeroJornada());
 		}

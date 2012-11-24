@@ -74,9 +74,9 @@ public class Algoritmo1 {
 						// actual
 						pronosticoPartido.setVisitante(partido
 								.getEquipoVisitante());
-						logger.info(pronosticoPartido.getLocal().getValor()
+						logger.info(pronosticoPartido.getLocal().getNombre()
 								+ " - "
-								+ pronosticoPartido.getVisitante().getValor());
+								+ pronosticoPartido.getVisitante().getNombre());
 
 						// Para cada equipo, se buscarán sus resultados
 						// relativos (pesos)
@@ -91,14 +91,15 @@ public class Algoritmo1 {
 								.getPorcentajeX()) {
 							if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
 									.getPorcentaje2()) {
-								logger.info("Predicción: 1");
+								System.out.println("Predicción: 1");
 							} else {
-								logger.info("Predicción: 2");
+								System.out.println("Predicción: 2");
 							}
 						} else {
-							logger.info("Predicción: X");
+							System.out.println("Predicción: X");
 						}
-						logger.info("----------------------------------");
+						System.out
+								.println("----------------------------------");
 					}
 				}
 			}
