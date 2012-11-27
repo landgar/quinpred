@@ -31,7 +31,10 @@ public class Partido {
 	 */
 	public ResultadoQuiniela getResultadoQuiniela() {
 		ResultadoQuiniela resultado;
-		if (golesLocal > golesVisitante) {
+
+		if (golesLocal == null || golesVisitante == null) {
+			resultado = new ResultadoQuiniela(ValorResultado.INVALIDO);
+		} else if (golesLocal > golesVisitante) {
 			resultado = new ResultadoQuiniela(ValorResultado.UNO);
 		} else if (golesLocal == golesVisitante) {
 			resultado = new ResultadoQuiniela(ValorResultado.EQUIS);
@@ -40,6 +43,7 @@ public class Partido {
 		} else {
 			resultado = new ResultadoQuiniela(ValorResultado.INVALIDO);
 		}
+
 		return resultado;
 	}
 
