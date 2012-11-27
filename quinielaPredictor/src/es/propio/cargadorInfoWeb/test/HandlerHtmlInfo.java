@@ -1,15 +1,18 @@
 package es.propio.cargadorInfoWeb.test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 import es.propio.modeladoInfo.Division;
+import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Temporada;
 
 public class HandlerHtmlInfo {
 	static final Logger logger = Logger.getLogger(HandlerHtmlInfo.class);
-	private Temporada temporada;
 
-	public void extraerDatos(final String paginaHtml) {
+	public static void extraerDatos(final String paginaHtml, Temporada temporada) {
 
 		// División
 		if (paginaHtml.lastIndexOf("<strong>Primera</strong>") != -1) {
@@ -25,6 +28,7 @@ public class HandlerHtmlInfo {
 		int lastIndex = 0;
 		String cadenaAParsear, equipoLocal, equipoVisitante;
 		Integer golesLocal, golesVisitante;
+		Set<Jornada> jornadasLeidas = new HashSet<Jornada>();
 		while (lastIndex != -1) {
 			lastIndex = paginaHtml.indexOf(cadenaABuscar, lastIndex);
 			if (lastIndex != -1) {
@@ -36,25 +40,11 @@ public class HandlerHtmlInfo {
 				// /deportes/futbol/partido/Barcelona-B-Racing-0842_00_15_0842_0129">D25</a>
 				cadenaAParsear = paginaHtml.substring(lastIndex,
 						paginaHtml.indexOf("</a>", lastIndex));
-				cadenaAParsear.substring(0,
-						cadenaAParsear.indexOf("08", lastIndex));
+				cadenaAParsear.substring(0, cadenaAParsear.indexOf("08"));
+				System.out.println(cadenaAParsear);
+				
 			}
 		}
-	}
-
-	/**
-	 * @return the temporada
-	 */
-	public Temporada getTemporada() {
-		return temporada;
-	}
-
-	/**
-	 * @param temporada
-	 *            the temporada to set
-	 */
-	public void setTemporada(Temporada temporada) {
-		this.temporada = temporada;
 	}
 
 }

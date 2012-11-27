@@ -1,5 +1,8 @@
 package es.propio.modeladoInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class Equipo {
@@ -28,9 +31,41 @@ public class Equipo {
 		this.nombre = nombre;
 	}
 
-	public Equipo(final Division division, final String nombrePatron) {
+	public Equipo(final Division division, final String nombre) {
 		super();
-		String nombreEncontrado = "";
+		List<String> nombresPrimera = new ArrayList<>();
+		nombresPrimera.add("Celta");
+		nombresPrimera.add("Malaga");
+		nombresPrimera.add("Real-Zaragoza");
+		nombresPrimera.add("Valladolid");
+		nombresPrimera.add("Rayo");
+		nombresPrimera.add("Granada");
+		nombresPrimera.add("Real-Madrid");
+		nombresPrimera.add("Valencia");
+		nombresPrimera.add("Levante");
+		nombresPrimera.add("Atletico");
+		nombresPrimera.add("Deportivo");
+		nombresPrimera.add("Osasuna");
+		nombresPrimera.add("Mallorca");
+		nombresPrimera.add("Espanyol");
+		nombresPrimera.add("Sevilla");
+		nombresPrimera.add("Getafe");
+		nombresPrimera.add("Athletic");
+		nombresPrimera.add("Barcelona");
+		nombresPrimera.add("R-Sociedad");
+		List<String> nombresSegunda = new ArrayList<>();
+		nombresSegunda.add("Racing");
+		nombresSegunda.add("Palmas");
+		nombresSegunda.add("Mirandes");
+		nombresSegunda.add("Huesca");
+		nombresSegunda.add("Lugo");
+		nombresSegunda.add("Hercules");
+		nombresSegunda.add("Xerez");
+		nombresSegunda.add("Recreativo");
+		nombresSegunda.add("Villarreal");
+		nombresSegunda.add("RM-Castilla");
+		nombresSegunda.add("Barcelona-B");
+		nombresSegunda.add("Almeria");
 
 		this.nombre = nombre;
 	}

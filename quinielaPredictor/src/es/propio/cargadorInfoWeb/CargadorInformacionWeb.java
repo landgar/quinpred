@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import es.propio.cargadorInfoWeb.test.HandlerHtmlInfo;
 import es.propio.modeladoInfo.Temporada;
 
 public class CargadorInformacionWeb {
@@ -29,8 +30,12 @@ public class CargadorInformacionWeb {
 		in.close();
 
 		// Inicialización
-//		temporadaPrimeraHastaHoy = new Temporada();
-//		temporadaSegundaHastaHoy = new Temporada();
+		temporadaPrimeraHastaHoy = new Temporada();
+		temporadaSegundaHastaHoy = new Temporada();
+		
+		HandlerHtmlInfo.extraerDatos(webpage, temporadaPrimeraHastaHoy);
+
+		
 
 	}
 
