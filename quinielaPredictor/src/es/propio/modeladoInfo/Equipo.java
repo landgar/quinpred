@@ -31,7 +31,7 @@ public class Equipo {
 		this.nombre = nombre;
 	}
 
-	public Equipo(final Division division, final String nombre) {
+	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
 		List<String> nombresPrimera = new ArrayList<>();
 		nombresPrimera.add("Celta");
@@ -67,7 +67,17 @@ public class Equipo {
 		nombresSegunda.add("Barcelona-B");
 		nombresSegunda.add("Almeria");
 
-		this.nombre = nombre;
+		String nombreEncontrado = "invalido";
+		if (division.equals((Division.PRIMERA))) {
+			for (String posibleNombre : posiblesNombres) {
+				for (String nombrePrimera : nombresPrimera) {
+					if (nombrePrimera == posibleNombre) {
+						
+					}
+				}
+			}
+		}
+		this.nombre = nombreEncontrado;
 	}
 
 	/**
