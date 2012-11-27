@@ -24,11 +24,24 @@ public class Partido {
 	 * @uml.property name="golesVisitante"
 	 */
 	private Integer golesVisitante;
+
 	/**
+	 * @return the resultadoQuiniela
 	 * @uml.property name="resultadoQuiniela"
-	 * @uml.associationEnd
 	 */
-	private ResultadoQuiniela resultadoQuiniela;
+	public ResultadoQuiniela getResultadoQuiniela() {
+		ResultadoQuiniela resultado;
+		if (golesLocal > golesVisitante) {
+			resultado = new ResultadoQuiniela(ValorResultado.UNO);
+		} else if (golesLocal == golesVisitante) {
+			resultado = new ResultadoQuiniela(ValorResultado.EQUIS);
+		} else if (golesLocal < golesVisitante) {
+			resultado = new ResultadoQuiniela(ValorResultado.DOS);
+		} else {
+			resultado = new ResultadoQuiniela(ValorResultado.INVALIDO);
+		}
+		return resultado;
+	}
 
 	/**
 	 * @return the equipoLocal
@@ -96,23 +109,6 @@ public class Partido {
 	 */
 	public void setGolesVisitante(Integer golesVisitante) {
 		this.golesVisitante = golesVisitante;
-	}
-
-	/**
-	 * @return the resultadoQuiniela
-	 * @uml.property name="resultadoQuiniela"
-	 */
-	public ResultadoQuiniela getResultadoQuiniela() {
-		return resultadoQuiniela;
-	}
-
-	/**
-	 * @param resultadoQuiniela
-	 *            the resultadoQuiniela to set
-	 * @uml.property name="resultadoQuiniela"
-	 */
-	public void setResultadoQuiniela(ResultadoQuiniela resultadoQuiniela) {
-		this.resultadoQuiniela = resultadoQuiniela;
 	}
 
 	/**

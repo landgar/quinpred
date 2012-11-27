@@ -68,11 +68,20 @@ public class Equipo {
 		nombresSegunda.add("Almeria");
 
 		String nombreEncontrado = "invalido";
-		if (division.equals((Division.PRIMERA))) {
-			for (String posibleNombre : posiblesNombres) {
+
+		for (String posibleNombre : posiblesNombres) {
+			if (division.equals((Division.PRIMERA))) {
 				for (String nombrePrimera : nombresPrimera) {
 					if (nombrePrimera == posibleNombre) {
-						
+						nombreEncontrado = nombrePrimera;
+						break;
+					}
+				}
+			} else if (division.equals((Division.SEGUNDA))) {
+				for (String nombreSegunda : nombresSegunda) {
+					if (nombreSegunda == posibleNombre) {
+						nombreEncontrado = nombreSegunda;
+						break;
 					}
 				}
 			}

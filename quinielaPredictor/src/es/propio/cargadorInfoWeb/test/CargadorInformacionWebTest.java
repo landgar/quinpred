@@ -36,12 +36,9 @@ public class CargadorInformacionWebTest {
 				+ temporada.getDivision().getCodigo()
 				+ "ª ********************");
 		for (Jornada jornada : temporada.getJornadas()) {
-			System.out.println("-----------------------------   Fecha: "
-					+ jornada.getFecha()
-					+ "   -----------------------------------");
 			for (Partido partido : jornada.getPartidos()) {
-				System.out.println(partido.getEquipoLocal() + " - "
-						+ partido.getEquipoVisitante() + " --> "
+				System.out.println(partido.getEquipoLocal().getNombre() + " - "
+						+ partido.getEquipoVisitante().getNombre() + " --> "
 						+ partido.getGolesLocal() + " - "
 						+ partido.getGolesVisitante() + "-->"
 						+ partido.getResultadoQuiniela().getValor().getValor());

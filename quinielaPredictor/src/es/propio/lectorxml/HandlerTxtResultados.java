@@ -52,15 +52,15 @@ public class HandlerTxtResultados {
 							posicion++;
 							final String resultado = resultados.nextToken();
 							Partido partido = new Partido();
-							partido.setResultadoQuiniela(new ResultadoQuiniela(
-									resultado));
+//							partido.setResultadoQuiniela(new ResultadoQuiniela(
+//									resultado));
 							partido.setPosicion(posicion);
 							jornada.getPartidos().add(partido);
 						}
 					} else if (numElemento == 8) {
 						Partido partido = new Partido();
-						partido.setResultadoQuiniela(new ResultadoQuiniela(
-								elemento));
+						// partido.setResultadoQuiniela(new ResultadoQuiniela(
+						// elemento));
 						partido.setPosicion(15);
 						jornada.getPartidos().add(partido);
 					}

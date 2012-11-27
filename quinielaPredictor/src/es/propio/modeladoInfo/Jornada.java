@@ -9,6 +9,13 @@ import org.apache.log4j.Logger;
 public class Jornada {
 
 	static final Logger logger = Logger.getLogger(Jornada.class);
+
+	public Jornada(Set<Partido> partidos, Integer numeroJornada) {
+		super();
+		this.partidos = partidos;
+		this.numeroJornada = numeroJornada;
+	}
+
 	/**
 	 * @uml.property name="fecha"
 	 */
