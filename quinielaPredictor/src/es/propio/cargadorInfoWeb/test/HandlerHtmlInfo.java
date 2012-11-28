@@ -66,8 +66,7 @@ public class HandlerHtmlInfo {
 					golesVisitante = -1;
 				}
 				List<String> listaNumeros = Arrays.asList(numeros.split("_"));
-				numeroJornada = Integer.valueOf(listaNumeros.get(3));
-				System.out.println(nombresEquipos);
+				numeroJornada = Integer.valueOf(listaNumeros.get(2));
 				List<String> trozos = Arrays.asList(nombresEquipos.split("-"));
 				List<String> posiblesNombresLocal = new ArrayList<>();
 				List<String> posiblesNombresVisitante = new ArrayList<>();

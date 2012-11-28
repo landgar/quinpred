@@ -29,13 +29,20 @@ public class CargadorInformacionWeb {
 		}
 		in.close();
 
+		BufferedReader in2 = new BufferedReader(new InputStreamReader(
+				urlSegunda.openStream()));
+		String inputLine2, webpage2 = "";
+		while ((inputLine2 = in2.readLine()) != null) {
+			webpage2 += inputLine2;
+		}
+		in2.close();
+
 		// Inicialización
 		temporadaPrimeraHastaHoy = new Temporada();
 		temporadaSegundaHastaHoy = new Temporada();
-		
-		HandlerHtmlInfo.extraerDatos(webpage, temporadaPrimeraHastaHoy);
 
-		
+		HandlerHtmlInfo.extraerDatos(webpage, temporadaPrimeraHastaHoy);
+		HandlerHtmlInfo.extraerDatos(webpage2, temporadaSegundaHastaHoy);
 
 	}
 
