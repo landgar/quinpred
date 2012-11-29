@@ -1,4 +1,4 @@
-package es.propio.cargadorInfoWeb.test;
+package es.propio.cargadorInfoWeb;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +14,8 @@ import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.Temporada;
 
-public class HandlerHtmlInfo {
-	static final Logger logger = Logger.getLogger(HandlerHtmlInfo.class);
+public class HandlerHtmlResultados {
+	static final Logger logger = Logger.getLogger(HandlerHtmlResultados.class);
 
 	public static void extraerDatos(final String paginaHtml, Temporada temporada) {
 
@@ -29,11 +29,12 @@ public class HandlerHtmlInfo {
 			return;
 		}
 
+		// Resultados con enlace a otra web
 		String cadenaABuscar = "/deportes/futbol/partido/";
 		int lastIndex = 0;
-		String cadenaAParsear;
+		String cadenaAParsear = paginaHtml;
 		Equipo local, visitante;
-		Integer golesLocal, golesVisitante, numeroJornada, numeroJornadaAnterior = -1;
+		Integer golesLocal, golesVisitante, numeroJornada = 0, numeroJornadaAnterior = 1;
 		Partido partido;
 		Jornada jornada;
 		Set<Partido> partidos = new HashSet<Partido>();
@@ -101,17 +102,42 @@ public class HandlerHtmlInfo {
 				partido.setGolesLocal(golesLocal);
 				partido.setGolesVisitante(golesVisitante);
 
-				partidos.add(partido);
-				if (numeroJornada != numeroJornadaAnterior) {
+				if (numeroJornada != numeroJornadaAnterior
+						&& partidos.size() > 0) {
 					// Jornada completada con sus partidos
-					jornada = new Jornada(partidos, numeroJornada);
+					jornada = new Jornada(partidos, numeroJornadaAnterior);
 					jornadas.add(jornada);
 					partidos = new HashSet<Partido>();
 				}
+				partidos.add(partido);
 
 				numeroJornadaAnterior = numeroJornada;
 			}
 		}
+
 		temporada.setJornadas(jornadas);
+
+		// Resultados sin enlace a otra web
+		lastIndex = 0;
+		cadenaABuscar = "<a name=\"Jornada";
+		while (lastIndex != -1) {
+			lastIndex = paginaHtml.indexOf(cadenaABuscar, lastIndex);
+			if (lastIndex != -1) {
+				lastIndex += cadenaABuscar.length();
+
+				// Tomaré los bloques de tabla, precedidos por un nombre de
+				// jornada:
+				// <a name="Jornada1"></a>
+				// <a name="Jornada22"></a>
+				// <table cellspacing="0">
+				// ...
+				// </table>
+				// Para ello, buscaré las jornadas
+				cadenaAParsear = paginaHtml.substring(lastIndex,
+						paginaHtml.indexOf("</a>", lastIndex));
+
+			}
+		}
+
 	}
 }

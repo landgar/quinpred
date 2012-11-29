@@ -3,7 +3,7 @@
  */
 package es.propio.cargadorInfoWeb.test;
 
-import es.propio.cargadorInfoWeb.CargadorInformacionWeb;
+import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.Temporada;
@@ -12,20 +12,20 @@ import es.propio.modeladoInfo.Temporada;
  * @author i3casa
  * 
  */
-public class CargadorInformacionWebTest {
+public class CargadorInformacionWebResultadosTest {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		CargadorInformacionWeb cargador = new CargadorInformacionWeb();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
 		cargador.cargar();
 
 		pintar(cargador);
 	}
 
-	private static void pintar(final CargadorInformacionWeb cargador) {
+	private static void pintar(final CargadorInformacionWebResultados cargador) {
 		System.out.println("TEST CargadorInformacionWebTest");
 		pintarTemporada(cargador.getTemporadaPrimeraHastaHoy());
 		pintarTemporada(cargador.getTemporadaSegundaHastaHoy());
