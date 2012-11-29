@@ -4,15 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import es.propio.cargadorInfoWeb.test.HandlerHtmlInfo;
 import es.propio.modeladoInfo.Temporada;
 
-public class CargadorInformacionWeb {
+public class CargadorInformacionWebResultados {
 
 	private Temporada temporadaPrimeraHastaHoy;
 	private Temporada temporadaSegundaHastaHoy;
 
-	public CargadorInformacionWeb() {
+	public CargadorInformacionWebResultados() {
 	}
 
 	public void cargar() throws Exception {
@@ -29,13 +28,20 @@ public class CargadorInformacionWeb {
 		}
 		in.close();
 
+		BufferedReader in2 = new BufferedReader(new InputStreamReader(
+				urlSegunda.openStream()));
+		String inputLine2, webpage2 = "";
+		while ((inputLine2 = in2.readLine()) != null) {
+			webpage2 += inputLine2;
+		}
+		in2.close();
+
 		// Inicialización
 		temporadaPrimeraHastaHoy = new Temporada();
 		temporadaSegundaHastaHoy = new Temporada();
-		
-		HandlerHtmlInfo.extraerDatos(webpage, temporadaPrimeraHastaHoy);
 
-		
+		HandlerHtmlResultados.extraerDatos(webpage, temporadaPrimeraHastaHoy);
+		HandlerHtmlResultados.extraerDatos(webpage2, temporadaSegundaHastaHoy);
 
 	}
 

@@ -51,6 +51,7 @@ public class Equipo {
 		nombresPrimera.add("Sevilla");
 		nombresPrimera.add("Getafe");
 		nombresPrimera.add("Athletic");
+		nombresPrimera.add("Betis");
 		nombresPrimera.add("Barcelona");
 		nombresPrimera.add("R-Sociedad");
 		List<String> nombresSegunda = new ArrayList<>();
@@ -66,20 +67,30 @@ public class Equipo {
 		nombresSegunda.add("RM-Castilla");
 		nombresSegunda.add("Barcelona-B");
 		nombresSegunda.add("Almeria");
+		nombresSegunda.add("Elche");
+		nombresSegunda.add("Cordoba");
+		nombresSegunda.add("Sporting");
+		nombresSegunda.add("Murcia");
+		nombresSegunda.add("Alcorcon");
+		nombresSegunda.add("Guadalajara");
+		nombresSegunda.add("Recreativo");
+		nombresSegunda.add("Ponferradina");
+		nombresSegunda.add("Sabadell");
+		nombresSegunda.add("Girona");
 
 		String nombreEncontrado = "invalido";
 
 		for (String posibleNombre : posiblesNombres) {
 			if (division.equals((Division.PRIMERA))) {
 				for (String nombrePrimera : nombresPrimera) {
-					if (nombrePrimera == posibleNombre) {
+					if (nombrePrimera.equals(posibleNombre)) {
 						nombreEncontrado = nombrePrimera;
 						break;
 					}
 				}
 			} else if (division.equals((Division.SEGUNDA))) {
 				for (String nombreSegunda : nombresSegunda) {
-					if (nombreSegunda == posibleNombre) {
+					if (nombreSegunda.equals(posibleNombre)) {
 						nombreEncontrado = nombreSegunda;
 						break;
 					}
