@@ -3,8 +3,9 @@
  */
 package es.propio.modeladoInfo;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author i3casa
@@ -12,31 +13,52 @@ import java.util.Set;
  */
 public class PronosticoJornada {
 	/**
-	 * @uml.property  name="pronosticoPartidos"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="es.propio.modeladoInfo.PronosticoPartido"
+	 * @uml.property name="pronosticoPartidos"
+	 * @uml.associationEnd multiplicity="(0 -1)"
+	 *                     elementType="es.propio.modeladoInfo.PronosticoPartido"
 	 */
-	private Set<PronosticoPartido> pronosticoPartidos;
+	private List<PronosticoPartido> pronosticoPartidos;
 	/**
-	 * @uml.property  name="numeroJornada"
+	 * @uml.property name="numeroJornada"
 	 */
 	private Integer numeroJornada;
 
+	public void pintarme() {
+		System.out.println("***** Pronostico Jornada: " + numeroJornada
+				+ " ******");
+		for (PronosticoPartido pronostico : pronosticoPartidos) {
+			pronostico.pintarme();
+		}
+	}
+
+	public PronosticoJornada ordenarPorPosicionPartido() {
+		Collections.sort(pronosticoPartidos);
+		return this;
+	}
+
 	public PronosticoJornada() {
 		super();
-		pronosticoPartidos = new HashSet<PronosticoPartido>();
+		pronosticoPartidos = new ArrayList<PronosticoPartido>();
+	}
+
+	public PronosticoJornada(Integer numeroJornada) {
+		super();
+		pronosticoPartidos = new ArrayList<PronosticoPartido>();
+		this.numeroJornada = numeroJornada;
 	}
 
 	/**
-	 * @return  the numeroJornada
-	 * @uml.property  name="numeroJornada"
+	 * @return the numeroJornada
+	 * @uml.property name="numeroJornada"
 	 */
 	public Integer getNumeroJornada() {
 		return numeroJornada;
 	}
 
 	/**
-	 * @param numeroJornada  the numeroJornada to set
-	 * @uml.property  name="numeroJornada"
+	 * @param numeroJornada
+	 *            the numeroJornada to set
+	 * @uml.property name="numeroJornada"
 	 */
 	public void setNumeroJornada(Integer numeroJornada) {
 		this.numeroJornada = numeroJornada;
@@ -45,7 +67,7 @@ public class PronosticoJornada {
 	/**
 	 * @return the pronosticoPartidos
 	 */
-	public Set<PronosticoPartido> getPronosticoPartidos() {
+	public List<PronosticoPartido> getPronosticoPartidos() {
 		return pronosticoPartidos;
 	}
 
@@ -53,7 +75,7 @@ public class PronosticoJornada {
 	 * @param pronosticoPartidos
 	 *            the pronosticoPartidos to set
 	 */
-	public void setPronosticoPartidos(Set<PronosticoPartido> pronosticoPartidos) {
+	public void setPronosticoPartidos(List<PronosticoPartido> pronosticoPartidos) {
 		this.pronosticoPartidos = pronosticoPartidos;
 	}
 
