@@ -77,6 +77,7 @@ public class Equipo {
 		nombresSegunda.add("Ponferradina");
 		nombresSegunda.add("Sabadell");
 		nombresSegunda.add("Girona");
+		nombresSegunda.add("Numancia");
 
 		String nombreEncontrado = "invalido";
 
