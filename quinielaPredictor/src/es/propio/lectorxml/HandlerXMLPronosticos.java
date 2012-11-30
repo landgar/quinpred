@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
@@ -20,15 +21,15 @@ import es.propio.modeladoInfo.PronosticoPartido;
 public class HandlerXMLPronosticos extends DefaultHandler {
 
 	static final Logger logger = Logger.getLogger(HandlerXMLPronosticos.class);
-	
+
 	/**
-	 * @uml.property  name="xr"
-	 * @uml.associationEnd  multiplicity="(1 1)"
+	 * @uml.property name="xr"
+	 * @uml.associationEnd multiplicity="(1 1)"
 	 */
 	private final XMLReader xr;
 	/**
-	 * @uml.property  name="pronosticoJornada"
-	 * @uml.associationEnd  multiplicity="(1 1)"
+	 * @uml.property name="pronosticoJornada"
+	 * @uml.associationEnd multiplicity="(1 1)"
 	 */
 	private PronosticoJornada pronosticoJornada;
 
@@ -39,10 +40,25 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 		pronosticoJornada = new PronosticoJornada();
 	}
 
+	public HandlerXMLPronosticos(final Integer numeroJornada)
+			throws SAXException {
+		xr = XMLReaderFactory.createXMLReader();
+		xr.setContentHandler(this);
+		xr.setErrorHandler(this);
+		pronosticoJornada = new PronosticoJornada(numeroJornada);
+	}
+
 	public void leer(final File archivoXML) throws FileNotFoundException,
 			IOException, SAXException {
 		FileReader fr = new FileReader(archivoXML);
 		xr.parse(new InputSource(fr));
+	}
+
+	public void leer(final String contenidoXml) throws FileNotFoundException,
+			IOException, SAXException {
+		InputSource is = new InputSource();
+		is.setCharacterStream(new StringReader(contenidoXml));
+		xr.parse(is);
 	}
 
 	public void leer(final URL url) throws FileNotFoundException, IOException,
@@ -87,12 +103,24 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 				} else if (atts.getLocalName(i).equals("p1")) {
 					pronosticoPartido.setPorcentaje1(Float.valueOf(atts
 							.getValue(i).replace(',', '.')));
+				} else if (atts.getLocalName(i).equals("uno")) {// quinielista.com
+					pronosticoPartido.setPorcentaje1(Float.valueOf(atts
+							.getValue(i)));
+
 				} else if (atts.getLocalName(i).equals("pX")) {
 					pronosticoPartido.setPorcentajeX(Float.valueOf(atts
 							.getValue(i).replace(',', '.')));
+				} else if (atts.getLocalName(i).equals("equis")) {// quinielista.com
+					pronosticoPartido.setPorcentajeX(Float.valueOf(atts
+							.getValue(i)));
+
 				} else if (atts.getLocalName(i).equals("p2")) {
 					pronosticoPartido.setPorcentaje2(Float.valueOf(atts
 							.getValue(i).replace(',', '.')));
+				} else if (atts.getLocalName(i).equals("dos")) {// quinielista.com
+					pronosticoPartido.setPorcentaje2(Float.valueOf(atts
+							.getValue(i)));
+
 				} else if (atts.getLocalName(i).equals("p1X")) {
 					pronosticoPartido.setPorcentaje1X(Float.valueOf(atts
 							.getValue(i).replace(',', '.')));
@@ -132,8 +160,8 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 	}
 
 	/**
-	 * @return  the xr
-	 * @uml.property  name="xr"
+	 * @return the xr
+	 * @uml.property name="xr"
 	 */
 	public XMLReader getXr() {
 		return xr;
