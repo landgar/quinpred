@@ -1,10 +1,13 @@
 package es.propio.cargadorInfoWeb;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -119,9 +122,9 @@ public class HandlerHtmlResultados {
 
 		// Resultados sin enlace a otra web
 		lastIndex = 0;
-		cadenaABuscar = "<a name=\"Jornada";
+		cadenaABuscar = "\"><a name=\"Jornada";
 		Integer jornada1, jornada2;
-		String aux, equipo1NombrePropio, equipo2NombrePropio;
+		String aux, equipo1NombrePropio, equipo2NombrePropio, resultados;
 		while (lastIndex != -1) {
 			lastIndex = paginaHtml.indexOf(cadenaABuscar, lastIndex);
 			if (lastIndex != -1) {
@@ -139,30 +142,90 @@ public class HandlerHtmlResultados {
 						paginaHtml.indexOf("</table>", lastIndex));
 
 				// Se guardan las dos jornadas de la tabla
+				String cadena = "<a name=\"Jornada";
 				aux = cadenaAParsear.substring(0,
 						cadenaAParsear.indexOf("\"></a>"));
 				jornada1 = Integer.valueOf(aux);
 				aux = cadenaAParsear.substring(5);
-				aux = aux.substring(aux.indexOf("Jornada") + 7,
+				aux = aux.substring(aux.indexOf(cadena) + cadena.length(),
 						aux.indexOf("\"></a>"));
 				jornada2 = Integer.valueOf(aux);
 
-				// Se toman los resultados, sólo si son numéricos y no tienen
-				// enlaces. Se toman los nombres de los equipos de dentro del id
+				// Se toman los nombres de los equipos de dentro del id
 				// de la etiqueta html, y luego se hace una conversión al equipo
 				// del sistema.
-				String cadena = "<td class=\"eq\" id=\"";
-				cadenaAParsear = cadenaAParsear.substring(cadenaAParsear
-						.indexOf(cadena) + cadena.length());
-				equipo1NombrePropio = cadenaAParsear.substring(0,
-						cadenaAParsear.indexOf("\""));
-				cadenaAParsear = cadenaAParsear.substring(cadenaAParsear
-						.indexOf(cadena) + cadena.length());
-				equipo2NombrePropio = cadenaAParsear.substring(0,
-						cadenaAParsear.indexOf("\""));
-				equipo1NombrePropio = conversionNombreEquipos(equipo1NombrePropio);
-				equipo2NombrePropio = conversionNombreEquipos(equipo2NombrePropio);
 
+				cadena = "<td class=\"eq\" id=\"";
+				String cadena2 = "<div>";
+				if (temporada.getDivision().equals(Division.SEGUNDA)) {
+					while (cadenaAParsear.indexOf(cadena) != -1) {
+
+						cadenaAParsear = cadenaAParsear
+								.substring(cadenaAParsear.indexOf(cadena)
+										+ cadena.length());
+						equipo1NombrePropio = cadenaAParsear.substring(0,
+								cadenaAParsear.indexOf("\""));
+						cadenaAParsear = cadenaAParsear
+								.substring(cadenaAParsear.indexOf(cadena)
+										+ cadena.length());
+						equipo2NombrePropio = cadenaAParsear.substring(0,
+								cadenaAParsear.indexOf("\""));
+
+						equipo1NombrePropio = conversionNombreEquipos(equipo1NombrePropio);
+						equipo2NombrePropio = conversionNombreEquipos(equipo2NombrePropio);
+
+						// Se toman los resultados, sólo si son numéricos y no
+						// tienen enlaces.
+
+						cadenaAParsear = cadenaAParsear
+								.substring(cadenaAParsear.indexOf(cadena2)
+										+ cadena2.length());
+						// Resultados del primer y segundo bloque de jornadas
+						// encontrados
+						for (int i = 0; i < 2; i++) {
+							numeroJornada = 0;
+							if (i == 0) {
+								numeroJornada = jornada1;
+							} else if (i == 1) {
+								numeroJornada = jornada2;
+							}
+
+							if (cadenaAParsear.indexOf("</div>") != -1) {
+								resultados = cadenaAParsear.substring(0,
+										cadenaAParsear.indexOf("</div>"));
+								Pattern p = Pattern
+										.compile("^([0-9]+)-([0-9]+)$");
+								Matcher m = p.matcher(resultados);
+								// El primer caracter es un número. Tendremos un
+								// resultado:
+								// 2-5
+								if (m.find()) {
+									golesLocal = Integer.parseInt(m.group(1));
+									golesVisitante = Integer.parseInt(m
+											.group(2));
+									jornadas = temporada.getJornadas();
+									List<String> lista = new ArrayList<String>();
+									lista.add(equipo1NombrePropio);
+									local = new Equipo(temporada.getDivision(),
+											lista);
+									lista = new ArrayList<String>();
+									lista.add(equipo2NombrePropio);
+									visitante = new Equipo(
+											temporada.getDivision(), lista);
+									partido = new Partido();
+									partido.setEquipoLocal(local);
+									partido.setEquipoVisitante(visitante);
+									partido.setGolesLocal(golesLocal);
+									partido.setGolesVisitante(golesVisitante);
+
+									meterPartidoEnJornada(
+											temporada.getJornadas(),
+											numeroJornada, partido);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -172,56 +235,32 @@ public class HandlerHtmlResultados {
 		String nombreEquipoSistema = "";
 		// Sólo tendremos problemas para los equipos de segunda. Por ello, se
 		// implementará esta conversión.
-		if (nombreEquipoWeb.equals("Racing")) {
-			nombreEquipoSistema = "Racing";
-		} else if (nombreEquipoWeb.equals("LasPalmas")) {
+		nombreEquipoSistema = Normalizer.normalize(nombreEquipoWeb,
+				Normalizer.Form.NFD);
+		nombreEquipoSistema = nombreEquipoSistema.replaceAll("[^\\p{ASCII}]",
+				"");
+		nombreEquipoSistema = nombreEquipoSistema.replaceAll("-", "");
+		// Casos raros
+		if (nombreEquipoWeb.equals("LasPalmas")) {
 			nombreEquipoSistema = "Palmas";
-		} else if (nombreEquipoWeb.equals("Mirandés")) {
-			nombreEquipoSistema = "Mirandes";
-		} else if (nombreEquipoWeb.equals("Huesca")) {
-			nombreEquipoSistema = "Huesca";
-		} else if (nombreEquipoWeb.equals("Lugo")) {
-			nombreEquipoSistema = "Lugo";
-		} else if (nombreEquipoWeb.equals("Hércules")) {
-			nombreEquipoSistema = "Hercules";
-		} else if (nombreEquipoWeb.equals("Xerez")) {
-			nombreEquipoSistema = "Xerez";
-		} else if (nombreEquipoWeb.equals("Recreativo")) {
-			nombreEquipoSistema = "Recreativo";
-		} else if (nombreEquipoWeb.equals("Villarreal")) {
-			nombreEquipoSistema = "Villarreal";
 		} else if (nombreEquipoWeb.equals("RMCastilla")) {
 			nombreEquipoSistema = "RM-Castilla";
 		} else if (nombreEquipoWeb.equals("BarcelonaB")) {
 			nombreEquipoSistema = "Barcelona-B";
-		} else if (nombreEquipoWeb.equals("Almeria")) {
-			nombreEquipoSistema = "Almeria";
-		} else if (nombreEquipoWeb.equals("Elche")) {
-			nombreEquipoSistema = "Elche";
-		} else if (nombreEquipoWeb.equals("Cordoba")) {
-			nombreEquipoSistema = "Cordoba";
-		} else if (nombreEquipoWeb.equals("Sporting")) {
-			nombreEquipoSistema = "Sporting";
-		} else if (nombreEquipoWeb.equals("Murcia")) {
-			nombreEquipoSistema = "Murcia";
-		} else if (nombreEquipoWeb.equals("Alcorcón")) {
-			nombreEquipoSistema = "Alcorcon";
-		} else if (nombreEquipoWeb.equals("Guadalajara")) {
-			nombreEquipoSistema = "Guadalajara";
-		} else if (nombreEquipoWeb.equals("Recreativo")) {
-			nombreEquipoSistema = "Recreativo";
-		} else if (nombreEquipoWeb.equals("Ponferradina")) {
-			nombreEquipoSistema = "Ponferradina";
-		} else if (nombreEquipoWeb.equals("Sabadell")) {
-			nombreEquipoSistema = "Sabadell";
-		} else if (nombreEquipoWeb.equals("Girona")) {
-			nombreEquipoSistema = "Girona";
-		} else if (nombreEquipoWeb.equals("Numancia")) {
-			nombreEquipoSistema = "Numancia";
-		} else {
+		}
+		if (nombreEquipoWeb.equals("")) {
 			logger.error("No se ha podido encontrar una conversión de nombre de equipo para el equipo con nombre web: "
 					+ nombreEquipoWeb);
 		}
 		return nombreEquipoSistema;
+	}
+
+	public static void meterPartidoEnJornada(Set<Jornada> jornadas,
+			final Integer numeroJornada, final Partido partido) {
+		for (Jornada jornada : jornadas) {
+			if (jornada.getNumeroJornada().equals(numeroJornada)) {
+				jornada.getPartidos().add(partido);
+			}
+		}
 	}
 }

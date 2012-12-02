@@ -6,7 +6,12 @@ import java.util.Set;
 
 import es.propio.lectorxml.HandlerXMLPronosticos;
 import es.propio.modeladoInfo.PronosticoJornada;
+import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
+/**
+ * @author carlos.andres
+ * 
+ */
 public class CargadorDatosPronosticos {
 
 	public static Set<PronosticoJornada> cargarPronosticosJornadas()
@@ -14,7 +19,8 @@ public class CargadorDatosPronosticos {
 		Set<PronosticoJornada> pronosticos = new HashSet<PronosticoJornada>();
 		File folder = new File("pronosticos_quinielista/");
 		for (final File fileEntry : folder.listFiles()) {
-			HandlerXMLPronosticos lector = new HandlerXMLPronosticos();
+			HandlerXMLPronosticos lector = new HandlerXMLPronosticos(
+					IdAlgoritmoEnum.WEB_QUINIELISTA);
 			lector.leer(fileEntry);
 			pronosticos.add(lector.getPronostico());
 		}

@@ -6,6 +6,7 @@ package es.propio.modeladoInfo;
 import java.util.Set;
 
 /**
+ * Donde se almacenarán los resultados de toda la temporada hasta hoy.
  * @author i3casa
  * 
  */

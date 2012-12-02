@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import es.propio.lectorxml.HandlerXMLPronosticos;
 import es.propio.modeladoInfo.PronosticoJornada;
+import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 /**
  * Objetivo: cargar los pronosticos de la jornada actual de quinielista.com
@@ -84,7 +85,7 @@ public class CargadorWebyXMLPronosticoQuinielista {
 	private PronosticoJornada procesarXML(String contenidoXml)
 			throws SAXException, FileNotFoundException, IOException {
 		HandlerXMLPronosticos handlerXml = new HandlerXMLPronosticos(
-				numeroJornada);
+				numeroJornada, IdAlgoritmoEnum.WEB_QUINIELISTA);
 		handlerXml.leer(contenidoXml);
 		PronosticoJornada pronosticoJornada = handlerXml.getPronostico();
 		return pronosticoJornada.ordenarPorPosicionPartido();

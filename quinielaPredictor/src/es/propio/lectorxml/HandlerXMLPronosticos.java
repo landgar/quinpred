@@ -17,6 +17,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
+import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 public class HandlerXMLPronosticos extends DefaultHandler {
 
@@ -33,19 +34,20 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 	 */
 	private PronosticoJornada pronosticoJornada;
 
-	public HandlerXMLPronosticos() throws SAXException {
-		xr = XMLReaderFactory.createXMLReader();
-		xr.setContentHandler(this);
-		xr.setErrorHandler(this);
-		pronosticoJornada = new PronosticoJornada();
-	}
-
-	public HandlerXMLPronosticos(final Integer numeroJornada)
+	public HandlerXMLPronosticos(IdAlgoritmoEnum idAlgoritmoPronosticador)
 			throws SAXException {
 		xr = XMLReaderFactory.createXMLReader();
 		xr.setContentHandler(this);
 		xr.setErrorHandler(this);
-		pronosticoJornada = new PronosticoJornada(numeroJornada);
+		pronosticoJornada = new PronosticoJornada(idAlgoritmoPronosticador);
+	}
+
+	public HandlerXMLPronosticos(final Integer numeroJornada,
+			IdAlgoritmoEnum idAlgoritmoPronosticador) throws SAXException {
+		xr = XMLReaderFactory.createXMLReader();
+		xr.setContentHandler(this);
+		xr.setErrorHandler(this);
+		pronosticoJornada = new PronosticoJornada(idAlgoritmoPronosticador);
 	}
 
 	public void leer(final File archivoXML) throws FileNotFoundException,
@@ -61,11 +63,11 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 		xr.parse(is);
 	}
 
-	public void leer(final URL url) throws FileNotFoundException, IOException,
-			SAXException {
+	public void leer(final URL url, IdAlgoritmoEnum idAlgoritmoPronosticador)
+			throws FileNotFoundException, IOException, SAXException {
 		xr.parse(new InputSource(url.openStream()));
 		// Iniialización
-		pronosticoJornada = new PronosticoJornada();
+		pronosticoJornada = new PronosticoJornada(idAlgoritmoPronosticador);
 	}
 
 	@Override
