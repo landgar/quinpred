@@ -43,8 +43,11 @@ public class Algoritmo1 {
 	 * 
 	 */
 	public static Set<PronosticoJornada> calcularPronosticos() throws Exception {
+
+		// TODO Cargar los resultados reales de la WEB, no de un fichero
 		Set<PronosticoJornada> pronosticos = CargadorDatosPronosticos
 				.cargarPronosticosJornadas();
+
 		Temporada temporada = new Temporada();
 		temporada.setJornadas(CombinadorInfoJornadas.obtenerTodaInfoJornadas());
 		for (PronosticoJornada pronosticoJornada : pronosticos) {

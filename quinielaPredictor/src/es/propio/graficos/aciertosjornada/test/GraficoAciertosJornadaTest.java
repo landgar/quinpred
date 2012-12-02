@@ -17,13 +17,10 @@ import es.propio.procesadoInfo.TipoDivisionEnum;
 public class GraficoAciertosJornadaTest {
 
 	public static void main(String[] args) throws Exception {
-
-		List<PronosticoJornada> pronosticosJornadaBulk = generarPronosticosJornadaMock();
-
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
-				pronosticosJornadaBulk);
+				generarPronosticosJornadaMock(),
+				generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.REAL));
 		graficoNumAciertosVsJornada(inDto);
-
 	}
 
 	private static void graficoNumAciertosVsJornada(
@@ -38,16 +35,14 @@ public class GraficoAciertosJornadaTest {
 
 	private static List<PronosticoJornada> generarPronosticosJornadaMock() {
 
-		List<PronosticoJornada> pronosticosAlgoritmo1 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.REAL);
-		List<PronosticoJornada> pronosticosAlgoritmo2 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORITMO1);
-		List<PronosticoJornada> pronosticosAlgoritmo3 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORTIMO2);
-		List<PronosticoJornada> pronosticosAlgoritmo4 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.WEB_QUINIELISTA);
+		List<PronosticoJornada> pronosticosAlgoritmo1 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORITMO1);
+		List<PronosticoJornada> pronosticosAlgoritmo2 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORTIMO2);
+		List<PronosticoJornada> pronosticosAlgoritmoQuinielista = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.WEB_QUINIELISTA);
 
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo1);
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo2);
-		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo3);
-		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo4);
+		pronosticosJornadaBulk.addAll(pronosticosAlgoritmoQuinielista);
 		return pronosticosJornadaBulk;
 	}
 
@@ -63,7 +58,7 @@ public class GraficoAciertosJornadaTest {
 		return pjPrimeraySegunda;
 	}
 
-	private static List<PronosticoJornada> generarPronosticosJornadaAlgoritmoDivisionMock(
+	public static List<PronosticoJornada> generarPronosticosJornadaAlgoritmoDivisionMock(
 			IdAlgoritmoEnum idAlgo, TipoDivisionEnum division) {
 		// PRIMERA
 		List<PronosticoJornada> pjPrimera = new ArrayList<PronosticoJornada>();

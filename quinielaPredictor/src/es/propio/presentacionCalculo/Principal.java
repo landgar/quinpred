@@ -15,8 +15,11 @@ import org.jfree.ui.RefineryUtilities;
 import es.propio.cargadorInfoWeb.CargadorWebyXMLPronosticoQuinielista;
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
+import es.propio.graficos.aciertosjornada.test.GraficoAciertosJornadaTest;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.procesadoInfo.Algoritmo1;
+import es.propio.procesadoInfo.IdAlgoritmoEnum;
+import es.propio.procesadoInfo.TipoDivisionEnum;
 
 /**
  * @author i3casa
@@ -41,7 +44,7 @@ public class Principal {
 
 		System.out.println("COMIENZO");
 		estudiarJornadasPasadas();
-		analizarJornadaActual();
+		// analizarJornadaActual();
 		System.out.println("FIN");
 	}
 
@@ -53,25 +56,67 @@ public class Principal {
 	 */
 	private static void estudiarJornadasPasadas() throws Exception {
 		System.out
-				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
-		Set<PronosticoJornada> pronosticosAlgoritmo1 = Algoritmo1
-				.calcularPronosticos();
-
-		System.out
 				.println("Pintando GRAFICOS para comparar los algoritmos ...");
 		System.out
 				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
+		System.out
+				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
 
+		graficosPrimeraDivision();
+		graficosSegundaDivision();
+	}
+
+	private static void graficosPrimeraDivision() throws Exception {
+		// PRIMERA DIVISION
+		// TODO invocar a AbstractAlgoritmo.calcularPronosticoPrimera
+		Set<PronosticoJornada> pronosticosPrimeraAlgoritmo1 = Algoritmo1
+				.calcularPronosticos();
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
-		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo1);
+		pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo1);
+		// pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo2);
+		// pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo3);
+
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
-				pronosticosJornadaBulk);
-		graficoNumAciertosVsJornada(inDto);
+				pronosticosJornadaBulk, obtenerResultadosRealesPrimera());
+		graficoNumAciertosVsJornada(inDto, TipoDivisionEnum.PRIMERA);
 
 	}
 
+	private static List<PronosticoJornada> obtenerResultadosRealesPrimera() {
+		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
+		List<PronosticoJornada> resultadosRealesPrimera = GraficoAciertosJornadaTest
+				.generarPronosticosJornadaAlgoritmoDivisionMock(
+						IdAlgoritmoEnum.REAL, TipoDivisionEnum.PRIMERA);
+		return resultadosRealesPrimera;
+	}
+
+	private static void graficosSegundaDivision() throws Exception {
+		// SEGUNDA DIVISION
+		// TODO invocar a AbstractAlgoritmo.calcularPronosticoSegunda
+		Set<PronosticoJornada> pronosticosSegundaAlgoritmo1 = Algoritmo1
+				.calcularPronosticos();
+
+		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
+		pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo1);
+		// pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo2);
+		// pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo3);
+
+		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
+				pronosticosJornadaBulk, obtenerResultadosRealesSegunda());
+		graficoNumAciertosVsJornada(inDto, TipoDivisionEnum.SEGUNDA);
+
+	}
+
+	private static List<PronosticoJornada> obtenerResultadosRealesSegunda() {
+		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
+		List<PronosticoJornada> resultadosRealesSegunda = GraficoAciertosJornadaTest
+				.generarPronosticosJornadaAlgoritmoDivisionMock(
+						IdAlgoritmoEnum.REAL, TipoDivisionEnum.SEGUNDA);
+		return resultadosRealesSegunda;
+	}
+
 	private static void graficoNumAciertosVsJornada(
-			EntradaAciertosJornadaDto inDto) {
+			EntradaAciertosJornadaDto inDto, TipoDivisionEnum division) {
 		String title = "Comparación de algoritmos según resultados pasados";
 		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
 				"GRAFICO Num aciertos vs. Jornada", title, inDto);
@@ -92,7 +137,7 @@ public class Principal {
 		System.out
 				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
 		// TODO Modulo para que nos ayude a rellenar la quiniela en papel, en
-		// función del algortimo que queramos usar.
+		// función del algoritmo que queramos usar.
 		Algoritmo1.calcularPronosticos();
 
 		// System.out

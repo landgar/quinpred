@@ -19,7 +19,9 @@ public abstract class AbstractAlgoritmo {
 	private PronosticoJornada estimacionJornadaPrimera;
 	private PronosticoJornada estimacionJornadaSegunda;
 
-	abstract void calcularPronostico() throws Exception;
+	abstract void calcularPronosticoPrimera() throws Exception;
+
+	abstract void calcularPronosticoSegunda() throws Exception;
 
 	public static Integer calcularNumerosJornadas(TipoDivisionEnum division) {
 		Integer numJornadas = 0;

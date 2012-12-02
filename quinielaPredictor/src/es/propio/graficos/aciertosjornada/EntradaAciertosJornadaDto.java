@@ -19,9 +19,13 @@ public class EntradaAciertosJornadaDto {
 
 	private final List<PronosticoJornada> pronosticosJornadaBulk;
 
+	private final List<PronosticoJornada> resultadosReales;
+
 	public EntradaAciertosJornadaDto(
-			List<PronosticoJornada> pronosticosJornadaBulk) {
+			List<PronosticoJornada> pronosticosJornadaBulk,
+			List<PronosticoJornada> resultadosReales) {
 		this.pronosticosJornadaBulk = pronosticosJornadaBulk;
+		this.resultadosReales = resultadosReales;
 	}
 
 	public Map<Jornada, List<PronosticoJornada>> organizarPorJornada() {
@@ -80,6 +84,10 @@ public class EntradaAciertosJornadaDto {
 
 	public List<PronosticoJornada> getPronosticosJornadaBulk() {
 		return pronosticosJornadaBulk;
+	}
+
+	public List<PronosticoJornada> getResultadosReales() {
+		return resultadosReales;
 	}
 
 }
