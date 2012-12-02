@@ -13,7 +13,8 @@ public abstract class AbstractAlgoritmo {
 
 	private IdAlgoritmoEnum id; // id del algoritmo
 
-	private PronosticoJornada estimacionJornada;
+	private PronosticoJornada estimacionJornadaPrimera;
+	private PronosticoJornada estimacionJornadaSegunda;
 
 	abstract void calcularPronostico() throws Exception;
 
@@ -25,12 +26,22 @@ public abstract class AbstractAlgoritmo {
 		this.id = id;
 	}
 
-	public PronosticoJornada getEstimacionJornada() {
-		return estimacionJornada;
+	public PronosticoJornada getEstimacionJornadaPrimera() {
+		return estimacionJornadaPrimera;
 	}
 
-	public void setEstimacionJornada(PronosticoJornada estimacionJornada) {
-		this.estimacionJornada = estimacionJornada;
+	public void setEstimacionJornadaPrimera(
+			PronosticoJornada estimacionJornadaPrimera) {
+		this.estimacionJornadaPrimera = estimacionJornadaPrimera;
+	}
+
+	public PronosticoJornada getEstimacionJornadaSegunda() {
+		return estimacionJornadaSegunda;
+	}
+
+	public void setEstimacionJornadaSegunda(
+			PronosticoJornada estimacionJornadaSegunda) {
+		this.estimacionJornadaSegunda = estimacionJornadaSegunda;
 	}
 
 }
