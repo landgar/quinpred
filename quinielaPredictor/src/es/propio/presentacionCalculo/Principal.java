@@ -61,20 +61,23 @@ public class Principal {
 				.println("Pintando GRAFICOS para comparar los algoritmos ...");
 		System.out
 				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
-		String title = "Comparación de algoritmos según resultados pasados";
 
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo1);
-
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
 				pronosticosJornadaBulk);
+		graficoNumAciertosVsJornada(inDto);
 
-		GraficoAciertosJornada demo = new GraficoAciertosJornada(
+	}
+
+	private static void graficoNumAciertosVsJornada(
+			EntradaAciertosJornadaDto inDto) {
+		String title = "Comparación de algoritmos según resultados pasados";
+		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
 				"GRAFICO Num aciertos vs. Jornada", title, inDto);
-		demo.pack();
-		RefineryUtilities.centerFrameOnScreen(demo);
-		demo.setVisible(true);
-
+		grafico.pack();
+		RefineryUtilities.centerFrameOnScreen(grafico);
+		grafico.setVisible(true);
 	}
 
 	/**

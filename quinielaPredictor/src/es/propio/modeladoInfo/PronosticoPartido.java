@@ -1,6 +1,7 @@
 package es.propio.modeladoInfo;
 
-public class PronosticoPartido implements Comparable<PronosticoPartido> {
+public class PronosticoPartido implements Comparable<PronosticoPartido>,
+		TieneResultadoPartido {
 
 	/**
 	 * @uml.property name="posicionPartido"
@@ -59,6 +60,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 				+ porcentajes);
 	}
 
+	@Override
 	public ValorResultado getResultadoMasProbable() {
 		ValorResultado salida = ValorResultado.INVALIDO;
 		if (porcentaje1 > porcentajeX) {

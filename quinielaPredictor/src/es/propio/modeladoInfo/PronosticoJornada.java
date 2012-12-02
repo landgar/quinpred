@@ -55,6 +55,7 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 		super();
 		pronosticoPartidos = new ArrayList<PronosticoPartido>();
 		this.numeroJornada = numeroJornada;
+		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
 	}
 
 	/**
