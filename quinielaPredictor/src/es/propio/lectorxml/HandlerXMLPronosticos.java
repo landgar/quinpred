@@ -50,6 +50,14 @@ public class HandlerXMLPronosticos extends DefaultHandler {
 		pronosticoJornada = new PronosticoJornada(idAlgoritmoPronosticador);
 	}
 
+	public HandlerXMLPronosticos(final Integer numeroJornada)
+			throws SAXException {
+		xr = XMLReaderFactory.createXMLReader();
+		xr.setContentHandler(this);
+		xr.setErrorHandler(this);
+		pronosticoJornada = new PronosticoJornada(numeroJornada, null);
+	}
+
 	public void leer(final File archivoXML) throws FileNotFoundException,
 			IOException, SAXException {
 		FileReader fr = new FileReader(archivoXML);

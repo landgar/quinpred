@@ -17,20 +17,20 @@ public abstract class AbstractAlgoritmo {
 
 	abstract void calcularPronostico() throws Exception;
 
-	public PronosticoJornada getEstimacionJornada() {
-		return estimacionJornada;
-	}
-
-	public void setEstimacionJornada(PronosticoJornada estimacionJornada) {
-		this.estimacionJornada = estimacionJornada;
-	}
-
 	public IdAlgoritmoEnum getId() {
 		return id;
 	}
 
 	public void setId(IdAlgoritmoEnum id) {
 		this.id = id;
+	}
+
+	public PronosticoJornada getEstimacionJornada() {
+		return estimacionJornada;
+	}
+
+	public void setEstimacionJornada(PronosticoJornada estimacionJornada) {
+		this.estimacionJornada = estimacionJornada;
 	}
 
 }

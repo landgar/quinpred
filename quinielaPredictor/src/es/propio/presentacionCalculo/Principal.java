@@ -4,7 +4,6 @@
 package es.propio.presentacionCalculo;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -12,9 +11,9 @@ import java.util.Set;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.jfree.ui.RefineryUtilities;
-import org.xml.sax.SAXException;
 
 import es.propio.cargadorInfoWeb.CargadorWebyXMLPronosticoQuinielista;
+import es.propio.graficos.GraficosManager;
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
 import es.propio.modeladoInfo.PronosticoJornada;
@@ -84,11 +83,23 @@ public class Principal {
 	 * quiniela que tendríamos que rellenar a papel en la JORNADA ACTUAL, para
 	 * cada algoritmo y pronosticos que leemos en webs externas.
 	 * 
-	 * @throws IOException
-	 * @throws SAXException
+	 * @throws Exception
 	 */
-	private static void analizarJornadaActual() throws IOException,
-			SAXException {
+	private static void analizarJornadaActual() throws Exception {
+
+		System.out
+				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
+		// TODO Modulo para que nos ayude a rellenar la quiniela en papel, en
+		// función del algortimo que queramos usar.
+		Algoritmo1.calcularPronosticos();
+
+		System.out
+				.println("Pintando GRAFICOS para comparar los algoritmos ...");
+		String title = "-- pruebas de graficos --";
+		GraficosManager demo = new GraficosManager(title, title);
+		demo.pack();
+		RefineryUtilities.centerFrameOnScreen(demo);
+		demo.setVisible(true);
 
 		System.out
 				.println("Obteniendo pronosticos de WEB QUINIELISTA.COM para Jornada actual (tarda unos 10 segundos)...");
@@ -96,11 +107,7 @@ public class Principal {
 		PronosticoJornada pronosticoJornada = cargador.ejecutar();
 		pronosticoJornada.pintarme();
 
-		System.out
-				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
-		// TODO Modulo para que nos ayude a rellenar la quiniela en papel, en
-		// función del algortimo que queramos usar.
-
+		System.out.println("FIN");
 	}
 
 }

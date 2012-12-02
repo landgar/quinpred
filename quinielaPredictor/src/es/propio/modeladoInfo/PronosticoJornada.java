@@ -50,16 +50,16 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 		return this;
 	}
 
-	public PronosticoJornada(IdAlgoritmoEnum idAlgoritmoPronosticador) {
-		super();
-		pronosticoPartidos = new ArrayList<PronosticoPartido>();
-	}
-
 	public PronosticoJornada(Integer numeroJornada,
 			IdAlgoritmoEnum idAlgoritmoPronosticador) {
 		super();
 		pronosticoPartidos = new ArrayList<PronosticoPartido>();
 		this.numeroJornada = numeroJornada;
+	}
+
+	public PronosticoJornada(IdAlgoritmoEnum idAlgoritmoPronosticador) {
+		super();
+		pronosticoPartidos = new ArrayList<PronosticoPartido>();
 	}
 
 	/**
