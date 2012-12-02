@@ -43,8 +43,11 @@ public class Algoritmo1 {
 	 * 
 	 */
 	public static Set<PronosticoJornada> calcularPronosticos() throws Exception {
+
+		// TODO Cargar los resultados reales de la WEB, no de un fichero
 		Set<PronosticoJornada> pronosticos = CargadorDatosPronosticos
 				.cargarPronosticosJornadas();
+
 		Temporada temporada = new Temporada();
 		temporada.setJornadas(CombinadorInfoJornadas.obtenerTodaInfoJornadas());
 		for (PronosticoJornada pronosticoJornada : pronosticos) {
@@ -67,55 +70,55 @@ public class Algoritmo1 {
 
 					if (jornadaAPredecir != null) {
 
-						for (Partido partido : jornadaAPredecir.getPartidos()) {
-							if (pronosticoPartido.getPosicionPartido().equals(
-									partido.getPosicion())) {
-								System.out.println("Posición del partido: "
-										+ pronosticoPartido
-												.getPosicionPartido());
-								// Se busca qué equipo es el local del partido
-								// actual
-								pronosticoPartido.setLocal(partido
-										.getEquipoLocal());
-
-								// Se busca qué equipo es el visitante del
-								// partido
-								// actual
-								pronosticoPartido.setVisitante(partido
-										.getEquipoVisitante());
-								logger.info(pronosticoPartido.getLocal()
-										.getNombre()
-										+ " - "
-										+ pronosticoPartido.getVisitante()
-												.getNombre());
-
-								// Para cada equipo, se buscarán sus resultados
-								// relativos (pesos)
-								partido.getEquipoLocal().pesosRelativos(
-										temporada);
-								partido.getEquipoVisitante().pesosRelativos(
-										temporada);
-
-								// Se multiplicará cada predicción por los
-								// pesos.
-								reestimacionPronostico(pronosticoPartido,
-										partido.getEquipoLocal(),
-										partido.getEquipoVisitante());
-								if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
-										.getPorcentajeX()) {
-									if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
-											.getPorcentaje2()) {
-										System.out.println("Predicción: 1");
-									} else {
-										System.out.println("Predicción: 2");
-									}
-								} else {
-									System.out.println("Predicción: X");
-								}
-								System.out
-										.println("----------------------------------");
-							}
-						}
+//						for (Partido partido : jornadaAPredecir.getPartidos()) {
+//							if (pronosticoPartido.getPosicionPartido().equals(
+//									partido.getPosicion())) {
+//								System.out.println("Posición del partido: "
+//										+ pronosticoPartido
+//												.getPosicionPartido());
+//								// Se busca qué equipo es el local del partido
+//								// actual
+//								pronosticoPartido.setLocal(partido
+//										.getEquipoLocal());
+//
+//								// Se busca qué equipo es el visitante del
+//								// partido
+//								// actual
+//								pronosticoPartido.setVisitante(partido
+//										.getEquipoVisitante());
+//								logger.info(pronosticoPartido.getLocal()
+//										.getNombre()
+//										+ " - "
+//										+ pronosticoPartido.getVisitante()
+//												.getNombre());
+//
+//								// Para cada equipo, se buscarán sus resultados
+//								// relativos (pesos)
+//								partido.getEquipoLocal().pesosRelativos(
+//										temporada);
+//								partido.getEquipoVisitante().pesosRelativos(
+//										temporada);
+//
+//								// Se multiplicará cada predicción por los
+//								// pesos.
+//								reestimacionPronostico(pronosticoPartido,
+//										partido.getEquipoLocal(),
+//										partido.getEquipoVisitante());
+//								if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
+//										.getPorcentajeX()) {
+//									if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
+//											.getPorcentaje2()) {
+//										System.out.println("Predicción: 1");
+//									} else {
+//										System.out.println("Predicción: 2");
+//									}
+//								} else {
+//									System.out.println("Predicción: X");
+//								}
+//								System.out
+//										.println("----------------------------------");
+//							}
+//						}
 					}
 				}
 			}

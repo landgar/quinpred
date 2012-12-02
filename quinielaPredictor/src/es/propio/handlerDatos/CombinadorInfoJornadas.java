@@ -53,12 +53,12 @@ public class CombinadorInfoJornadas {
 				jornadaMasProxima.setNumeroJornada(jornada.getNumeroJornada());
 				for (Partido partido2 : jornadaMasProxima.getPartidos()) {
 					for (Partido partido : jornada.getPartidos()) {
-						if (partido.getPosicion()
-								.equals(partido2.getPosicion())) {
-							partido2.setEquipoLocal(partido.getEquipoLocal());
-							partido2.setEquipoVisitante(partido
-									.getEquipoVisitante());
-						}
+//						if (partido.getPosicion()
+//								.equals(partido2.getPosicion())) {
+//							partido2.setEquipoLocal(partido.getEquipoLocal());
+//							partido2.setEquipoVisitante(partido
+//									.getEquipoVisitante());
+//						}
 					}
 				}
 			} else {

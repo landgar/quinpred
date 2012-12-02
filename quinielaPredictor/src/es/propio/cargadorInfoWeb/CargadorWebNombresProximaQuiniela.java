@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.PronosticoJornada;
 
 /**
@@ -28,13 +29,17 @@ public class CargadorWebNombresProximaQuiniela {
 		String inputLine, webpage = "";
 		while ((inputLine = in.readLine()) != null) {
 			webpage += inputLine;
-			
+
 		}
 		in.close();
-		
+
 		System.out.println(webpage);
-		
-		//TODO: meter un handler que guarde el contenido.
+
+		// TODO: meter un handler que guarde el contenido.
+		Boleto boletoActual = new Boleto();
+		HandlerWebBoleto.extraerDatos(webpage, boletoActual);
+
+		System.out.println("FIN");
 	}
 
 	/**

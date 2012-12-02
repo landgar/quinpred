@@ -101,6 +101,102 @@ public class Equipo {
 		this.nombre = nombreEncontrado;
 	}
 
+	public Division getDivision() {
+		// Primera división
+		Division division = Division.INVALIDO;
+		if (nombre.equals("Celta")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Málaga")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Zaragoza")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Valladolid")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Rayo Vallecano")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Granada")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Real Madrid")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Valencia")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Levante")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Atlético de Madrid")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Deportivo")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Osasuna")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Mallorca")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Espanyol")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Sevilla")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Getafe")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Athletic de Bilbao")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Betis")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Barcelona")) {
+			division = Division.PRIMERA;
+		} else if (nombre.equals("Real Sociedad")) {
+			division = Division.PRIMERA;
+		}
+		// Segunda división
+		else if (nombre.equals("Racing de Santander")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Las Palmas")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Mirandés")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Huesca")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Lugo")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Hércules")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Xerez")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Villarreal")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Real Madrid Castilla")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Barcelona B")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Almería")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Elche")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Córdoba")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Sporting de Gijón")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Murcia")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Alcorcón")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Guadalajara")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Recreativo de Huelva")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Ponferradina")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Sabadell")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Girona")) {
+			division = Division.SEGUNDA;
+		} else if (nombre.equals("Numancia")) {
+			division = Division.SEGUNDA;
+		} else {
+			logger.error("No se ha podido encontrar una división para el equipo con nombre: "
+					+ nombre);
+		}
+		return division;
+	}
+
 	/**
 	 * @return the pesoGanados
 	 * @uml.property name="pesoGanados"
@@ -209,4 +305,5 @@ public class Equipo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 }

@@ -1,10 +1,6 @@
 package es.propio.modeladoInfo;
 
 public class Partido {
-	/**
-	 * @uml.property name="posicion"
-	 */
-	private Integer posicion;
 
 	/**
 	 * @uml.property name="equipoLocal"
@@ -113,23 +109,6 @@ public class Partido {
 	 */
 	public void setGolesVisitante(Integer golesVisitante) {
 		this.golesVisitante = golesVisitante;
-	}
-
-	/**
-	 * @return the posicion
-	 * @uml.property name="posicion"
-	 */
-	public Integer getPosicion() {
-		return posicion;
-	}
-
-	/**
-	 * @param posicion
-	 *            the posicion to set
-	 * @uml.property name="posicion"
-	 */
-	public void setPosicion(Integer posicion) {
-		this.posicion = posicion;
 	}
 
 	public Boolean esLocal(Equipo equipo) {

@@ -1,7 +1,7 @@
 package es.propio.modeladoInfo;
 
 public enum Division {
-	PRIMERA(1), SEGUNDA(2);
+	PRIMERA(1), SEGUNDA(2), INVALIDO(3);
 
 	private Integer codigo;
 

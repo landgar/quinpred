@@ -21,11 +21,11 @@ public class HandlerTxtNombresEquiposTest {
 		for (Jornada jornada : nombresJornadas) {
 			System.out.println("Fecha: " + jornada.getFecha());
 			System.out.println("Jornada: " + jornada.getNumeroJornada());
-			for (Partido partido : jornada.getPartidos()) {
-				System.out.println(partido.getPosicion() + ";"
-						+ partido.getEquipoLocal().getNombre() + ";"
-						+ partido.getEquipoVisitante().getNombre());
-			}
+//			for (Partido partido : jornada.getPartidos()) {
+//				System.out.println(partido.getPosicion() + ";"
+//						+ partido.getEquipoLocal().getNombre() + ";"
+//						+ partido.getEquipoVisitante().getNombre());
+//			}
 		}
 	}
 }

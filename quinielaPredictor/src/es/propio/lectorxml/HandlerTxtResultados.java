@@ -54,14 +54,14 @@ public class HandlerTxtResultados {
 							Partido partido = new Partido();
 //							partido.setResultadoQuiniela(new ResultadoQuiniela(
 //									resultado));
-							partido.setPosicion(posicion);
+//							partido.setPosicion(posicion);
 							jornada.getPartidos().add(partido);
 						}
 					} else if (numElemento == 8) {
 						Partido partido = new Partido();
 						// partido.setResultadoQuiniela(new ResultadoQuiniela(
 						// elemento));
-						partido.setPosicion(15);
+//						partido.setPosicion(15);
 						jornada.getPartidos().add(partido);
 					}
 				}

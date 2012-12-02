@@ -12,11 +12,11 @@ public class HandlerTxtResultadosTest {
 				"resultadosPartidos_LoteriasYApuestas/resultadosSorteos (2).txt"));
 		System.out.println("Fecha: "
 				+ lector.getJornada().getFecha().toString());
-		for (Partido partido : lector.getJornada().getPartidos()) {
-			System.out.println("Posición: " + partido.getPosicion());
-			System.out.println("Resultado: "
-					+ partido.getResultadoQuiniela().getValor());
-		}
+//		for (Partido partido : lector.getJornada().getPartidos()) {
+//			System.out.println("Posición: " + partido.getPosicion());
+//			System.out.println("Resultado: "
+//					+ partido.getResultadoQuiniela().getValor());
+//		}
 
 	}
 }

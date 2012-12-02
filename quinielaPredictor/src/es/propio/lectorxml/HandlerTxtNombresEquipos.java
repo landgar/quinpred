@@ -100,7 +100,7 @@ public class HandlerTxtNombresEquipos {
 									}
 								}
 								Partido partido = new Partido();
-								partido.setPosicion(numLinea - 2);
+//								partido.setPosicion(numLinea - 2);
 								Equipo local = new Equipo(nombreLocal);
 								Equipo visitante = new Equipo(nombreVisitante);
 								partido.setEquipoLocal(local);
