@@ -65,8 +65,9 @@ public class EntradaAciertosJornadaDto {
 			pronosticos = new ArrayList<PronosticoJornada>();
 
 			for (PronosticoJornada pronostico : pronosticosJornadaBulk) {
-				if (pronostico.getIdAlgoritmoPronosticador()
-						.equals(idAlgoritmo)) {
+				if (idAlgoritmo != null
+						&& pronostico.getIdAlgoritmoPronosticador().equals(
+								idAlgoritmo)) {
 					pronosticos.add(pronostico);
 				}
 			}

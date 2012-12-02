@@ -102,23 +102,30 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 		Map<IdAlgoritmoEnum, List<PronosticoJornada>> mapa = inDto
 				.organizarPorAlgoritmo();
 
-		for (IdAlgoritmoEnum idAlgoritmo : mapa.keySet()) {
+		if (mapa.keySet() != null) {
 
-			List<PronosticoJornada> pronosticosJornadasDeUnAlgoritmo = mapa
-					.get(idAlgoritmo);
-			Collections.sort(pronosticosJornadasDeUnAlgoritmo);
+			for (IdAlgoritmoEnum idAlgoritmo : mapa.keySet()) {
 
-			HashMap<String, Double> mapaxyAlgoritmo = new HashMap<String, Double>();
-			for (PronosticoJornada pjornadaEjex : pronosticosJornadasDeUnAlgoritmo) {
+				if (idAlgoritmo != null) {
 
-				// TODO Rellenar los aciertos comparando pjornadaEjex con el
-				// PronosticoJornada real.
-				Double aciertos = 5.0D;
-				mapaxyAlgoritmo.put(pjornadaEjex.getNumeroJornada().toString(),
-						aciertos);
+					List<PronosticoJornada> pronosticosJornadasDeUnAlgoritmo = mapa
+							.get(idAlgoritmo);
+					Collections.sort(pronosticosJornadasDeUnAlgoritmo);
+
+					HashMap<String, Double> mapaxyAlgoritmo = new HashMap<String, Double>();
+					for (PronosticoJornada pjornadaEjex : pronosticosJornadasDeUnAlgoritmo) {
+
+						// TODO Rellenar los aciertos comparando pjornadaEjex
+						// con el PronosticoJornada real.
+						Double aciertos = 5.0D;
+						mapaxyAlgoritmo.put(pjornadaEjex.getNumeroJornada()
+								.toString(), aciertos);
+					}
+
+					rellenarLinea(dataset, idAlgoritmo.toString(),
+							mapaxyAlgoritmo);
+				}
 			}
-
-			rellenarLinea(dataset, idAlgoritmo.toString(), mapaxyAlgoritmo);
 		}
 
 		return dataset;

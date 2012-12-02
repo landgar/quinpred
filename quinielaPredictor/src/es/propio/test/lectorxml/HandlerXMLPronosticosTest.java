@@ -14,12 +14,16 @@ public class HandlerXMLPronosticosTest {
 
 	public static void main(String[] args) throws FileNotFoundException,
 			IOException, SAXException {
-		HandlerXMLPronosticos lector = new HandlerXMLPronosticos(
+
+		Integer numJornada = 18;
+
+		HandlerXMLPronosticos lector = new HandlerXMLPronosticos(numJornada,
 				IdAlgoritmoEnum.WEB_QUINIELISTA);
 		// lector.leer(new File("pronosticos_quinielista/prediccion15.xml"));
 
 		lector.leer(new URL(
-				"https://www.quinielista.es/xml/concurso2.asp?jornada=18"),
+				"https://www.quinielista.es/xml/concurso2.asp?jornada="
+						+ numJornada.toString()), numJornada,
 				IdAlgoritmoEnum.WEB_QUINIELISTA);
 		System.out.println("Número de jornada: "
 				+ lector.getPronostico().getNumeroJornada());

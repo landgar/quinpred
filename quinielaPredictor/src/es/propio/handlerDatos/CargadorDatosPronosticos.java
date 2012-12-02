@@ -19,7 +19,7 @@ public class CargadorDatosPronosticos {
 		Set<PronosticoJornada> pronosticos = new HashSet<PronosticoJornada>();
 		File folder = new File("pronosticos_quinielista/");
 		for (final File fileEntry : folder.listFiles()) {
-			HandlerXMLPronosticos lector = new HandlerXMLPronosticos(
+			HandlerXMLPronosticos lector = new HandlerXMLPronosticos(null,
 					IdAlgoritmoEnum.WEB_QUINIELISTA);
 			lector.leer(fileEntry);
 			pronosticos.add(lector.getPronostico());

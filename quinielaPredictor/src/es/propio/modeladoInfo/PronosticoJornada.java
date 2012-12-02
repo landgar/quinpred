@@ -57,11 +57,6 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 		this.numeroJornada = numeroJornada;
 	}
 
-	public PronosticoJornada(IdAlgoritmoEnum idAlgoritmoPronosticador) {
-		super();
-		pronosticoPartidos = new ArrayList<PronosticoPartido>();
-	}
-
 	/**
 	 * @return the numeroJornada
 	 * @uml.property name="numeroJornada"
