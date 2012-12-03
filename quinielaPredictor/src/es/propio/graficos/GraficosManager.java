@@ -21,11 +21,66 @@ public class GraficosManager extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public GraficosManager(String title) {
-		super(title);
-		JPanel chartPanel = createDemoPanel();
+	public GraficosManager(String tituloVentana, String tituloGraficos) {
+		super(tituloVentana);
+		JPanel chartPanel = createDemoPanel(tituloGraficos);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
 		setContentPane(chartPanel);
+	}
+
+	/**
+	 * Panel principal
+	 * 
+	 * @return A panel.
+	 */
+	public static JPanel createDemoPanel(String tituloGraficos) {
+		JFreeChart chart = createChart(tituloGraficos);
+		return new ChartPanel(chart);
+	}
+
+	/**
+	 * Tabla de graficos
+	 * 
+	 * @return A chart.
+	 */
+	private static JFreeChart createChart(String tituloGraficos) {
+
+		CategoryAxis domainAxis = new CategoryAxis("Titulo eje X");
+		CombinedCategoryPlot plot = new CombinedCategoryPlot(domainAxis,
+				new NumberAxis("Titulo eje Y"));
+		plot.add(crearSubplotLineas(), 2);
+		plot.add(crearSubplot2(), 1);
+
+		JFreeChart tabla = new JFreeChart(tituloGraficos, new Font("SansSerif",
+				Font.BOLD, 12), plot, true);
+		return tabla;
+
+	}
+
+	private static CategoryPlot crearSubplotLineas() {
+		CategoryDataset dataset1 = createDataset1();
+		NumberAxis rangeAxis1 = new NumberAxis("Value");
+		rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
+		renderer1
+				.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		CategoryPlot subplot1 = new CategoryPlot(dataset1, null, rangeAxis1,
+				renderer1);
+		subplot1.setDomainGridlinesVisible(true);
+		return subplot1;
+	}
+
+	private static CategoryPlot crearSubplot2() {
+		CategoryDataset dataset2 = createDataset2();
+		NumberAxis rangeAxis2 = new NumberAxis("Value");
+		rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		BarRenderer renderer2 = new BarRenderer();
+		renderer2
+				.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		CategoryPlot subplot2 = new CategoryPlot(dataset2, null, rangeAxis2,
+				renderer2);
+		subplot2.setDomainGridlinesVisible(true);
+		return subplot2;
 	}
 
 	/**
@@ -108,56 +163,6 @@ public class GraficosManager extends ApplicationFrame {
 
 		return result;
 
-	}
-
-	/**
-	 * Creates a chart.
-	 * 
-	 * @return A chart.
-	 */
-	private static JFreeChart createChart() {
-
-		CategoryDataset dataset1 = createDataset1();
-		NumberAxis rangeAxis1 = new NumberAxis("Value");
-		rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
-		renderer1
-				.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-		CategoryPlot subplot1 = new CategoryPlot(dataset1, null, rangeAxis1,
-				renderer1);
-		subplot1.setDomainGridlinesVisible(true);
-
-		CategoryDataset dataset2 = createDataset2();
-		NumberAxis rangeAxis2 = new NumberAxis("Value");
-		rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		BarRenderer renderer2 = new BarRenderer();
-		renderer2
-				.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-		CategoryPlot subplot2 = new CategoryPlot(dataset2, null, rangeAxis2,
-				renderer2);
-		subplot2.setDomainGridlinesVisible(true);
-
-		CategoryAxis domainAxis = new CategoryAxis("Category");
-		CombinedCategoryPlot plot = new CombinedCategoryPlot(domainAxis,
-				new NumberAxis("Range"));
-		plot.add(subplot1, 2);
-		plot.add(subplot2, 1);
-
-		JFreeChart result = new JFreeChart(
-				"Combined Domain Category Plot Demo", new Font("SansSerif",
-						Font.BOLD, 12), plot, true);
-		return result;
-
-	}
-
-	/**
-	 * Creates a panel for the demo (used by SuperDemo.java).
-	 * 
-	 * @return A panel.
-	 */
-	public static JPanel createDemoPanel() {
-		JFreeChart chart = createChart();
-		return new ChartPanel(chart);
 	}
 
 }

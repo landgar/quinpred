@@ -1,6 +1,7 @@
 package es.propio.modeladoInfo;
 
-public class PronosticoPartido implements Comparable<PronosticoPartido> {
+public class PronosticoPartido implements Comparable<PronosticoPartido>,
+		TieneResultadoPartido {
 
 	/**
 	 * @uml.property name="posicionPartido"
@@ -59,24 +60,25 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 				+ porcentajes);
 	}
 
-	public ValorResultado getResultadoMasProbable(){
-		ValorResultado salida=ValorResultado.INVALIDO;
-		if(porcentaje1>porcentajeX){
-			if(porcentaje1>porcentaje2){
-				salida=ValorResultado.UNO;
-			}else{
-				salida=ValorResultado.DOS;
+	@Override
+	public ValorResultado getResultadoMasProbable() {
+		ValorResultado salida = ValorResultado.INVALIDO;
+		if (porcentaje1 > porcentajeX) {
+			if (porcentaje1 > porcentaje2) {
+				salida = ValorResultado.UNO;
+			} else {
+				salida = ValorResultado.DOS;
 			}
-		}else if(porcentajeX>porcentaje2){
-			if(porcentaje1>porcentaje2){
-				salida=ValorResultado.EQUIS;
-			}else{
-				salida=ValorResultado.DOS;
+		} else if (porcentajeX > porcentaje2) {
+			if (porcentaje1 > porcentaje2) {
+				salida = ValorResultado.EQUIS;
+			} else {
+				salida = ValorResultado.DOS;
 			}
 		}
 		return salida;
 	}
-	
+
 	@Override
 	public int compareTo(PronosticoPartido pronosticoPartido) {
 		int comparison = 0;
