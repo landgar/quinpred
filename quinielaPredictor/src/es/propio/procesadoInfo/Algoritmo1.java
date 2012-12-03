@@ -23,7 +23,7 @@ import es.propio.modeladoInfo.Temporada;
  * @author i3casa
  * 
  */
-public class Algoritmo1 {
+public class Algoritmo1 extends AbstractAlgoritmo{
 	static final Logger logger = Logger.getLogger(Algoritmo1.class);
 
 	public static <T extends Comparable<? super T>> List<T> asSortedList(
@@ -157,5 +157,43 @@ public class Algoritmo1 {
 		pronostico.setPorcentaje2(pronostico.getPorcentaje2()
 				* local.getPesoPerdidos() * visitante.getPesoGanados());
 	}
+
+	@Override
+	void calcularPronosticoPrimera() throws Exception {
+		PronosticoJornada pronosticoJornada=new PronosticoJornada(1, IdAlgoritmoEnum.ALGORTIMO2);
+		List<PronosticoPartido> pronosticos=new ArrayList<PronosticoPartido>();
+		for(int i=1;i<=15;i++){
+			PronosticoPartido pronostico=new PronosticoPartido();
+			pronostico.setLocal(new Equipo("Celta"));
+			pronostico.setVisitante(new Equipo("Malaga"));
+			pronostico.setPosicionPartido(i);
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
+			pronostico.setPorcentaje2(0F);
+			pronosticos.add(pronostico);
+		}
+		pronosticoJornada.setPronosticoPartidos(pronosticos);
+		setEstimacionJornadaPrimera(pronosticoJornada);
+	}
+
+	@Override
+	void calcularPronosticoSegunda() throws Exception {
+		PronosticoJornada pronosticoJornada=new PronosticoJornada(1, IdAlgoritmoEnum.ALGORTIMO2);
+		List<PronosticoPartido> pronosticos=new ArrayList<PronosticoPartido>();
+		for(int i=1;i<=15;i++){
+			PronosticoPartido pronostico=new PronosticoPartido();
+			pronostico.setLocal(new Equipo("Xerez"));
+			pronostico.setVisitante(new Equipo("Hercules"));
+			pronostico.setPosicionPartido(i);
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
+			pronostico.setPorcentaje2(0F);
+			pronosticos.add(pronostico);
+		}
+		pronosticoJornada.setPronosticoPartidos(pronosticos);
+		setEstimacionJornadaPrimera(pronosticoJornada);
+		
+	}
+
 
 }
