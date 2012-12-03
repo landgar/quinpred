@@ -3,6 +3,7 @@
  */
 package es.propio.procesadoInfo;
 
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 
 /**
@@ -23,18 +24,17 @@ public abstract class AbstractAlgoritmo {
 
 	abstract void calcularPronosticoSegunda() throws Exception;
 
-	public static Integer calcularNumerosJornadas(TipoDivisionEnum division) {
+	public static Integer calcularNumerosJornadas(Division division) {
 		Integer numJornadas = 0;
-		numJornadas = division.equals(TipoDivisionEnum.PRIMERA) ? NUM_JORNADAS_PRIMERA
+		numJornadas = division.equals(Division.PRIMERA) ? NUM_JORNADAS_PRIMERA
 				: NUM_JORNADAS_SEGUNDA;
 		return numJornadas;
 	}
 
-	public static Integer calcularNumPartidosPorJornada(
-			TipoDivisionEnum division) {
+	public static Integer calcularNumPartidosPorJornada(Division division) {
 		Integer numJornadas = 0;
 		// Es igual que el numero de jornadas
-		numJornadas = division.equals(TipoDivisionEnum.PRIMERA) ? NUM_JORNADAS_PRIMERA
+		numJornadas = division.equals(Division.PRIMERA) ? NUM_JORNADAS_PRIMERA
 				: NUM_JORNADAS_SEGUNDA;
 		return numJornadas;
 	}

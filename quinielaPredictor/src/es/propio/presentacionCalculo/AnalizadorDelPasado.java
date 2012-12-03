@@ -9,10 +9,10 @@ import org.jfree.ui.RefineryUtilities;
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
 import es.propio.graficos.aciertosjornada.test.GraficoAciertosJornadaTest;
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
-import es.propio.procesadoInfo.TipoDivisionEnum;
 
 /**
  * Analiza los resultados del pasado.
@@ -55,7 +55,7 @@ public class AnalizadorDelPasado {
 
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
 				pronosticosJornadaBulk, obtenerResultadosRealesPrimera());
-		graficoNumAciertosVsJornada(inDto, TipoDivisionEnum.PRIMERA);
+		graficoNumAciertosVsJornada(inDto, Division.PRIMERA);
 
 	}
 
@@ -63,7 +63,7 @@ public class AnalizadorDelPasado {
 		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
 		List<PronosticoJornada> resultadosRealesPrimera = GraficoAciertosJornadaTest
 				.generarPronosticosJornadaAlgoritmoDivisionMock(
-						IdAlgoritmoEnum.REAL, TipoDivisionEnum.PRIMERA);
+						IdAlgoritmoEnum.REAL, Division.PRIMERA);
 		return resultadosRealesPrimera;
 	}
 
@@ -80,7 +80,7 @@ public class AnalizadorDelPasado {
 
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
 				pronosticosJornadaBulk, obtenerResultadosRealesSegunda());
-		graficoNumAciertosVsJornada(inDto, TipoDivisionEnum.SEGUNDA);
+		graficoNumAciertosVsJornada(inDto, Division.SEGUNDA);
 
 	}
 
@@ -88,15 +88,14 @@ public class AnalizadorDelPasado {
 		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
 		List<PronosticoJornada> resultadosRealesSegunda = GraficoAciertosJornadaTest
 				.generarPronosticosJornadaAlgoritmoDivisionMock(
-						IdAlgoritmoEnum.REAL, TipoDivisionEnum.SEGUNDA);
+						IdAlgoritmoEnum.REAL, Division.SEGUNDA);
 		return resultadosRealesSegunda;
 	}
 
 	private static void graficoNumAciertosVsJornada(
-			EntradaAciertosJornadaDto inDto, TipoDivisionEnum division) {
+			EntradaAciertosJornadaDto inDto, Division division) {
 		String titulo = "Comparación de algoritmos en jornadas pasadas: ";
-		titulo += division.equals(TipoDivisionEnum.PRIMERA) ? "PRIMERA"
-				: "SEGUNDA";
+		titulo += division.equals(Division.PRIMERA) ? "PRIMERA" : "SEGUNDA";
 		titulo += " DIVISION";
 
 		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
