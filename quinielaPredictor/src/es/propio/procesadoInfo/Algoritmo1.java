@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import es.propio.cargadorInfoWeb.CargadorWebyXMLPronosticoQuinielista;
 import es.propio.handlerDatos.CargadorDatosPronosticos;
 import es.propio.handlerDatos.CombinadorInfoJornadas;
 import es.propio.modeladoInfo.Equipo;
@@ -160,7 +161,8 @@ public class Algoritmo1 extends AbstractAlgoritmo{
 
 	@Override
 	void calcularPronosticoPrimera() throws Exception {
-		PronosticoJornada pronosticoJornada=new PronosticoJornada(1, IdAlgoritmoEnum.ALGORTIMO2);
+		CargadorWebyXMLPronosticoQuinielista cargador = new CargadorWebyXMLPronosticoQuinielista();
+		PronosticoJornada pronosticoJornada = cargador.ejecutar();
 		List<PronosticoPartido> pronosticos=new ArrayList<PronosticoPartido>();
 		for(int i=1;i<=15;i++){
 			PronosticoPartido pronostico=new PronosticoPartido();
@@ -172,7 +174,7 @@ public class Algoritmo1 extends AbstractAlgoritmo{
 			pronostico.setPorcentaje2(0F);
 			pronosticos.add(pronostico);
 		}
-		pronosticoJornada.setPronosticoPartidos(pronosticos);
+		pronosticoJornada.setPronosticoPartidos(pronosticoJornada.getPronosticoPartidos());
 		setEstimacionJornadaPrimera(pronosticoJornada);
 	}
 

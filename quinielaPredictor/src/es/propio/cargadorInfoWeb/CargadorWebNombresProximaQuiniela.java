@@ -16,13 +16,18 @@ import es.propio.modeladoInfo.PronosticoJornada;
  */
 public class CargadorWebNombresProximaQuiniela {
 
-	private PronosticoJornada pronosticoJornada;
+	private Boleto boleto;
 
 	public CargadorWebNombresProximaQuiniela() {
 	}
 
-	public void cargar() throws Exception {
-		final URL urlPrimera = new URL("http://www.elfutbolin.com/quiniela/");
+	public void cargar(final String numeroBoleto) throws Exception {
+		String seleccionBoleto = "";
+		if (numeroBoleto != "") {
+			seleccionBoleto = "quiniela.asp?jornada=" + numeroBoleto;
+		}
+		final URL urlPrimera = new URL("http://www.elfutbolin.com/quiniela/"
+				+ seleccionBoleto);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				urlPrimera.openStream()));
@@ -32,28 +37,29 @@ public class CargadorWebNombresProximaQuiniela {
 
 		}
 		in.close();
-
-		System.out.println(webpage);
-
-		// TODO: meter un handler que guarde el contenido.
-		Boleto boletoActual = new Boleto();
-		HandlerWebBoleto.extraerDatos(webpage, boletoActual);
+		Boleto boletoLeido = new Boleto();
+		HandlerWebBoleto.extraerDatos(webpage, boletoLeido);
+		setBoleto(boletoLeido);
 
 		System.out.println("FIN");
 	}
 
-	/**
-	 * @return the pronosticoJornada
-	 */
-	public PronosticoJornada getPronosticoJornada() {
-		return pronosticoJornada;
+	public void cargar() throws Exception {
+		cargar("");
 	}
 
 	/**
-	 * @param pronosticoJornada
-	 *            the pronosticoJornada to set
+	 * @return the boleto
 	 */
-	public void setPronosticoJornada(PronosticoJornada pronosticoJornada) {
-		this.pronosticoJornada = pronosticoJornada;
+	public Boleto getBoleto() {
+		return boleto;
+	}
+
+	/**
+	 * @param boleto
+	 *            the boleto to set
+	 */
+	public void setBoleto(Boleto boleto) {
+		this.boleto = boleto;
 	}
 }

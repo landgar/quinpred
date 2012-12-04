@@ -31,7 +31,7 @@ public class HandlerWebBoleto {
 		if (boleto.getPartidos() == null) {
 			boleto.setPartidos(new HashMap<Integer, Partido>());
 		}
-		String cadenaABuscar = " <td nowrap=\"nowrap\" class=\"par separador\">";
+		String cadenaABuscar = "calendario/partido";
 		int lastIndex = 0;
 		String cadenaAParsear, cadenaAParsear2, aux;
 		cadenaAParsear = paginaHtml;
@@ -42,38 +42,37 @@ public class HandlerWebBoleto {
 			lastIndex = paginaHtml.indexOf(cadenaABuscar, lastIndex);
 			if (lastIndex != -1) {
 				lastIndex += cadenaABuscar.length();
-
+				lastIndex = paginaHtml.indexOf(">", lastIndex) + 1;
 				// Tendré que parsear:
-				// <a
-				// href='/segundadivision/calendario/partido/cordoba-xerez'>Córdoba-Xerez</a></td>
+				// Córdoba-Xerez</a></td>
 				// <td align="right" valign="bottom" class="separador">8</td>
-				// ó
-				// <td nowrap="nowrap"
-				// class="par separador">Barcelona-Alavés</td>
-				// <td align="right" valign="bottom" class="separador">4</td
 				cadenaAParsear = paginaHtml.substring(lastIndex,
-						paginaHtml.indexOf("</td>", lastIndex));
+						paginaHtml.indexOf("</", lastIndex));
 				cadenaAParsear2 = paginaHtml.substring(paginaHtml.indexOf(
-						"\">" + 2, lastIndex + cadenaAParsear.length()));
-				cadenaAParsear2 = cadenaAParsear2.substring(2,
-						cadenaAParsear2.indexOf("</td>")).trim();
-				String equipo1NombrePropio = "", equipo2NombrePropio = "";
-				Integer posicion;
-				if (cadenaAParsear.charAt(0) == '<') {
-					aux = cadenaAParsear.substring(
-							cadenaAParsear.indexOf("'>") + 2,
-							cadenaAParsear.indexOf("</a>"));
-				} else {
-					aux = cadenaAParsear;
-				}
-				Pattern p = Pattern.compile("^([^-]+)-([^-]+)$");
+						"\">", lastIndex) + 2);
+				cadenaAParsear2 = cadenaAParsear2.substring(0,cadenaAParsear2
+						.indexOf("<"));
+				Pattern p = Pattern
+						.compile("^([^>]+)([>]+)([0-9]+)([<]+)([^<]+).");
+				aux = paginaHtml.substring(paginaHtml.indexOf("bottom",
+						lastIndex + cadenaAParsear2.length()));
 				Matcher m = p.matcher(aux);
+				Integer posicion = 0;
+				if (m.find()) {
+					posicion = Integer.valueOf(m.group(3));
+				} else {
+					posicion = 15;// Pleno al 15.
+				}
+				String equipo1NombrePropio = "", equipo2NombrePropio = "";
+
+				aux = cadenaAParsear;
+				p = Pattern.compile("^([^-]+)-([^-]+)$");
+				m = p.matcher(aux);
 				// Córdoba-Xerez
 				if (m.find()) {
 					equipo1NombrePropio = m.group(1);
 					equipo2NombrePropio = m.group(2);
 				}
-				posicion = Integer.valueOf(cadenaAParsear2);
 
 				// Se rellena el boleto
 				equipo1NombrePropio = conversionNombreEquipos(equipo1NombrePropio);
@@ -95,7 +94,7 @@ public class HandlerWebBoleto {
 		if (m.find()) {
 			boleto.setNumeroBoleto(Integer.valueOf(m.group(1)));
 			SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-			aux=m.group(3);
+			aux = m.group(3);
 			boleto.setFecha(formateador.parse(aux));
 		}
 

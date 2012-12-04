@@ -3,9 +3,11 @@
  */
 package es.propio.cargadorInfoWeb.test;
 
+import java.util.Map;
+
 import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
-import es.propio.modeladoInfo.PronosticoJornada;
-import es.propio.modeladoInfo.PronosticoPartido;
+import es.propio.modeladoInfo.Boleto;
+import es.propio.modeladoInfo.Partido;
 
 /**
  * @author i3casa
@@ -17,32 +19,28 @@ public class CargadorWebNombresProximaQuinielaTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("TEST CargadorWebNombresProximaQuinielaTest");
 		CargadorWebNombresProximaQuiniela cargador = new CargadorWebNombresProximaQuiniela();
-		cargador.cargar();
+		cargador.cargar("22");
 
 		pintar(cargador);
 	}
 
 	private static void pintar(final CargadorWebNombresProximaQuiniela cargador)
 			throws Exception {
-		System.out.println("TEST CargadorWebNombresProximaQuinielaTest");
-		cargador.cargar();
-		pintarPronosticoJornada(cargador.getPronosticoJornada());
+		pintarPronosticoJornada(cargador.getBoleto());
 	}
 
-	private static void pintarPronosticoJornada(
-			final PronosticoJornada pronosticoJornada) {
+	private static void pintarPronosticoJornada(final Boleto boleto) {
 		System.out.println("******************** Pronóstico jornada: "
-				+ pronosticoJornada.getNumeroJornada()
-				+ "ª ********************");
-		for (PronosticoPartido pronosticoPartido : pronosticoJornada
-				.getPronosticoPartidos()) {
-			System.out.println(pronosticoPartido.getPosicionPartido() + ".  "
-					+ pronosticoPartido.getLocal().getNombre() + " - "
-					+ pronosticoPartido.getVisitante().getNombre() + " : "
-					+ pronosticoPartido.getResultadoMasProbable().getValor());
+				+ boleto.getNumeroBoleto() + "ª ********* "
+				+ boleto.getFecha().toString() + " ***********");
+		Map<Integer, Partido> mapa = boleto.getPartidos();
+		for (Map.Entry<Integer, Partido> entry : mapa.entrySet()) {
+			Partido partido = entry.getValue();
+			System.out.println("Posición: " + entry.getKey() + ".  "
+					+ partido.getEquipoLocal().getNombre() + " - "
+					+ partido.getEquipoVisitante().getNombre());
 		}
 	}
-
 }
