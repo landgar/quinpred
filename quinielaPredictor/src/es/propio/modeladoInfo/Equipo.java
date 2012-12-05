@@ -33,6 +33,46 @@ public class Equipo {
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
+		List<String> nombresPrimera = getNombresEquiposPrimera();
+		List<String> nombresSegunda = getNombresEquiposSegunda();
+		String nombreEncontrado = "invalido";
+		for (String posibleNombre : posiblesNombres) {
+			if (division.equals((Division.PRIMERA))) {
+				for (String nombrePrimera : nombresPrimera) {
+					if (nombrePrimera.equals(posibleNombre)) {
+						nombreEncontrado = nombrePrimera;
+						break;
+					}
+				}
+			} else if (division.equals((Division.SEGUNDA))) {
+				for (String nombreSegunda : nombresSegunda) {
+					if (nombreSegunda.equals(posibleNombre)) {
+						nombreEncontrado = nombreSegunda;
+						break;
+					}
+				}
+			}
+		}
+		this.nombre = nombreEncontrado;
+	}
+
+	public Division getDivision() {
+		List<String> nombresPrimera = getNombresEquiposPrimera();
+		List<String> nombresSegunda = getNombresEquiposSegunda();
+		// Primera división
+		Division division = Division.INVALIDO;
+		if (nombresPrimera.contains(nombre)) {
+			division = Division.PRIMERA;
+		} else if (nombresSegunda.contains(nombre)) {
+			division = Division.SEGUNDA;
+		} else {
+			logger.error("No se ha podido encontrar una división para el equipo con nombre: "
+					+ nombre);
+		}
+		return division;
+	}
+
+	public static List<String> getNombresEquiposPrimera() {
 		List<String> nombresPrimera = new ArrayList<>();
 		nombresPrimera.add("Celta");
 		nombresPrimera.add("Malaga");
@@ -54,6 +94,10 @@ public class Equipo {
 		nombresPrimera.add("Betis");
 		nombresPrimera.add("Barcelona");
 		nombresPrimera.add("R-Sociedad");
+		return nombresPrimera;
+	}
+
+	public static List<String> getNombresEquiposSegunda() {
 		List<String> nombresSegunda = new ArrayList<>();
 		nombresSegunda.add("Racing");
 		nombresSegunda.add("Palmas");
@@ -78,123 +122,7 @@ public class Equipo {
 		nombresSegunda.add("Sabadell");
 		nombresSegunda.add("Girona");
 		nombresSegunda.add("Numancia");
-
-		String nombreEncontrado = "invalido";
-
-		for (String posibleNombre : posiblesNombres) {
-			if (division.equals((Division.PRIMERA))) {
-				for (String nombrePrimera : nombresPrimera) {
-					if (nombrePrimera.equals(posibleNombre)) {
-						nombreEncontrado = nombrePrimera;
-						break;
-					}
-				}
-			} else if (division.equals((Division.SEGUNDA))) {
-				for (String nombreSegunda : nombresSegunda) {
-					if (nombreSegunda.equals(posibleNombre)) {
-						nombreEncontrado = nombreSegunda;
-						break;
-					}
-				}
-			}
-		}
-		this.nombre = nombreEncontrado;
-	}
-
-	public Division getDivision() {
-		// Primera división
-		Division division = Division.INVALIDO;
-		if (nombre.equals("Celta")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Málaga")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Zaragoza")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Valladolid")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Rayo Vallecano")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Granada")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Real Madrid")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Valencia")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Levante")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Atlético de Madrid")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Deportivo")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Osasuna")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Mallorca")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Espanyol")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Sevilla")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Getafe")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Athletic de Bilbao")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Betis")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Barcelona")) {
-			division = Division.PRIMERA;
-		} else if (nombre.equals("Real Sociedad")) {
-			division = Division.PRIMERA;
-		}
-		// Segunda división
-		else if (nombre.equals("Racing de Santander")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Las Palmas")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Mirandés")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Huesca")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Lugo")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Hércules")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Xerez")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Villarreal")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Real Madrid Castilla")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Barcelona B")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Almería")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Elche")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Córdoba")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Sporting de Gijón")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Murcia")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Alcorcón")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Guadalajara")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Recreativo de Huelva")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Ponferradina")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Sabadell")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Girona")) {
-			division = Division.SEGUNDA;
-		} else if (nombre.equals("Numancia")) {
-			division = Division.SEGUNDA;
-		} else {
-			logger.error("No se ha podido encontrar una división para el equipo con nombre: "
-					+ nombre);
-		}
-		return division;
+		return nombresSegunda;
 	}
 
 	/**

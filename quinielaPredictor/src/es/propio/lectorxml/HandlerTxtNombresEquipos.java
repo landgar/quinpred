@@ -99,7 +99,7 @@ public class HandlerTxtNombresEquipos {
 										nombreVisitante = elemento3;
 									}
 								}
-								Partido partido = new Partido();
+								Partido partido = new Partido(Boolean.TRUE);
 //								partido.setPosicion(numLinea - 2);
 								Equipo local = new Equipo(nombreLocal);
 								Equipo visitante = new Equipo(nombreVisitante);

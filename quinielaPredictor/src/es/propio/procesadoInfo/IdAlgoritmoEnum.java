@@ -1,7 +1,7 @@
 package es.propio.procesadoInfo;
 
 public enum IdAlgoritmoEnum {
-	REAL(0), ALGORITMO1(1), ALGORTIMO2(2), WEB_QUINIELISTA(10);
+	REAL(0), ALGORITMO1(1), WEB_QUINIELISTA(10);
 
 	private Integer idAlgoritmo;
 

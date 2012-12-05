@@ -58,6 +58,9 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 
 		System.out.println(nombresEquipos + "posicion = " + posicionPartido
 				+ porcentajes);
+
+		System.out.println("Resultado más probable : "
+				+ getResultadoMasProbable().getValor());
 	}
 
 	@Override
@@ -70,11 +73,9 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 				salida = ValorResultado.DOS;
 			}
 		} else if (porcentajeX > porcentaje2) {
-			if (porcentaje1 > porcentaje2) {
-				salida = ValorResultado.EQUIS;
-			} else {
-				salida = ValorResultado.DOS;
-			}
+			salida = ValorResultado.EQUIS;
+		}else{
+			salida = ValorResultado.DOS;
 		}
 		return salida;
 	}

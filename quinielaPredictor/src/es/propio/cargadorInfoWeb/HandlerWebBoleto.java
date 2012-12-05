@@ -50,8 +50,8 @@ public class HandlerWebBoleto {
 						paginaHtml.indexOf("</", lastIndex));
 				cadenaAParsear2 = paginaHtml.substring(paginaHtml.indexOf(
 						"\">", lastIndex) + 2);
-				cadenaAParsear2 = cadenaAParsear2.substring(0,cadenaAParsear2
-						.indexOf("<"));
+				cadenaAParsear2 = cadenaAParsear2.substring(0,
+						cadenaAParsear2.indexOf("<"));
 				Pattern p = Pattern
 						.compile("^([^>]+)([>]+)([0-9]+)([<]+)([^<]+).");
 				aux = paginaHtml.substring(paginaHtml.indexOf("bottom",
@@ -79,7 +79,7 @@ public class HandlerWebBoleto {
 				local = new Equipo(equipo1NombrePropio);
 				equipo2NombrePropio = conversionNombreEquipos(equipo2NombrePropio);
 				visitante = new Equipo(equipo2NombrePropio);
-				partido = new Partido();
+				partido = new Partido(Boolean.FALSE);
 				partido.setEquipoLocal(local);
 				partido.setEquipoVisitante(visitante);
 				boleto.getPartidos().put(posicion, partido);

@@ -36,12 +36,10 @@ public class GraficoAciertosJornadaTest {
 	private static List<PronosticoJornada> generarPronosticosJornadaMock() {
 
 		List<PronosticoJornada> pronosticosAlgoritmo1 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORITMO1);
-		List<PronosticoJornada> pronosticosAlgoritmo2 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORTIMO2);
 		List<PronosticoJornada> pronosticosAlgoritmoQuinielista = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.WEB_QUINIELISTA);
 
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo1);
-		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo2);
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmoQuinielista);
 		return pronosticosJornadaBulk;
 	}

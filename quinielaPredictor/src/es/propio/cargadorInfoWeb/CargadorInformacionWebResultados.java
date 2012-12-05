@@ -37,11 +37,9 @@ public class CargadorInformacionWebResultados {
 		in2.close();
 
 		// Inicialización
-		temporadaPrimeraHastaHoy = new Temporada();
-		temporadaSegundaHastaHoy = new Temporada();
 
-		HandlerHtmlResultados.extraerDatos(webpage, temporadaPrimeraHastaHoy);
-		HandlerHtmlResultados.extraerDatos(webpage2, temporadaSegundaHastaHoy);
+		temporadaPrimeraHastaHoy = HandlerHtmlResultados.extraerDatos(webpage);
+		temporadaSegundaHastaHoy = HandlerHtmlResultados.extraerDatos(webpage2);
 
 	}
 

@@ -22,7 +22,10 @@ public class PredictorDelFuturo {
 				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
 		// TODO Modulo para que nos ayude a rellenar la quiniela en papel, en
 		// función del algoritmo que queramos usar.
-		Algoritmo1.calcularPronosticos();
+
+		Algoritmo1 alg = new Algoritmo1();
+		alg.calcularPronosticoPrimera();
+		alg.calcularPronosticoSegunda();
 
 		// System.out
 		// .println("Pintando GRAFICOS para comparar los algoritmos ...");

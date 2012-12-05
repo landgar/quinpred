@@ -14,8 +14,8 @@ import es.propio.modeladoInfo.ResultadoQuiniela;
 public class HandlerTxtResultados {
 
 	/**
-	 * @uml.property  name="jornada"
-	 * @uml.associationEnd  multiplicity="(1 1)"
+	 * @uml.property name="jornada"
+	 * @uml.associationEnd multiplicity="(1 1)"
 	 */
 	private Jornada jornada;
 
@@ -51,17 +51,18 @@ public class HandlerTxtResultados {
 						while (resultados.hasMoreTokens()) {
 							posicion++;
 							final String resultado = resultados.nextToken();
-							Partido partido = new Partido();
-//							partido.setResultadoQuiniela(new ResultadoQuiniela(
-//									resultado));
-//							partido.setPosicion(posicion);
+							Partido partido = new Partido(Boolean.TRUE);
+							// partido.setResultadoQuiniela(new
+							// ResultadoQuiniela(
+							// resultado));
+							// partido.setPosicion(posicion);
 							jornada.getPartidos().add(partido);
 						}
 					} else if (numElemento == 8) {
-						Partido partido = new Partido();
+						Partido partido = new Partido(Boolean.TRUE);
 						// partido.setResultadoQuiniela(new ResultadoQuiniela(
 						// elemento));
-//						partido.setPosicion(15);
+						// partido.setPosicion(15);
 						jornada.getPartidos().add(partido);
 					}
 				}
@@ -72,16 +73,17 @@ public class HandlerTxtResultados {
 	}
 
 	/**
-	 * @return  the jornada
-	 * @uml.property  name="jornada"
+	 * @return the jornada
+	 * @uml.property name="jornada"
 	 */
 	public Jornada getJornada() {
 		return jornada;
 	}
 
 	/**
-	 * @param jornada  the jornada to set
-	 * @uml.property  name="jornada"
+	 * @param jornada
+	 *            the jornada to set
+	 * @uml.property name="jornada"
 	 */
 	public void setJornada(Jornada jornada) {
 		this.jornada = jornada;

@@ -2,6 +2,13 @@ package es.propio.modeladoInfo;
 
 public class Partido {
 
+	private Boolean seHaJugado;
+
+	public Partido(final Boolean seHaJugado) {
+		super();
+		this.seHaJugado = seHaJugado;
+	}
+
 	/**
 	 * @uml.property name="equipoLocal"
 	 * @uml.associationEnd
@@ -28,7 +35,8 @@ public class Partido {
 	public ResultadoQuiniela getResultadoQuiniela() {
 		ResultadoQuiniela resultado;
 
-		if (golesLocal == null || golesVisitante == null) {
+		if (golesLocal == null || golesVisitante == null || golesLocal < 0
+				|| golesVisitante < 0) {
 			resultado = new ResultadoQuiniela(ValorResultado.INVALIDO);
 		} else if (golesLocal > golesVisitante) {
 			resultado = new ResultadoQuiniela(ValorResultado.UNO);
@@ -125,6 +133,21 @@ public class Partido {
 			salida = Boolean.TRUE;
 		}
 		return salida;
+	}
+
+	/**
+	 * @return the seHaJugado
+	 */
+	public Boolean getSeHaJugado() {
+		return seHaJugado;
+	}
+
+	/**
+	 * @param seHaJugado
+	 *            the seHaJugado to set
+	 */
+	public void setSeHaJugado(Boolean seHaJugado) {
+		this.seHaJugado = seHaJugado;
 	}
 
 }

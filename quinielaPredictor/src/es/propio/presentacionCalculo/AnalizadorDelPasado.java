@@ -46,10 +46,10 @@ public class AnalizadorDelPasado {
 	private static void graficosPrimeraDivision() throws Exception {
 		// PRIMERA DIVISION
 		// TODO invocar a AbstractAlgoritmo.calcularPronosticoPrimera
-		Set<PronosticoJornada> pronosticosPrimeraAlgoritmo1 = Algoritmo1
-				.calcularPronosticos();
+		Algoritmo1 alg = new Algoritmo1();
+		alg.calcularPronosticoPrimera();
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
-		pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo1);
+		pronosticosJornadaBulk.add(alg.getEstimacionJornadaPrimera());
 		// pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo2);
 		// pronosticosJornadaBulk.addAll(pronosticosPrimeraAlgoritmo3);
 
@@ -70,11 +70,10 @@ public class AnalizadorDelPasado {
 	private static void graficosSegundaDivision() throws Exception {
 		// SEGUNDA DIVISION
 		// TODO invocar a AbstractAlgoritmo.calcularPronosticoSegunda
-		Set<PronosticoJornada> pronosticosSegundaAlgoritmo1 = Algoritmo1
-				.calcularPronosticos();
-
+		Algoritmo1 alg = new Algoritmo1();
+		alg.calcularPronosticoSegunda();
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
-		pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo1);
+		pronosticosJornadaBulk.add(alg.getEstimacionJornadaSegunda());
 		// pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo2);
 		// pronosticosJornadaBulk.addAll(pronosticosSegundaAlgoritmo3);
 
