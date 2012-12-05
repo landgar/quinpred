@@ -33,16 +33,9 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 	public void pintarme() {
 		System.out.println("***** Pronostico Jornada: " + numeroJornada
 				+ " ******");
-
-		if (pronosticoPartidos != null && pronosticoPartidos.size() == 15) {
-			for (PronosticoPartido pronostico : pronosticoPartidos) {
-				pronostico.pintarme();
-			}
-		} else {
-			System.out
-					.println("ATENCION: PRONÓSTICO NO VÁLIDO. Debería tener exactamente 15 partidos !!!");
+		for (PronosticoPartido pronostico : pronosticoPartidos) {
+			pronostico.pintarme();
 		}
-
 	}
 
 	public PronosticoJornada ordenarPorPosicionPartido() {
@@ -54,6 +47,14 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 			IdAlgoritmoEnum idAlgoritmoPronosticador) {
 		super();
 		pronosticoPartidos = new ArrayList<PronosticoPartido>();
+		this.numeroJornada = numeroJornada;
+		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
+	}
+
+	public PronosticoJornada(List<PronosticoPartido> pronosticoPartidos,
+			Integer numeroJornada, IdAlgoritmoEnum idAlgoritmoPronosticador) {
+		super();
+		this.pronosticoPartidos = pronosticoPartidos;
 		this.numeroJornada = numeroJornada;
 		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
 	}

@@ -30,7 +30,13 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 
 	@Override
 	public void calcularPronosticoSegunda() throws Exception {
-		// TODO
+		List<PronosticoPartido> lista = getEstimacionJornadaSegunda()
+				.getPronosticoPartidos();
+		for (PronosticoPartido pronostico : lista) {
+			pronostico.setPorcentaje1(generateNormalizedRandomNumber());
+			pronostico.setPorcentajeX(generateNormalizedRandomNumber());
+			pronostico.setPorcentaje2(generateNormalizedRandomNumber());
+		}
 	}
 
 	private static Float generateNormalizedRandomNumber() {

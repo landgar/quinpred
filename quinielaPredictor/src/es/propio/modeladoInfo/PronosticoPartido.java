@@ -8,17 +8,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 	 */
 	private Integer posicionPartido;
 
-	/**
-	 * @uml.property name="local"
-	 * @uml.associationEnd
-	 */
-	private Equipo local;
-	/**
-	 * @uml.property name="visitante"
-	 * @uml.associationEnd
-	 */
-	private Equipo visitante;
-
+	private Partido partido;
 	/**
 	 * @uml.property name="porcentaje1"
 	 */
@@ -49,9 +39,10 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 	private Float porcentajeX2;
 
 	public void pintarme() {
-		String nombresEquipos = (local != null ? (local.getNombre() + " - ")
-				: "")
-				+ (visitante != null ? (visitante.getNombre() + " --> ") : "");
+		String nombresEquipos = (partido.getEquipoLocal() != null ? (partido
+				.getEquipoLocal().getNombre() + " - ") : "")
+				+ (partido.getEquipoVisitante() != null ? (partido
+						.getEquipoVisitante().getNombre() + " --> ") : "");
 
 		String porcentajes = " Porcentajes: " + " UNO = " + porcentaje1
 				+ " EQUIS = " + porcentajeX + " DOS = " + porcentaje2;
@@ -74,7 +65,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 			}
 		} else if (porcentajeX > porcentaje2) {
 			salida = ValorResultado.EQUIS;
-		}else{
+		} else {
 			salida = ValorResultado.DOS;
 		}
 		return salida;
@@ -228,37 +219,17 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 	}
 
 	/**
-	 * @return the local
-	 * @uml.property name="local"
+	 * @return the partido
 	 */
-	public Equipo getLocal() {
-		return local;
+	public Partido getPartido() {
+		return partido;
 	}
 
 	/**
-	 * @param local
-	 *            the local to set
-	 * @uml.property name="local"
+	 * @param partido the partido to set
 	 */
-	public void setLocal(Equipo local) {
-		this.local = local;
-	}
-
-	/**
-	 * @return the visitante
-	 * @uml.property name="visitante"
-	 */
-	public Equipo getVisitante() {
-		return visitante;
-	}
-
-	/**
-	 * @param visitante
-	 *            the visitante to set
-	 * @uml.property name="visitante"
-	 */
-	public void setVisitante(Equipo visitante) {
-		this.visitante = visitante;
+	public void setPartido(Partido partido) {
+		this.partido = partido;
 	}
 
 }
