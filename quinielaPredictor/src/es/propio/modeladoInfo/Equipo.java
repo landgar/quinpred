@@ -33,6 +33,46 @@ public class Equipo {
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
+		List<String> nombresPrimera = getNombresEquiposPrimera();
+		List<String> nombresSegunda = getNombresEquiposSegunda();
+		String nombreEncontrado = "invalido";
+		for (String posibleNombre : posiblesNombres) {
+			if (division.equals((Division.PRIMERA))) {
+				for (String nombrePrimera : nombresPrimera) {
+					if (nombrePrimera.equals(posibleNombre)) {
+						nombreEncontrado = nombrePrimera;
+						break;
+					}
+				}
+			} else if (division.equals((Division.SEGUNDA))) {
+				for (String nombreSegunda : nombresSegunda) {
+					if (nombreSegunda.equals(posibleNombre)) {
+						nombreEncontrado = nombreSegunda;
+						break;
+					}
+				}
+			}
+		}
+		this.nombre = nombreEncontrado;
+	}
+
+	public Division getDivision() {
+		List<String> nombresPrimera = getNombresEquiposPrimera();
+		List<String> nombresSegunda = getNombresEquiposSegunda();
+		// Primera división
+		Division division = Division.INVALIDO;
+		if (nombresPrimera.contains(nombre)) {
+			division = Division.PRIMERA;
+		} else if (nombresSegunda.contains(nombre)) {
+			division = Division.SEGUNDA;
+		} else {
+			logger.error("No se ha podido encontrar una división para el equipo con nombre: "
+					+ nombre);
+		}
+		return division;
+	}
+
+	public static List<String> getNombresEquiposPrimera() {
 		List<String> nombresPrimera = new ArrayList<>();
 		nombresPrimera.add("Celta");
 		nombresPrimera.add("Malaga");
@@ -54,6 +94,10 @@ public class Equipo {
 		nombresPrimera.add("Betis");
 		nombresPrimera.add("Barcelona");
 		nombresPrimera.add("R-Sociedad");
+		return nombresPrimera;
+	}
+
+	public static List<String> getNombresEquiposSegunda() {
 		List<String> nombresSegunda = new ArrayList<>();
 		nombresSegunda.add("Racing");
 		nombresSegunda.add("Palmas");
@@ -78,27 +122,7 @@ public class Equipo {
 		nombresSegunda.add("Sabadell");
 		nombresSegunda.add("Girona");
 		nombresSegunda.add("Numancia");
-
-		String nombreEncontrado = "invalido";
-
-		for (String posibleNombre : posiblesNombres) {
-			if (division.equals((Division.PRIMERA))) {
-				for (String nombrePrimera : nombresPrimera) {
-					if (nombrePrimera.equals(posibleNombre)) {
-						nombreEncontrado = nombrePrimera;
-						break;
-					}
-				}
-			} else if (division.equals((Division.SEGUNDA))) {
-				for (String nombreSegunda : nombresSegunda) {
-					if (nombreSegunda.equals(posibleNombre)) {
-						nombreEncontrado = nombreSegunda;
-						break;
-					}
-				}
-			}
-		}
-		this.nombre = nombreEncontrado;
+		return nombresSegunda;
 	}
 
 	/**
@@ -209,4 +233,5 @@ public class Equipo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 }

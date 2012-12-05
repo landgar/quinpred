@@ -27,7 +27,7 @@ public class CargadorWebyXMLPronosticoQuinielista {
 	private static String URL_QUINIELISTA_HACIA_XML_PARTE1 = "https://www.quinielista.es/";
 	private static String URL_QUINIELISTA_HACIA_XML_PARTE2 = "xml/sistemistas.asp?jornada=";
 
-	private Integer numeroJornada;
+	private Integer numeroBoletoSegunQuinielista;
 
 	public CargadorWebyXMLPronosticoQuinielista() {
 	}
@@ -61,11 +61,14 @@ public class CargadorWebyXMLPronosticoQuinielista {
 		String resto = htmlConLinkHaciaXML.substring(indiceLink + longitudBase);
 		int indiceComilla = resto.indexOf("\"");
 
-		String numeroJornada = resto.subSequence(0, indiceComilla).toString();
-		this.numeroJornada = Integer.valueOf(numeroJornada);
+		String numeroBoletoActual = resto.subSequence(0, indiceComilla)
+				.toString();
+		this.numeroBoletoSegunQuinielista = Integer.valueOf(numeroBoletoActual);
 
 		String linkHaciaXML = URL_QUINIELISTA_HACIA_XML_PARTE1
-				+ URL_QUINIELISTA_HACIA_XML_PARTE2 + numeroJornada;
+				+ URL_QUINIELISTA_HACIA_XML_PARTE2 + numeroBoletoActual;
+
+		System.out.println("URL = " + linkHaciaXML);
 		return linkHaciaXML;
 	}
 
@@ -85,9 +88,19 @@ public class CargadorWebyXMLPronosticoQuinielista {
 	private PronosticoJornada procesarXML(String contenidoXml)
 			throws SAXException, FileNotFoundException, IOException {
 		HandlerXMLPronosticos handlerXml = new HandlerXMLPronosticos(
-				numeroJornada, IdAlgoritmoEnum.WEB_QUINIELISTA);
+				numeroBoletoSegunQuinielista, IdAlgoritmoEnum.WEB_QUINIELISTA);
 		handlerXml.leer(contenidoXml);
 		PronosticoJornada pronosticoJornada = handlerXml.getPronostico();
 		return pronosticoJornada.ordenarPorPosicionPartido();
 	}
+
+	public Integer getNumeroBoletoSegunQuinielista() {
+		return numeroBoletoSegunQuinielista;
+	}
+
+	public void setNumeroBoletoSegunQuinielista(
+			Integer numeroBoletoSegunQuinielista) {
+		this.numeroBoletoSegunQuinielista = numeroBoletoSegunQuinielista;
+	}
+
 }

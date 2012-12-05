@@ -28,7 +28,7 @@ import es.propio.procesadoInfo.IdAlgoritmoEnum;
 /**
  * Comparación gráfica de algoritmos según nº aciertos vs. jornada. ENTRADA:
  * EntradaAciertosJornadaDto. COMO TENEMOS LOS RESULTADOS REALES, OBVIAMENTE
- * TODO LO QUE PINTAMOS SON DATOS PASADOS, NADA DEL FUTURO. SALIDA: grafico nº
+ * todo LO QUE PINTAMOS SON DATOS PASADOS, NADA DEL FUTURO. SALIDA: grafico nº
  * aciertos vs. jornada
  * 
  * @author carlos.andres
@@ -47,7 +47,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	public GraficoAciertosJornada(String tituloVentana, String tituloGraficos,
 			EntradaAciertosJornadaDto inDto) {
 		super(tituloVentana);
-		this.inDto = inDto;
+		GraficoAciertosJornada.inDto = inDto;
 		JPanel chartPanel = createDemoPanel(tituloGraficos);
 		chartPanel.setPreferredSize(DIMENSION_GRAFICO);
 		setContentPane(chartPanel);
@@ -99,8 +99,15 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	public static CategoryDataset createDataset() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+		// ESTO es PESADO, pero facilita el calculo posterior
+		inDto.marcarAciertos();
+
 		Map<IdAlgoritmoEnum, List<PronosticoJornada>> mapa = inDto
 				.organizarPorAlgoritmo();
+
+		// Auxiliares
+		String numJornada = null;
+		Integer numAciertos = null;
 
 		if (mapa.keySet() != null) {
 
@@ -115,11 +122,13 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 					HashMap<String, Double> mapaxyAlgoritmo = new HashMap<String, Double>();
 					for (PronosticoJornada pjornadaEjex : pronosticosJornadasDeUnAlgoritmo) {
 
-						// TODO Rellenar los aciertos comparando pjornadaEjex
-						// con el PronosticoJornada real.
-						Double aciertos = 5.0D;
-						mapaxyAlgoritmo.put(pjornadaEjex.getNumeroJornada()
-								.toString(), aciertos);
+						numJornada = pjornadaEjex.getNumeroJornada().toString();
+						numAciertos = pjornadaEjex.getNumeroAciertos();
+
+						if (numJornada != null && numAciertos != null) {
+							mapaxyAlgoritmo.put(numJornada,
+									Double.valueOf(numAciertos));
+						}
 					}
 
 					rellenarLinea(dataset, idAlgoritmo.toString(),
@@ -144,7 +153,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	}
 
 	public void setInDto(EntradaAciertosJornadaDto inDto) {
-		this.inDto = inDto;
+		GraficoAciertosJornada.inDto = inDto;
 	}
 
 }

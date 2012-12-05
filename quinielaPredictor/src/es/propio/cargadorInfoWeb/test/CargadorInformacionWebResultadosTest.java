@@ -18,10 +18,8 @@ public class CargadorInformacionWebResultadosTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
 		cargador.cargar();
-
 		pintar(cargador);
 	}
 

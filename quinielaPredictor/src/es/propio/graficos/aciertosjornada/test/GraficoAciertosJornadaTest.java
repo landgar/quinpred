@@ -8,11 +8,11 @@ import org.jfree.ui.RefineryUtilities;
 
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
-import es.propio.procesadoInfo.TipoDivisionEnum;
 
 public class GraficoAciertosJornadaTest {
 
@@ -36,12 +36,10 @@ public class GraficoAciertosJornadaTest {
 	private static List<PronosticoJornada> generarPronosticosJornadaMock() {
 
 		List<PronosticoJornada> pronosticosAlgoritmo1 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORITMO1);
-		List<PronosticoJornada> pronosticosAlgoritmo2 = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.ALGORTIMO2);
 		List<PronosticoJornada> pronosticosAlgoritmoQuinielista = generarPronosticosJornadaAlgoritmoMock(IdAlgoritmoEnum.WEB_QUINIELISTA);
 
 		List<PronosticoJornada> pronosticosJornadaBulk = new ArrayList<PronosticoJornada>();
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo1);
-		pronosticosJornadaBulk.addAll(pronosticosAlgoritmo2);
 		pronosticosJornadaBulk.addAll(pronosticosAlgoritmoQuinielista);
 		return pronosticosJornadaBulk;
 	}
@@ -51,15 +49,15 @@ public class GraficoAciertosJornadaTest {
 		List<PronosticoJornada> pjPrimeraySegunda = new ArrayList<PronosticoJornada>();
 		pjPrimeraySegunda
 				.addAll(generarPronosticosJornadaAlgoritmoDivisionMock(idAlgo,
-						TipoDivisionEnum.PRIMERA));
+						Division.PRIMERA));
 		pjPrimeraySegunda
 				.addAll(generarPronosticosJornadaAlgoritmoDivisionMock(idAlgo,
-						TipoDivisionEnum.SEGUNDA));
+						Division.SEGUNDA));
 		return pjPrimeraySegunda;
 	}
 
 	public static List<PronosticoJornada> generarPronosticosJornadaAlgoritmoDivisionMock(
-			IdAlgoritmoEnum idAlgo, TipoDivisionEnum division) {
+			IdAlgoritmoEnum idAlgo, Division division) {
 		// PRIMERA
 		List<PronosticoJornada> pjPrimera = new ArrayList<PronosticoJornada>();
 		List<Integer> numerosJornadaPrimera = generarNumJornadasMock(division);
@@ -70,8 +68,7 @@ public class GraficoAciertosJornadaTest {
 		return pjPrimera;
 	}
 
-	private static List<Integer> generarNumJornadasMock(
-			TipoDivisionEnum division) {
+	private static List<Integer> generarNumJornadasMock(Division division) {
 		List<Integer> numeros = new ArrayList<Integer>();
 		int numJornadasMax = AbstractAlgoritmo
 				.calcularNumerosJornadas(division);
@@ -82,15 +79,14 @@ public class GraficoAciertosJornadaTest {
 	}
 
 	private static PronosticoJornada generarPronosticoJornadaMock(
-			Integer numJornada, IdAlgoritmoEnum idAlgo,
-			TipoDivisionEnum division) {
+			Integer numJornada, IdAlgoritmoEnum idAlgo, Division division) {
 		PronosticoJornada pj = new PronosticoJornada(numJornada, idAlgo);
 		pj.setPronosticoPartidos(generarListaPronosticoPartidoMock(division));
 		return pj;
 	}
 
 	private static List<PronosticoPartido> generarListaPronosticoPartidoMock(
-			TipoDivisionEnum division) {
+			Division division) {
 		List<PronosticoPartido> lista = new ArrayList<PronosticoPartido>();
 		Integer numPartidos = AbstractAlgoritmo
 				.calcularNumPartidosPorJornada(division);
@@ -101,7 +97,7 @@ public class GraficoAciertosJornadaTest {
 	}
 
 	private static PronosticoPartido generarPronosticoPartidoMock(
-			TipoDivisionEnum division, Integer numPartidoPosicion) {
+			Division division, Integer numPartidoPosicion) {
 		PronosticoPartido pp = new PronosticoPartido();
 		pp.setPosicionPartido(numPartidoPosicion);
 

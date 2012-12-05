@@ -1,24 +1,13 @@
 package es.propio.modeladoInfo;
 
-public class PronosticoPartido implements Comparable<PronosticoPartido>,
-		TieneResultadoPartido {
+public class PronosticoPartido implements Comparable<PronosticoPartido> {
 
 	/**
 	 * @uml.property name="posicionPartido"
 	 */
 	private Integer posicionPartido;
 
-	/**
-	 * @uml.property name="local"
-	 * @uml.associationEnd
-	 */
-	private Equipo local;
-	/**
-	 * @uml.property name="visitante"
-	 * @uml.associationEnd
-	 */
-	private Equipo visitante;
-
+	private Partido partido;
 	/**
 	 * @uml.property name="porcentaje1"
 	 */
@@ -49,18 +38,28 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 	private Float porcentajeX2;
 
 	public void pintarme() {
-		String nombresEquipos = (local != null ? (local.getNombre() + " - ")
-				: "")
-				+ (visitante != null ? (visitante.getNombre() + " --> ") : "");
 
 		String porcentajes = " Porcentajes: " + " UNO = " + porcentaje1
 				+ " EQUIS = " + porcentajeX + " DOS = " + porcentaje2;
 
-		System.out.println(nombresEquipos + "posicion = " + posicionPartido
-				+ porcentajes);
+		String mensaje = "";
+
+		if (partido != null) {
+			String nombresEquipos = (partido.getEquipoLocal() != null ? (partido
+					.getEquipoLocal().getNombre() + " - ") : "")
+					+ (partido.getEquipoVisitante() != null ? (partido
+							.getEquipoVisitante().getNombre() + " --> ") : "");
+
+			mensaje += nombresEquipos;
+		}
+
+		mensaje += "Posicion = " + posicionPartido + porcentajes + " --> "
+				+ "Resultado más probable : "
+				+ getResultadoMasProbable().getValor();
+
+		System.out.println(mensaje);
 	}
 
-	@Override
 	public ValorResultado getResultadoMasProbable() {
 		ValorResultado salida = ValorResultado.INVALIDO;
 		if (porcentaje1 > porcentajeX) {
@@ -70,11 +69,9 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 				salida = ValorResultado.DOS;
 			}
 		} else if (porcentajeX > porcentaje2) {
-			if (porcentaje1 > porcentaje2) {
-				salida = ValorResultado.EQUIS;
-			} else {
-				salida = ValorResultado.DOS;
-			}
+			salida = ValorResultado.EQUIS;
+		} else {
+			salida = ValorResultado.DOS;
 		}
 		return salida;
 	}
@@ -227,37 +224,18 @@ public class PronosticoPartido implements Comparable<PronosticoPartido>,
 	}
 
 	/**
-	 * @return the local
-	 * @uml.property name="local"
+	 * @return the partido
 	 */
-	public Equipo getLocal() {
-		return local;
+	public Partido getPartido() {
+		return partido;
 	}
 
 	/**
-	 * @param local
-	 *            the local to set
-	 * @uml.property name="local"
+	 * @param partido
+	 *            the partido to set
 	 */
-	public void setLocal(Equipo local) {
-		this.local = local;
-	}
-
-	/**
-	 * @return the visitante
-	 * @uml.property name="visitante"
-	 */
-	public Equipo getVisitante() {
-		return visitante;
-	}
-
-	/**
-	 * @param visitante
-	 *            the visitante to set
-	 * @uml.property name="visitante"
-	 */
-	public void setVisitante(Equipo visitante) {
-		this.visitante = visitante;
+	public void setPartido(Partido partido) {
+		this.partido = partido;
 	}
 
 }

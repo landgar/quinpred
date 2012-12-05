@@ -1,10 +1,15 @@
 package es.propio.modeladoInfo;
 
+import org.apache.log4j.Logger;
+
 public class Partido {
-	/**
-	 * @uml.property name="posicion"
-	 */
-	private Integer posicion;
+	static final Logger logger = Logger.getLogger(Partido.class);
+	private Boolean seHaJugado;
+
+	public Partido(final Boolean seHaJugado) {
+		super();
+		this.seHaJugado = seHaJugado;
+	}
 
 	/**
 	 * @uml.property name="equipoLocal"
@@ -25,6 +30,40 @@ public class Partido {
 	 */
 	private Integer golesVisitante;
 
+	public ResultadoEquipo getResultadoEquipo(final Equipo equipo) {
+		ResultadoEquipo resultado = new ResultadoEquipo(
+				ValorResultadoEquipo.INVALIDO);
+		String nombreEquipo = equipo.getNombre();
+		if (equipo != null && nombreEquipo != null) {
+			if (nombreEquipo.equals(equipoLocal.getNombre())) {
+				if (getResultadoQuiniela().getValor()
+						.equals(ValorResultado.UNO)) {
+					resultado.setValor(ValorResultadoEquipo.GANADO);
+				} else if (getResultadoQuiniela().getValor().equals(
+						ValorResultado.DOS)) {
+					resultado.setValor(ValorResultadoEquipo.PERDIDO);
+				} else {
+					resultado.setValor(ValorResultadoEquipo.EMPATADO);
+				}
+			} else if (nombreEquipo.equals(equipoVisitante.getNombre())) {
+				if (getResultadoQuiniela().getValor()
+						.equals(ValorResultado.UNO)) {
+					resultado.setValor(ValorResultadoEquipo.PERDIDO);
+				} else if (getResultadoQuiniela().getValor().equals(
+						ValorResultado.DOS)) {
+					resultado.setValor(ValorResultadoEquipo.GANADO);
+				} else {
+					resultado.setValor(ValorResultadoEquipo.EMPATADO);
+				}
+			} else {
+				logger.error("El equipo del que obtener resultados del partido no es correcto");
+			}
+		} else {
+			logger.error("El equipo del que obtener resultados del partido está vacío");
+		}
+		return resultado;
+	}
+
 	/**
 	 * @return the resultadoQuiniela
 	 * @uml.property name="resultadoQuiniela"
@@ -32,7 +71,8 @@ public class Partido {
 	public ResultadoQuiniela getResultadoQuiniela() {
 		ResultadoQuiniela resultado;
 
-		if (golesLocal == null || golesVisitante == null) {
+		if (golesLocal == null || golesVisitante == null || golesLocal < 0
+				|| golesVisitante < 0) {
 			resultado = new ResultadoQuiniela(ValorResultado.INVALIDO);
 		} else if (golesLocal > golesVisitante) {
 			resultado = new ResultadoQuiniela(ValorResultado.UNO);
@@ -115,23 +155,6 @@ public class Partido {
 		this.golesVisitante = golesVisitante;
 	}
 
-	/**
-	 * @return the posicion
-	 * @uml.property name="posicion"
-	 */
-	public Integer getPosicion() {
-		return posicion;
-	}
-
-	/**
-	 * @param posicion
-	 *            the posicion to set
-	 * @uml.property name="posicion"
-	 */
-	public void setPosicion(Integer posicion) {
-		this.posicion = posicion;
-	}
-
 	public Boolean esLocal(Equipo equipo) {
 		Boolean salida = Boolean.FALSE;
 		if (equipo.getNombre().equals(equipoLocal.getNombre())) {
@@ -146,6 +169,21 @@ public class Partido {
 			salida = Boolean.TRUE;
 		}
 		return salida;
+	}
+
+	/**
+	 * @return the seHaJugado
+	 */
+	public Boolean getSeHaJugado() {
+		return seHaJugado;
+	}
+
+	/**
+	 * @param seHaJugado
+	 *            the seHaJugado to set
+	 */
+	public void setSeHaJugado(Boolean seHaJugado) {
+		this.seHaJugado = seHaJugado;
 	}
 
 }

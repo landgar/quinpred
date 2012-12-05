@@ -3,159 +3,49 @@
  */
 package es.propio.procesadoInfo;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import es.propio.handlerDatos.CargadorDatosPronosticos;
-import es.propio.handlerDatos.CombinadorInfoJornadas;
-import es.propio.modeladoInfo.Equipo;
-import es.propio.modeladoInfo.Jornada;
-import es.propio.modeladoInfo.Partido;
-import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
-import es.propio.modeladoInfo.Temporada;
 
 /**
  * @author i3casa
  * 
  */
-public class Algoritmo1 {
+public class Algoritmo1 extends AbstractAlgoritmo {
 	static final Logger logger = Logger.getLogger(Algoritmo1.class);
 
-	public static <T extends Comparable<? super T>> List<T> asSortedList(
-			Collection<T> c) {
-		List<T> list = new ArrayList<T>(c);
-		java.util.Collections.sort(list);
-		return list;
-	}
-
-	/**
-	 * Algoritmo:
-	 * 
-	 * Se toman los pronósticos de cada jornada. Para cada pronóstico de cada
-	 * partido de cada jornada, se multiplica el pronóstico por el peso relativo
-	 * de 1, X, 2 que ha tenido ese equipo a lo largo de las jornadas
-	 * anteriores.
-	 * 
-	 */
-	public static Set<PronosticoJornada> calcularPronosticos() throws Exception {
-
-		// TODO Cargar los resultados reales de la WEB, no de un fichero
-		Set<PronosticoJornada> pronosticos = CargadorDatosPronosticos
-				.cargarPronosticosJornadas();
-
-		Temporada temporada = new Temporada();
-		temporada.setJornadas(CombinadorInfoJornadas.obtenerTodaInfoJornadas());
-		for (PronosticoJornada pronosticoJornada : pronosticos) {
-			Integer numeroJornada = pronosticoJornada.getNumeroJornada();
-			logger.info("Pronóstico de la jornada: " + numeroJornada);
-			Jornada jornadaAPredecir = null;
-			for (Jornada jornada : temporada.getJornadas()) {
-				if (jornada != null && jornada.getNumeroJornada() != null) {
-					logger.debug("Tenemos información de la jornada: "
-							+ jornada.getNumeroJornada());
-					if (jornada.getNumeroJornada().equals(numeroJornada)) {
-						jornadaAPredecir = jornada;
-					}
-				}
-			}
-
-			if (pronosticoJornada != null) {
-				for (PronosticoPartido pronosticoPartido : pronosticoJornada
-						.getPronosticoPartidos()) {
-
-					if (jornadaAPredecir != null) {
-
-						for (Partido partido : jornadaAPredecir.getPartidos()) {
-							if (pronosticoPartido.getPosicionPartido().equals(
-									partido.getPosicion())) {
-								System.out.println("Posición del partido: "
-										+ pronosticoPartido
-												.getPosicionPartido());
-								// Se busca qué equipo es el local del partido
-								// actual
-								pronosticoPartido.setLocal(partido
-										.getEquipoLocal());
-
-								// Se busca qué equipo es el visitante del
-								// partido
-								// actual
-								pronosticoPartido.setVisitante(partido
-										.getEquipoVisitante());
-								logger.info(pronosticoPartido.getLocal()
-										.getNombre()
-										+ " - "
-										+ pronosticoPartido.getVisitante()
-												.getNombre());
-
-								// Para cada equipo, se buscarán sus resultados
-								// relativos (pesos)
-								partido.getEquipoLocal().pesosRelativos(
-										temporada);
-								partido.getEquipoVisitante().pesosRelativos(
-										temporada);
-
-								// Se multiplicará cada predicción por los
-								// pesos.
-								reestimacionPronostico(pronosticoPartido,
-										partido.getEquipoLocal(),
-										partido.getEquipoVisitante());
-								if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
-										.getPorcentajeX()) {
-									if (pronosticoPartido.getPorcentaje1() > pronosticoPartido
-											.getPorcentaje2()) {
-										System.out.println("Predicción: 1");
-									} else {
-										System.out.println("Predicción: 2");
-									}
-								} else {
-									System.out.println("Predicción: X");
-								}
-								System.out
-										.println("----------------------------------");
-							}
-						}
-					}
-				}
-			}
+	@Override
+	public void calcularPronosticoPrimera() throws Exception {
+		List<PronosticoPartido> lista = getEstimacionJornadaPrimera()
+				.getPronosticoPartidos();
+		for (PronosticoPartido pronostico : lista) {
+			pronostico.setPorcentaje1(generateNormalizedRandomNumber());
+			pronostico.setPorcentajeX(generateNormalizedRandomNumber());
+			pronostico.setPorcentaje2(generateNormalizedRandomNumber());
 		}
-		return pronosticos;
 	}
 
-	/**
-	 * 
-	 * FIXME: esto es una falacia: que un equipo haya empatado antes, no quiere
-	 * decir que haya más probabilidad de que empate ahora.
-	 * 
-	 * Se pondera el pronóstico en función de las estadísticas. Se cruzan las
-	 * valores, de manera, que si:
-	 * 
-	 * El local (Barcelona) tenía 70% de pronóstico, pero había ganado todos los
-	 * anteriores, entonces lo multiplico por pesoGanadosL (será 1.0), y al
-	 * visitante se le multiplicará por pesoPerdidosL (será 0.0). Con el
-	 * visitante, al revés. Y los empates, directamente multiplicados (si alguno
-	 * nunca ha empatado, no habrá empate (FIXME: falacia)).
-	 * 
-	 * @param pronostico
-	 * @param pesoGanadosL
-	 * @param pesoEmpatadosL
-	 * @param pesoPerdidosL
-	 * @param pesoGanadosV
-	 * @param pesoEmpatadosV
-	 * @param pesoPerdidosV
-	 */
-	private static void reestimacionPronostico(PronosticoPartido pronostico,
-			final Equipo local, final Equipo visitante) {
-		pronostico.setPorcentaje1(pronostico.getPorcentaje1()
-				* local.getPesoGanados() * visitante.getPesoPerdidos());
-		pronostico.setPorcentajeX(pronostico.getPorcentajeX()
-				* local.getPesoEmpatados() * visitante.getPesoEmpatados());
-		pronostico.setPorcentaje2(pronostico.getPorcentaje2()
-				* local.getPesoPerdidos() * visitante.getPesoGanados());
+	@Override
+	public void calcularPronosticoSegunda() throws Exception {
+		List<PronosticoPartido> lista = getEstimacionJornadaSegunda()
+				.getPronosticoPartidos();
+		for (PronosticoPartido pronostico : lista) {
+			pronostico.setPorcentaje1(generateNormalizedRandomNumber());
+			pronostico.setPorcentajeX(generateNormalizedRandomNumber());
+			pronostico.setPorcentaje2(generateNormalizedRandomNumber());
+		}
 	}
 
+	private static Float generateNormalizedRandomNumber() {
+		return generateRandomNumber(0, 1);
+	}
+
+	private static Float generateRandomNumber(final Integer minX,
+			final Integer maxX) {
+		Random rand = new Random();
+		return rand.nextFloat() * (maxX - minX) + minX;
+	}
 }

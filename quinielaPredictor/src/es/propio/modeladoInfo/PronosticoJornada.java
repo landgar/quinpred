@@ -30,18 +30,61 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 	 */
 	private IdAlgoritmoEnum idAlgoritmoPronosticador;
 
+	/**
+	 * Variable auxiliar para indicar el numero de aciertos de la jornada. Usar
+	 * el metodo obtenerNumAciertos().
+	 */
+	private Integer numeroAciertos;
+
 	public void pintarme() {
 		System.out.println("***** Pronostico Jornada: " + numeroJornada
 				+ " ******");
-
-		if (pronosticoPartidos != null && pronosticoPartidos.size() == 15) {
-			for (PronosticoPartido pronostico : pronosticoPartidos) {
-				pronostico.pintarme();
-			}
-		} else {
-			System.out
-					.println("ATENCION: PRONÓSTICO NO VÁLIDO. Debería tener exactamente 15 partidos !!!");
+		for (PronosticoPartido pronostico : pronosticoPartidos) {
+			pronostico.pintarme();
 		}
+	}
+
+	/**
+	 * Calcula el numero de aciertos de este pronostico de jornada. Obviamente,
+	 * necesito conocer el resultado que se ha dado en la realidad.
+	 * 
+	 * @param resultadoRealJornada
+	 *            Resultado real de la jornada, para poder comparar con este
+	 *            pronostico.
+	 */
+	public void obtenerNumAciertos(PronosticoJornada resultadoRealJornada) {
+
+		Integer num = null;
+
+		if (resultadoRealJornada.getNumeroJornada().equals(numeroJornada)) {
+
+			// misma jornada: comparo cada partido
+			for (PronosticoPartido realp : resultadoRealJornada
+					.getPronosticoPartidos()) {
+
+				for (PronosticoPartido pronosticop : pronosticoPartidos) {
+
+					// mismo partido (posicion)
+					if (realp.getPosicionPartido().equals(
+							pronosticop.getPosicionPartido())) {
+
+						if (num == null) {
+							num = Integer.valueOf(0);
+						}
+
+						if (!realp.getResultadoMasProbable().equals(
+								ValorResultado.INVALIDO)
+								&& realp.getResultadoMasProbable().equals(
+										pronosticop.getResultadoMasProbable())) {
+							num++;
+						}
+
+					}
+				}
+			}
+		}
+
+		numeroAciertos = num;
 
 	}
 
@@ -54,6 +97,14 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 			IdAlgoritmoEnum idAlgoritmoPronosticador) {
 		super();
 		pronosticoPartidos = new ArrayList<PronosticoPartido>();
+		this.numeroJornada = numeroJornada;
+		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
+	}
+
+	public PronosticoJornada(List<PronosticoPartido> pronosticoPartidos,
+			Integer numeroJornada, IdAlgoritmoEnum idAlgoritmoPronosticador) {
+		super();
+		this.pronosticoPartidos = pronosticoPartidos;
 		this.numeroJornada = numeroJornada;
 		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
 	}
@@ -106,6 +157,14 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 			comparison = numeroJornada.compareTo(o.getNumeroJornada());
 		}
 		return comparison;
+	}
+
+	public Integer getNumeroAciertos() {
+		return numeroAciertos;
+	}
+
+	public void setNumeroAciertos(Integer numeroAciertos) {
+		this.numeroAciertos = numeroAciertos;
 	}
 
 }

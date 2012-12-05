@@ -29,8 +29,6 @@ public class HandlerXMLPronosticosTest {
 				+ lector.getPronostico().getNumeroJornada());
 		for (PronosticoPartido pronostico : lector.getPronostico()
 				.getPronosticoPartidos()) {
-			System.out.println("Posición del partido: "
-					+ pronostico.getPosicionPartido());
 			System.out.println(pronostico.getPorcentaje1() + "\t"
 					+ pronostico.getPorcentajeX() + "\t"
 					+ +pronostico.getPorcentaje2() + "\t"
