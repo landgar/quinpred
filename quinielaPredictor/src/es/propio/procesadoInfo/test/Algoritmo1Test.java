@@ -33,8 +33,10 @@ public class Algoritmo1Test {
 	}
 
 	private static void calcula(Algoritmo1 alg) throws Exception {
+		//Carga de boleto
 		CargadorWebNombresProximaQuiniela cargadorBoleto = new CargadorWebNombresProximaQuiniela();
 		cargadorBoleto.cargar("24");
+		//Traspaso de partidos a listas para su predicción 
 		List<PronosticoPartido> listaPartidosPrimera = new ArrayList<PronosticoPartido>();
 		List<PronosticoPartido> listaPartidosSegunda = new ArrayList<PronosticoPartido>();
 		PronosticoPartido pronostico;
@@ -53,6 +55,7 @@ public class Algoritmo1Test {
 				listaPartidosSegunda.add(pronostico);
 			}
 		}
+		//Predicción de resultados
 		PronosticoJornada pronosticoPrimera = new PronosticoJornada(
 				listaPartidosPrimera, 1, IdAlgoritmoEnum.ALGORITMO1);
 		alg.setEstimacionJornadaPrimera(pronosticoPrimera);
