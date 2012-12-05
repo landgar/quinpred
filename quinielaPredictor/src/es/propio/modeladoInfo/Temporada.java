@@ -15,10 +15,9 @@ import java.util.List;
  */
 public class Temporada {
 
-
 	public static Integer NUM_JORNADAS_PRIMERA = 20;
 	public static Integer NUM_JORNADAS_SEGUNDA = 21;
-	
+
 	/**
 	 * @uml.property name="jornadas"
 	 */
@@ -33,6 +32,82 @@ public class Temporada {
 		super();
 		this.jornadas = jornadas;
 		this.division = division;
+	}
+
+	public Integer getNumeroGanadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
+				ValorResultadoEquipo.GANADO);
+	}
+
+	public Integer getNumeroPerdidosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
+				ValorResultadoEquipo.PERDIDO);
+	}
+
+	public Integer getNumeroEmpatadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
+				ValorResultadoEquipo.EMPATADO);
+	}
+
+	private Integer getNumeroResultadosEquipoAnteriores(final Equipo equipo,
+			final Integer numeroJornada, ValorResultadoEquipo resultado) {
+		Integer salida = 0;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 1; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			if (jornada.getNumeroJornada() < numeroJornada) {
+				Partido partido = jornada.getPartidoDondeJuega(equipo);
+				ValorResultadoEquipo resultadoEquipo = partido
+						.getResultadoEquipo(equipo).getValor();
+				if (partido.getSeHaJugado()
+						&& resultadoEquipo.equals(resultado)) {
+					salida++;
+				}
+			}
+		}
+		return salida;
+	}
+
+	public Integer getNumeroUnosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosAnteriores(equipo, numeroJornada,
+				ValorResultado.UNO);
+	}
+
+	public Integer getNumeroDosesAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosAnteriores(equipo, numeroJornada,
+				ValorResultado.DOS);
+	}
+
+	public Integer getNumeroEmpatesAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosAnteriores(equipo, numeroJornada,
+				ValorResultado.EQUIS);
+	}
+
+	private Integer getNumeroResultadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada, ValorResultado resultado) {
+		Integer salida = 0;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 1; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			if (jornada.getNumeroJornada() < numeroJornada) {
+				Partido partido = jornada.getPartidoDondeJuega(equipo);
+				ValorResultado resultadoPartido = partido
+						.getResultadoQuiniela().getValor();
+				if (partido.getSeHaJugado()
+						&& resultadoPartido.equals(resultado)) {
+					salida++;
+				}
+			}
+		}
+		return salida;
 	}
 
 	/**

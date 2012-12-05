@@ -1,7 +1,9 @@
 package es.propio.modeladoInfo;
 
-public class Partido {
+import org.apache.log4j.Logger;
 
+public class Partido {
+	static final Logger logger = Logger.getLogger(Partido.class);
 	private Boolean seHaJugado;
 
 	public Partido(final Boolean seHaJugado) {
@@ -27,6 +29,40 @@ public class Partido {
 	 * @uml.property name="golesVisitante"
 	 */
 	private Integer golesVisitante;
+
+	public ResultadoEquipo getResultadoEquipo(final Equipo equipo) {
+		ResultadoEquipo resultado = new ResultadoEquipo(
+				ValorResultadoEquipo.INVALIDO);
+		String nombreEquipo = equipo.getNombre();
+		if (equipo != null && nombreEquipo != null) {
+			if (nombreEquipo.equals(equipoLocal.getNombre())) {
+				if (getResultadoQuiniela().getValor()
+						.equals(ValorResultado.UNO)) {
+					resultado.setValor(ValorResultadoEquipo.GANADO);
+				} else if (getResultadoQuiniela().getValor().equals(
+						ValorResultado.DOS)) {
+					resultado.setValor(ValorResultadoEquipo.PERDIDO);
+				} else {
+					resultado.setValor(ValorResultadoEquipo.EMPATADO);
+				}
+			} else if (nombreEquipo.equals(equipoVisitante.getNombre())) {
+				if (getResultadoQuiniela().getValor()
+						.equals(ValorResultado.UNO)) {
+					resultado.setValor(ValorResultadoEquipo.PERDIDO);
+				} else if (getResultadoQuiniela().getValor().equals(
+						ValorResultado.DOS)) {
+					resultado.setValor(ValorResultadoEquipo.GANADO);
+				} else {
+					resultado.setValor(ValorResultadoEquipo.EMPATADO);
+				}
+			} else {
+				logger.error("El equipo del que obtener resultados del partido no es correcto");
+			}
+		} else {
+			logger.error("El equipo del que obtener resultados del partido está vacío");
+		}
+		return resultado;
+	}
 
 	/**
 	 * @return the resultadoQuiniela

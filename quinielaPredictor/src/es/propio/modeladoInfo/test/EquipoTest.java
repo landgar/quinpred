@@ -19,7 +19,7 @@ public class EquipoTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		System.out.println("TEST EquipoTest");
 		List<String> posiblesNombres = new ArrayList<>();
 		posiblesNombres.add("Barcelona-B");
 		posiblesNombres.add("Osasuna");
