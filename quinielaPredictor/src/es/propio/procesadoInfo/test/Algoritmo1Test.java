@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
+import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
@@ -38,8 +39,9 @@ public class Algoritmo1Test {
 		List<PronosticoPartido> listaPartidosSegunda = new ArrayList<PronosticoPartido>();
 		PronosticoPartido pronostico;
 		Partido partido;
-		for (Map.Entry<Integer, Partido> entry : cargadorBoleto.getBoleto()
-				.getPartidos().entrySet()) {
+		Boleto boleto = cargadorBoleto.getBoleto();
+		for (Map.Entry<Integer, Partido> entry : boleto.getPartidos()
+				.entrySet()) {
 			partido = entry.getValue();
 			pronostico = new PronosticoPartido();
 			pronostico.setPosicionPartido(entry.getKey());

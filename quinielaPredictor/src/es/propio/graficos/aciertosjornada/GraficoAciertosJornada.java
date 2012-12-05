@@ -47,7 +47,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	public GraficoAciertosJornada(String tituloVentana, String tituloGraficos,
 			EntradaAciertosJornadaDto inDto) {
 		super(tituloVentana);
-		this.inDto = inDto;
+		GraficoAciertosJornada.inDto = inDto;
 		JPanel chartPanel = createDemoPanel(tituloGraficos);
 		chartPanel.setPreferredSize(DIMENSION_GRAFICO);
 		setContentPane(chartPanel);
@@ -144,7 +144,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	}
 
 	public void setInDto(EntradaAciertosJornadaDto inDto) {
-		this.inDto = inDto;
+		GraficoAciertosJornada.inDto = inDto;
 	}
 
 }
