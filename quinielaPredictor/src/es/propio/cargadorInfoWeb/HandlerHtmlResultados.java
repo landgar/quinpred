@@ -132,7 +132,7 @@ public class HandlerHtmlResultados {
 									.substring(cadenaAParsear.indexOf(cadena2)
 											+ cadena2.length());
 							p = Pattern
-									.compile("([>]+)([/a-zA-Z0-9-]+)([</a>]+)([</div>]+)([</span>]+)");
+									.compile("([>]+)([/a-zA-Z0-9-]+)([</a>]*)([</div>]*)([</span>]*)");
 							m = p.matcher(cadenaAParsear);
 							if (m.find()) {
 								// <span>D20</span> </p>
@@ -142,7 +142,7 @@ public class HandlerHtmlResultados {
 									// <div><a
 									// href="/deportes/futbol/partido/Real-Zaragoza-Valladolid-0841_00_01_0022_0021">0-1</a></div>
 									p = Pattern
-											.compile("([>]+)([/a-zA-Z0-9-]+)([</a>]+)([</div>]+)([</span>]+)");
+											.compile("([>]+)([/a-zA-Z0-9-]+)([</a>]*)([</div>]*)([</span>]*)");
 									m = p.matcher(cadenaAParsear);
 									resultados = m.group(2);
 								}
@@ -154,7 +154,7 @@ public class HandlerHtmlResultados {
 						p = Pattern.compile("^([0-9]+)-([0-9]+)</span>");
 						m = p.matcher(cadenaAParsear);
 						p2 = Pattern
-								.compile("^([0-9]+)-([0-9]+)([</a>]+)</div>");
+								.compile("^([0-9]+)-([0-9]+)([</a>]*)</div>");
 						m2 = p2.matcher(cadenaAParsear);
 						if (m.find()) {
 							// Partido todavía no jugado

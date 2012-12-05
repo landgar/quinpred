@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import es.propio.modeladoInfo.Boleto;
-import es.propio.modeladoInfo.PronosticoJornada;
 
 /**
  * @author i3casa
