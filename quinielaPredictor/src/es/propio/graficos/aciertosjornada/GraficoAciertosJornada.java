@@ -2,6 +2,7 @@ package es.propio.graficos.aciertosjornada;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -132,7 +133,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 					}
 
 					rellenarLinea(dataset, idAlgoritmo.toString(),
-							mapaxyAlgoritmo);
+							ordenarMapa(mapaxyAlgoritmo));
 				}
 			}
 		}
@@ -140,10 +141,28 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 		return dataset;
 	}
 
+	public static HashMap<Integer, Double> ordenarMapa(
+			HashMap<String, Double> in) {
+		HashMap<Integer, Double> out = new HashMap<Integer, Double>();
+
+		Set<String> keysStr = in.keySet();
+		List<Integer> keys = new ArrayList<Integer>();
+		for (String str : keysStr) {
+			keys.add(Integer.valueOf(str));
+		}
+		Collections.sort(keys);
+
+		for (Integer key : keys) {
+			out.put(key, in.get(String.valueOf(key)));
+		}
+
+		return out;
+	}
+
 	public static void rellenarLinea(DefaultCategoryDataset dataset,
-			String nombreLinea, HashMap<String, Double> mapaxy) {
-		Set<String> keys = mapaxy.keySet();
-		for (String key : keys) {
+			String nombreLinea, HashMap<Integer, Double> mapaxy) {
+		Set<Integer> keys = mapaxy.keySet();
+		for (Integer key : keys) {
 			dataset.addValue(mapaxy.get(key), nombreLinea, key);
 		}
 	}
