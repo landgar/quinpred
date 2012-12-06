@@ -39,7 +39,7 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 		}
 	}
 
-	private static Float generateNormalizedRandomNumber() {
+	public static Float generateNormalizedRandomNumber() {
 		return generateRandomNumber(0, 1);
 	}
 
