@@ -27,9 +27,9 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 		List<PronosticoPartido> lista = getEstimacionJornadaPrimera()
 				.getPronosticoPartidos();
 		for (PronosticoPartido pronostico : lista) {
-			pronostico.setPorcentaje1(generateNormalizedRandomNumber());
-			pronostico.setPorcentajeX(generateNormalizedRandomNumber());
-			pronostico.setPorcentaje2(generateNormalizedRandomNumber());
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
+			pronostico.setPorcentaje2(0F);
 		}
 	}
 
@@ -38,15 +38,15 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 		List<PronosticoPartido> lista = getEstimacionJornadaSegunda()
 				.getPronosticoPartidos();
 		for (PronosticoPartido pronostico : lista) {
-			pronostico.setPorcentaje1(generateNormalizedRandomNumber());
-			pronostico.setPorcentajeX(generateNormalizedRandomNumber());
-			pronostico.setPorcentaje2(generateNormalizedRandomNumber());
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
+			pronostico.setPorcentaje2(0F);
 		}
 	}
 
-	public static Float generateNormalizedRandomNumber() {
-		Random rand = new Random();
-		return rand.nextFloat();
-	}
+	// public static Float generateNormalizedRandomNumber() {
+	// Random rand = new Random();
+	// return rand.nextFloat();
+	// }
 
 }

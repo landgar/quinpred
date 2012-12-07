@@ -62,5 +62,7 @@ public class TemporadaTest {
 				+ temporada.getGolesFueraEnContra(equipo));
 		System.out.println("Goles totales en contra: "
 				+ temporada.getGolesTotalesEnContra(equipo));
+		System.out.println("Jornada actual: # partidos: "
+				+ temporada.getJornadaActual().getPartidos().size());
 	}
 }

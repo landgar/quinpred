@@ -100,7 +100,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	public static CategoryDataset createDataset() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		// ESTO es PESADO, pero facilita el calculo posterior
+		// ESTO es PESADO, pero facilita el cálculo posterior
 		inDto.marcarAciertos();
 
 		Map<IdAlgoritmoEnum, List<PronosticoJornada>> mapa = inDto
@@ -118,7 +118,6 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 
 					List<PronosticoJornada> pronosticosJornadasDeUnAlgoritmo = mapa
 							.get(idAlgoritmo);
-//					Collections.sort(pronosticosJornadasDeUnAlgoritmo);
 
 					HashMap<String, Double> mapaxyAlgoritmo = new HashMap<String, Double>();
 					for (PronosticoJornada pjornadaEjex : pronosticosJornadasDeUnAlgoritmo) {

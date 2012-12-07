@@ -3,17 +3,19 @@ package es.propio.presentacionCalculo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.jfree.ui.RefineryUtilities;
 
+import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
-import es.propio.graficos.aciertosjornada.test.GraficoAciertosJornadaTest;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.ValorResultado;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -24,7 +26,7 @@ import es.propio.procesadoInfo.IdAlgoritmoEnum;
  * 
  */
 public class AnalizadorDelPasado {
-
+	static final Logger logger = Logger.getLogger(AnalizadorDelPasado.class);
 	static List<AbstractAlgoritmo> algoritmos;
 
 	public AnalizadorDelPasado() {
@@ -59,8 +61,9 @@ public class AnalizadorDelPasado {
 			pronosticosJornadas.addAll(pronosticarJornada(jornada, division));
 		}
 
+		List<PronosticoJornada> resultadosReales = obtenerResultadosReales(temporada);
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
-				pronosticosJornadas, obtenerResultadosReales(division));
+				pronosticosJornadas, resultadosReales);
 		graficoNumAciertosVsJornada(inDto, division);
 	}
 
@@ -105,12 +108,55 @@ public class AnalizadorDelPasado {
 	}
 
 	private static List<PronosticoJornada> obtenerResultadosReales(
-			Division division) {
+			final Temporada temporada) throws Exception {
 
-		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
-		List<PronosticoJornada> resultadosReales = GraficoAciertosJornadaTest
-				.generarPronosticosJornadaAlgoritmoDivisionMock(
-						IdAlgoritmoEnum.REAL, division);
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		cargador.cargar();
+		List<Jornada> jornadasPasadas = new ArrayList<Jornada>();
+		if (temporada.getDivision().equals(Division.PRIMERA)) {
+			jornadasPasadas = cargador.getTemporadaPrimera()
+					.getJornadasPasadas();
+		} else if (temporada.getDivision().equals(Division.SEGUNDA)) {
+			jornadasPasadas = cargador.getTemporadaSegunda()
+					.getJornadasPasadas();
+		}
+
+		List<PronosticoJornada> resultadosReales = new ArrayList<PronosticoJornada>();
+		List<PronosticoPartido> pronosticosPartidosReales;
+		PronosticoJornada pronosticoJornada;
+		PronosticoPartido pronosticoPartido;
+		for (Jornada jornada : jornadasPasadas) {
+			pronosticoJornada = new PronosticoJornada(
+					jornada.getNumeroJornada(), IdAlgoritmoEnum.REAL);
+			pronosticosPartidosReales = new ArrayList<PronosticoPartido>();
+			for (Partido partido : jornada.getPartidos()) {
+				pronosticoPartido = new PronosticoPartido();
+				pronosticoPartido.setPartido(partido);
+				ValorResultado resultadoReal = partido.getResultadoQuiniela()
+						.getValor();
+				pronosticoPartido.setPorcentaje1(0F);
+				pronosticoPartido.setPorcentajeX(0F);
+				pronosticoPartido.setPorcentaje2(0F);
+				if (resultadoReal.equals(ValorResultado.UNO)) {
+					pronosticoPartido.setPorcentaje1(1F);
+				} else if (resultadoReal.equals(ValorResultado.EQUIS)) {
+					pronosticoPartido.setPorcentajeX(1F);
+				} else if (resultadoReal.equals(ValorResultado.DOS)) {
+					pronosticoPartido.setPorcentaje2(1F);
+				} else {
+					logger.error("El resultado real del partido siguiente no es correcto: "
+							+ partido.getEquipoLocal().getNombre()
+							+ " - "
+							+ partido.getEquipoVisitante().getNombre());
+				}
+				pronosticosPartidosReales.add(pronosticoPartido);
+			}
+			pronosticoJornada.setPronosticoPartidos(pronosticosPartidosReales);
+			resultadosReales.add(pronosticoJornada);
+		}
+		// List<PronosticoJornada> resultadosReales = GraficoAciertosJornadaTest
+		// .generarPronosticosJornadaAlgoritmoDivisionMock(
+		// IdAlgoritmoEnum.REAL, temporada.getDivision());
 		return resultadosReales;
 
 	}

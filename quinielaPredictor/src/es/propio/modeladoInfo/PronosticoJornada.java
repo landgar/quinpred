@@ -64,15 +64,20 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 
 				for (PronosticoPartido pronosticop : pronosticoPartidos) {
 
-					boolean mismoLocal = realp.getPartido().getEquipoLocal()
-							.equals(pronosticop.getPartido().getEquipoLocal());
+					boolean mismoLocal = realp
+							.getPartido()
+							.getEquipoLocal()
+							.getNombre()
+							.equals(pronosticop.getPartido().getEquipoLocal()
+									.getNombre());
 					boolean mismoVisitante = realp
 							.getPartido()
 							.getEquipoVisitante()
+							.getNombre()
 							.equals(pronosticop.getPartido()
-									.getEquipoVisitante());
+									.getEquipoVisitante().getNombre());
 
-					// mismo partido (posicion)
+					// mismo partido
 					if (mismoLocal && mismoVisitante) {
 
 						if (num == null) {
@@ -90,8 +95,11 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 				}
 			}
 		}
-
-		numeroAciertos = num;
+if(num!=null){
+	System.out.println("Jornada "+numeroJornada+" *************-->número de aciertos: "+num);
+	numeroAciertos = num;
+}
+		
 
 	}
 

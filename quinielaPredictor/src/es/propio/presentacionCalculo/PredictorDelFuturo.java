@@ -33,7 +33,7 @@ public class PredictorDelFuturo {
 			Temporada temporadaSegunda) throws Exception {
 
 		System.out
-				.println("Pintando quinielas previstas para Bolet actual, según varios algoritmos y webs");
+				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
 
 		// ALGORITMOS factory
 		if (algo1 == null) {
