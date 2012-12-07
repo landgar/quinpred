@@ -12,6 +12,7 @@ import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
+import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 public class GraficoAciertosJornadaTest {
@@ -101,15 +102,14 @@ public class GraficoAciertosJornadaTest {
 		PronosticoPartido pp = new PronosticoPartido();
 		pp.setPosicionPartido(numPartidoPosicion);
 
-		Random random = new Random();
-		pp.setPorcentaje1(random.nextFloat());
-		pp.setPorcentaje12(random.nextFloat());
-		pp.setPorcentaje1X(random.nextFloat());
-		pp.setPorcentaje1X2(random.nextFloat());
-		pp.setPorcentaje2(random.nextFloat());
-		pp.setPorcentajeX(random.nextFloat());
-		pp.setPorcentajeX2(random.nextFloat());
-		pp.setPorcentaje12(random.nextFloat());
+		pp.setPorcentaje1(Algoritmo1.generateNormalizedRandomNumber());
+		pp.setPorcentaje12(0F);
+		pp.setPorcentaje1X(0F);
+		pp.setPorcentaje1X2(0F);
+		pp.setPorcentaje2(Algoritmo1.generateNormalizedRandomNumber());
+		pp.setPorcentajeX(Algoritmo1.generateNormalizedRandomNumber());
+		pp.setPorcentajeX2(0F);
+		pp.setPorcentaje12(0F);
 
 		return pp;
 	}

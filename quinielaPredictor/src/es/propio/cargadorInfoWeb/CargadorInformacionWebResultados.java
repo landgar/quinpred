@@ -8,8 +8,8 @@ import es.propio.modeladoInfo.Temporada;
 
 public class CargadorInformacionWebResultados {
 
-	private Temporada temporadaPrimeraHastaHoy;
-	private Temporada temporadaSegundaHastaHoy;
+	private Temporada temporadaPrimera;
+	private Temporada temporadaSegunda;
 
 	public CargadorInformacionWebResultados() {
 	}
@@ -38,39 +38,39 @@ public class CargadorInformacionWebResultados {
 
 		// Inicialización
 
-		temporadaPrimeraHastaHoy = HandlerHtmlResultados.extraerDatos(webpage);
-		temporadaSegundaHastaHoy = HandlerHtmlResultados.extraerDatos(webpage2);
+		temporadaPrimera = HandlerHtmlResultados.extraerDatos(webpage);
+		temporadaSegunda = HandlerHtmlResultados.extraerDatos(webpage2);
 
 	}
 
 	/**
 	 * @return the temporadaPrimeraHastaHoy
 	 */
-	public Temporada getTemporadaPrimeraHastaHoy() {
-		return temporadaPrimeraHastaHoy;
+	public Temporada getTemporadaPrimera() {
+		return temporadaPrimera;
 	}
 
 	/**
 	 * @param temporadaPrimeraHastaHoy
 	 *            the temporadaPrimeraHastaHoy to set
 	 */
-	public void setTemporadaPrimeraHastaHoy(Temporada temporadaPrimeraHastaHoy) {
-		this.temporadaPrimeraHastaHoy = temporadaPrimeraHastaHoy;
+	public void setTemporadaPrimera(Temporada temporadaPrimeraHastaHoy) {
+		this.temporadaPrimera = temporadaPrimeraHastaHoy;
 	}
 
 	/**
 	 * @return the temporadaSegundaHastaHoy
 	 */
-	public Temporada getTemporadaSegundaHastaHoy() {
-		return temporadaSegundaHastaHoy;
+	public Temporada getTemporadaSegunda() {
+		return temporadaSegunda;
 	}
 
 	/**
 	 * @param temporadaSegundaHastaHoy
 	 *            the temporadaSegundaHastaHoy to set
 	 */
-	public void setTemporadaSegundaHastaHoy(Temporada temporadaSegundaHastaHoy) {
-		this.temporadaSegundaHastaHoy = temporadaSegundaHastaHoy;
+	public void setTemporadaSegunda(Temporada temporadaSegundaHastaHoy) {
+		this.temporadaSegunda = temporadaSegundaHastaHoy;
 	}
 
 }

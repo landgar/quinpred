@@ -33,25 +33,16 @@ public class EntradaAciertosJornadaDto {
 	 * pronosticos que acertaron.
 	 */
 	public void marcarAciertos() {
-
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
-
 			Map<Jornada, List<PronosticoJornada>> mapaBulk = organizarPronosticosBulkPorJornada();
 			Map<Jornada, List<PronosticoJornada>> mapaReales = organizarResultadosRealesPorJornada();
-
 			// TODO comprobar
 			for (PronosticoJornada realj : resultadosReales) {
-
 				for (PronosticoJornada pronosticoj : pronosticosJornadaBulk) {
-
 					pronosticoj.obtenerNumAciertos(pronosticoj);
-
 				}
-
 			}
-
 		}
-
 	}
 
 	public Map<Jornada, List<PronosticoJornada>> organizarPronosticosBulkPorJornada() {

@@ -207,6 +207,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 	}
 
 	/**
+	 * Sólo sirve para el boleto.
 	 * @return the posicionPartido
 	 * @uml.property name="posicionPartido"
 	 */
@@ -215,6 +216,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 	}
 
 	/**
+	 * Sólo sirve para el boleto.
 	 * @param posicionPartido
 	 *            the posicionPartido to set
 	 * @uml.property name="posicionPartido"

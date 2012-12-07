@@ -10,6 +10,7 @@ import es.propio.cargadorInfoWeb.CargadorWebyXMLPronosticoQuinielista;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
+import es.propio.modeladoInfo.Temporada;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -28,7 +29,8 @@ public class PredictorDelFuturo {
 	 * @return Numero de boleto actua (segun la web quinielista)
 	 * @throws Exception
 	 */
-	public static Integer analizarJornadaActual() throws Exception {
+	public static void analizarJornadaActual(Temporada temporadaPrimera,
+			Temporada temporadaSegunda) throws Exception {
 
 		System.out
 				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
@@ -38,14 +40,14 @@ public class PredictorDelFuturo {
 			algo1 = new Algoritmo1();
 		}
 
-		// WEB QUINIELISTA (aprovecho para sacar el numero de boleto actual)
-		Integer numBoletoActual = mostrarPrediccionesQuinielistaWeb();
+		// WEB QUINIELISTA
+		mostrarPrediccionesQuinielistaWeb();
 
 		// NUESTRAS PREDICCIONES
-		predecirResultadosPrimera(numBoletoActual.toString());
-		predecirResultadosSegunda(numBoletoActual.toString());
-
-		return numBoletoActual;
+		predecirResultadosPrimera(temporadaPrimera.getNumeroJornadaActual()
+				.toString());
+		predecirResultadosSegunda(temporadaSegunda.getNumeroJornadaActual()
+				.toString());
 
 	}
 

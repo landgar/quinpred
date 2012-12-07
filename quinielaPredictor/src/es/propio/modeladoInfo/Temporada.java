@@ -3,9 +3,11 @@
  */
 package es.propio.modeladoInfo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Donde se almacenarán los resultados de toda la temporada hasta hoy.
@@ -15,8 +17,8 @@ import java.util.List;
  */
 public class Temporada {
 
-	public static Integer NUM_JORNADAS_PRIMERA = 20;
-	public static Integer NUM_JORNADAS_SEGUNDA = 21;
+	public static Integer NUM_EQUIPOS_PRIMERA = 20;
+	public static Integer NUM_EQUIPOS_SEGUNDA = 22;
 
 	/**
 	 * @uml.property name="jornadas"
@@ -57,10 +59,11 @@ public class Temporada {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		for (int i = 1; i < jornadas.size(); i++) {
+		Integer min = Math.min(jornadas.size(), numeroJornada);
+		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
-			if (jornada.getNumeroJornada() < numeroJornada) {
-				Partido partido = jornada.getPartidoDondeJuega(equipo);
+			Partido partido = jornada.getPartidoDondeJuega(equipo);
+			if (partido != null) {
 				ValorResultadoEquipo resultadoEquipo = partido
 						.getResultadoEquipo(equipo).getValor();
 				if (partido.getSeHaJugado()
@@ -78,16 +81,16 @@ public class Temporada {
 				ValorResultado.UNO);
 	}
 
-	public Integer getNumeroDosesAnteriores(final Equipo equipo,
-			final Integer numeroJornada) {
-		return getNumeroResultadosAnteriores(equipo, numeroJornada,
-				ValorResultado.DOS);
-	}
-
 	public Integer getNumeroEmpatesAnteriores(final Equipo equipo,
 			final Integer numeroJornada) {
 		return getNumeroResultadosAnteriores(equipo, numeroJornada,
 				ValorResultado.EQUIS);
+	}
+
+	public Integer getNumeroDosesAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosAnteriores(equipo, numeroJornada,
+				ValorResultado.DOS);
 	}
 
 	private Integer getNumeroResultadosAnteriores(final Equipo equipo,
@@ -95,10 +98,11 @@ public class Temporada {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		for (int i = 1; i < jornadas.size(); i++) {
+		Integer min = Math.min(jornadas.size(), numeroJornada);
+		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
-			if (jornada.getNumeroJornada() < numeroJornada) {
-				Partido partido = jornada.getPartidoDondeJuega(equipo);
+			Partido partido = jornada.getPartidoDondeJuega(equipo);
+			if (partido != null) {
 				ValorResultado resultadoPartido = partido
 						.getResultadoQuiniela().getValor();
 				if (partido.getSeHaJugado()
@@ -108,6 +112,118 @@ public class Temporada {
 			}
 		}
 		return salida;
+	}
+
+	public Integer getPuntosAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return 3 * getNumeroGanadosAnteriores(equipo, numeroJornada)
+				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
+	}
+
+	public List<Jornada> getJornadasPasadas() {
+		List<Jornada> todas = getJornadas();
+		List<Jornada> pasadas = new ArrayList<Jornada>();
+		Integer actual = getNumeroJornadaActual();
+		int indiceActual = actual - 1;
+		for (int i = 0; i < indiceActual; i++) {
+			pasadas.add(todas.get(i));
+		}
+		return pasadas;
+	}
+
+	public Jornada getJornadaActual() {
+		Jornada jornada = new Jornada();
+		List<Jornada> jornadas = getJornadas();
+		for (int i = 0; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			Set<Partido> partidos = jornada.getPartidos();
+			for (Partido partido : partidos) {
+				if (!partido.getSeHaJugado()) {
+					return jornada;
+				}
+			}
+		}
+		return jornada;
+	}
+
+	public Integer getNumeroJornadaActual() {
+		Integer numeroJornadaActual = -1;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 0; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			Set<Partido> partidos = jornada.getPartidos();
+			for (Partido partido : partidos) {
+				if (!partido.getSeHaJugado()) {
+					return jornada.getNumeroJornada();
+				}
+			}
+		}
+		return numeroJornadaActual;
+	}
+
+	public Integer getGolesTotalesAFavor(final Equipo equipo) {
+		return getGolesEnCasaAFavor(equipo) + getGolesFueraAFavor(equipo);
+	}
+
+	public Integer getGolesEnCasaAFavor(final Equipo equipo) {
+		return getGolesPorLugarAFavor(equipo, Boolean.TRUE);
+	}
+
+	public Integer getGolesFueraAFavor(final Equipo equipo) {
+		return getGolesPorLugarAFavor(equipo, Boolean.FALSE);
+	}
+
+	private Integer getGolesPorLugarAFavor(final Equipo equipo,
+			final Boolean enCasaOFuera) {
+		Integer golesTotales = 0;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 0; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			Partido partido = jornada.getPartidoDondeJuega(equipo);
+			if (partido.getSeHaJugado()) {
+				if (enCasaOFuera && partido.esLocal(equipo)) {
+					golesTotales += partido.getGolesLocal();
+				}
+				if (!enCasaOFuera && partido.esVisitante(equipo)) {
+					golesTotales += partido.getGolesVisitante();
+				}
+			}
+		}
+		return golesTotales;
+	}
+
+	public Integer getGolesTotalesEnContra(final Equipo equipo) {
+		return getGolesEnCasaEnContra(equipo) + getGolesFueraEnContra(equipo);
+	}
+
+	public Integer getGolesEnCasaEnContra(final Equipo equipo) {
+		return getGolesPorLugarEnContra(equipo, Boolean.TRUE);
+	}
+
+	public Integer getGolesFueraEnContra(final Equipo equipo) {
+		return getGolesPorLugarEnContra(equipo, Boolean.FALSE);
+	}
+
+	private Integer getGolesPorLugarEnContra(final Equipo equipo,
+			final Boolean enCasaOFuera) {
+		Integer golesTotales = 0;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 0; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			Partido partido = jornada.getPartidoDondeJuega(equipo);
+			if (partido.getSeHaJugado()) {
+				if (enCasaOFuera && partido.esLocal(equipo)) {
+					golesTotales += partido.getGolesVisitante();
+				}
+				if (!enCasaOFuera && partido.esVisitante(equipo)) {
+					golesTotales += partido.getGolesLocal();
+				}
+			}
+		}
+		return golesTotales;
 	}
 
 	/**

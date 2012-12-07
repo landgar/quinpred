@@ -25,8 +25,8 @@ public class CargadorInformacionWebResultadosTest {
 
 	private static void pintar(final CargadorInformacionWebResultados cargador) {
 		System.out.println("TEST CargadorInformacionWebTest");
-		pintarTemporada(cargador.getTemporadaPrimeraHastaHoy());
-		pintarTemporada(cargador.getTemporadaSegundaHastaHoy());
+		pintarTemporada(cargador.getTemporadaPrimera());
+		pintarTemporada(cargador.getTemporadaSegunda());
 	}
 
 	private static void pintarTemporada(final Temporada temporada) {

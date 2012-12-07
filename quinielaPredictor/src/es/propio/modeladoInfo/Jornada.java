@@ -15,6 +15,8 @@ public class Jornada {
 		this.partidos = partidos;
 		this.numeroJornada = numeroJornada;
 	}
+	
+	
 
 	/**
 	 * @uml.property name="fecha"
@@ -127,6 +129,15 @@ public class Jornada {
 					+ " con número de jornada: " + this.getNumeroJornada());
 		}
 		return partido;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "NUmero="+numeroJornada;
 	}
 
 }

@@ -87,6 +87,22 @@ public class Partido {
 		return resultado;
 	}
 
+	public Integer goles(final Equipo equipo) {
+		Integer goles = -1;
+		if (getSeHaJugado()) {
+			if (equipo.getNombre().equals(equipoLocal.getNombre())) {
+				goles = golesLocal;
+			} else if (equipo.getNombre().equals(equipoVisitante.getNombre())) {
+				goles = golesVisitante;
+			} else {
+				logger.error("Se están intentando obtener los goles de un quipo no presente en este partido");
+			}
+		} else {
+			logger.error("Se están intentando obtener los goles de un partido no jugado");
+		}
+		return goles;
+	}
+
 	/**
 	 * @return the equipoLocal
 	 * @uml.property name="equipoLocal"

@@ -17,6 +17,11 @@ import es.propio.modeladoInfo.PronosticoPartido;
 public class Algoritmo1 extends AbstractAlgoritmo {
 	static final Logger logger = Logger.getLogger(Algoritmo1.class);
 
+	public Algoritmo1() {
+		super();
+		setId(IdAlgoritmoEnum.ALGORITMO1);
+	}
+
 	@Override
 	public void calcularPronosticoPrimera() throws Exception {
 		List<PronosticoPartido> lista = getEstimacionJornadaPrimera()
@@ -40,12 +45,8 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 	}
 
 	public static Float generateNormalizedRandomNumber() {
-		return generateRandomNumber(0, 1);
+		Random rand = new Random();
+		return rand.nextFloat();
 	}
 
-	private static Float generateRandomNumber(final Integer minX,
-			final Integer maxX) {
-		Random rand = new Random();
-		return rand.nextFloat() * (maxX - minX) + minX;
-	}
 }

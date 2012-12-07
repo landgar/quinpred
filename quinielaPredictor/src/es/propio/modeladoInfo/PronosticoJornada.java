@@ -64,9 +64,16 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 
 				for (PronosticoPartido pronosticop : pronosticoPartidos) {
 
+					boolean mismoLocal = realp.getPartido().getEquipoLocal()
+							.equals(pronosticop.getPartido().getEquipoLocal());
+					boolean mismoVisitante = realp
+							.getPartido()
+							.getEquipoVisitante()
+							.equals(pronosticop.getPartido()
+									.getEquipoVisitante());
+
 					// mismo partido (posicion)
-					if (realp.getPosicionPartido().equals(
-							pronosticop.getPosicionPartido())) {
+					if (mismoLocal && mismoVisitante) {
 
 						if (num == null) {
 							num = Integer.valueOf(0);

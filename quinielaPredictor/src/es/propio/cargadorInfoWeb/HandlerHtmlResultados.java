@@ -39,9 +39,9 @@ public class HandlerHtmlResultados {
 		List<Jornada> jornadas;
 
 		if (temporada.getDivision().equals(Division.PRIMERA)) {
-			totalJornadas = Temporada.NUM_JORNADAS_PRIMERA * 2;
+			totalJornadas = (Temporada.NUM_EQUIPOS_PRIMERA - 1) * 2;
 		} else if (temporada.getDivision().equals(Division.SEGUNDA)) {
-			totalJornadas = Temporada.NUM_JORNADAS_SEGUNDA * 2;
+			totalJornadas = (Temporada.NUM_EQUIPOS_SEGUNDA - 1) * 2;
 		} else {
 			logger.error("No se pueden crear jornadas para la división: "
 					+ temporada.getDivision().getCodigo());

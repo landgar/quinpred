@@ -24,17 +24,16 @@ public abstract class AbstractAlgoritmo {
 
 	public static Integer calcularNumerosJornadas(Division division) {
 		Integer numJornadas = 0;
-		numJornadas = division.equals(Division.PRIMERA) ? Temporada.NUM_JORNADAS_PRIMERA
-				: Temporada.NUM_JORNADAS_SEGUNDA;
+		numJornadas = division.equals(Division.PRIMERA) ? ((Temporada.NUM_EQUIPOS_PRIMERA-1)*2)
+				: ((Temporada.NUM_EQUIPOS_SEGUNDA-1)*2);
 		return numJornadas;
 	}
 
 	public static Integer calcularNumPartidosPorJornada(Division division) {
-		Integer numJornadas = 0;
-		// Es igual que el numero de jornadas
-		numJornadas = division.equals(Division.PRIMERA) ? Temporada.NUM_JORNADAS_PRIMERA
-				: Temporada.NUM_JORNADAS_SEGUNDA;
-		return numJornadas;
+		Integer numPartidos = 0;
+		numPartidos = division.equals(Division.PRIMERA) ? Temporada.NUM_EQUIPOS_PRIMERA / 2
+				: Temporada.NUM_EQUIPOS_SEGUNDA / 2;
+		return numPartidos;
 	}
 
 	public void pintame() {

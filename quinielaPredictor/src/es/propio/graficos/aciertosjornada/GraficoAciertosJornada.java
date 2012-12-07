@@ -118,7 +118,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 
 					List<PronosticoJornada> pronosticosJornadasDeUnAlgoritmo = mapa
 							.get(idAlgoritmo);
-					Collections.sort(pronosticosJornadasDeUnAlgoritmo);
+//					Collections.sort(pronosticosJornadasDeUnAlgoritmo);
 
 					HashMap<String, Double> mapaxyAlgoritmo = new HashMap<String, Double>();
 					for (PronosticoJornada pjornadaEjex : pronosticosJornadasDeUnAlgoritmo) {
