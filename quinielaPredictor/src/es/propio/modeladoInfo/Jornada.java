@@ -137,7 +137,7 @@ public class Jornada {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "NUmero="+numeroJornada;
+		return "Numero="+numeroJornada;
 	}
 
 }

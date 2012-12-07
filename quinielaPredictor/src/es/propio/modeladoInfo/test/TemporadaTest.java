@@ -3,6 +3,8 @@
  */
 package es.propio.modeladoInfo.test;
 
+import org.apache.log4j.BasicConfigurator;
+
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Equipo;
 import es.propio.modeladoInfo.Temporada;
@@ -17,6 +19,7 @@ public class TemporadaTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
+		BasicConfigurator.configure();
 		System.out.println("TEST TemporadaTest");
 		obtenerResultadosAnteriores();
 	}
@@ -24,8 +27,8 @@ public class TemporadaTest {
 	private static void obtenerResultadosAnteriores() throws Exception {
 		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
 		cargador.cargar();
-		Temporada temporada = cargador.getTemporadaSegunda();
-		Equipo equipo = new Equipo("Numancia");
+		Temporada temporada = cargador.getTemporadaPrimera();
+		Equipo equipo = new Equipo("Valladolid");
 		Integer numeroJornada = 20;
 		System.out.println("# ganados: "
 				+ temporada.getNumeroGanadosAnteriores(equipo, numeroJornada));

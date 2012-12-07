@@ -154,7 +154,7 @@ public class Temporada {
 			jornada = jornadas.get(i);
 			Set<Partido> partidos = jornada.getPartidos();
 			for (Partido partido : partidos) {
-				if (!partido.getSeHaJugado()) {
+				if (partido != null && !partido.getSeHaJugado()) {
 					return jornada.getNumeroJornada();
 				}
 			}
@@ -182,7 +182,7 @@ public class Temporada {
 		for (int i = 0; i < jornadas.size(); i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
-			if (partido.getSeHaJugado()) {
+			if (partido != null && partido.getSeHaJugado()) {
 				if (enCasaOFuera && partido.esLocal(equipo)) {
 					golesTotales += partido.getGolesLocal();
 				}
@@ -214,7 +214,7 @@ public class Temporada {
 		for (int i = 0; i < jornadas.size(); i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
-			if (partido.getSeHaJugado()) {
+			if (partido != null && partido.getSeHaJugado()) {
 				if (enCasaOFuera && partido.esLocal(equipo)) {
 					golesTotales += partido.getGolesVisitante();
 				}

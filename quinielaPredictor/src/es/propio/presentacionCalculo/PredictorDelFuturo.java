@@ -33,7 +33,7 @@ public class PredictorDelFuturo {
 			Temporada temporadaSegunda) throws Exception {
 
 		System.out
-				.println("Pintando quinielas previstas para jornada actual, segun varios algoritmos y webs");
+				.println("Pintando quinielas previstas para Bolet actual, según varios algoritmos y webs");
 
 		// ALGORITMOS factory
 		if (algo1 == null) {
@@ -54,7 +54,7 @@ public class PredictorDelFuturo {
 	private static Integer mostrarPrediccionesQuinielistaWeb()
 			throws IOException, SAXException {
 		System.out
-				.println("Obteniendo pronosticos de WEB QUINIELISTA.COM para Jornada actual (tarda unos 10 segundos)...");
+				.println("Obteniendo pronosticos de WEB QUINIELISTA.COM para Boleto actual (tarda unos 10 segundos)...");
 
 		CargadorWebyXMLPronosticoQuinielista cargador = new CargadorWebyXMLPronosticoQuinielista();
 		PronosticoJornada pronosticoJornada = cargador.ejecutar();

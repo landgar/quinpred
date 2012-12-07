@@ -102,12 +102,12 @@ public class GraficoAciertosJornadaTest {
 		PronosticoPartido pp = new PronosticoPartido();
 		pp.setPosicionPartido(numPartidoPosicion);
 
-		pp.setPorcentaje1(Algoritmo1.generateNormalizedRandomNumber());
+		pp.setPorcentaje1(1F);
 		pp.setPorcentaje12(0F);
 		pp.setPorcentaje1X(0F);
 		pp.setPorcentaje1X2(0F);
-		pp.setPorcentaje2(Algoritmo1.generateNormalizedRandomNumber());
-		pp.setPorcentajeX(Algoritmo1.generateNormalizedRandomNumber());
+		pp.setPorcentaje2(0F);
+		pp.setPorcentajeX(0F);
 		pp.setPorcentajeX2(0F);
 		pp.setPorcentaje12(0F);
 

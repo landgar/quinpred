@@ -37,7 +37,7 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 	private Integer numeroAciertos;
 
 	public void pintarme() {
-		System.out.println("***** Pronostico Jornada: " + numeroJornada
+		System.out.println("***** Pronostico Jornada/Boleto: " + numeroJornada
 				+ " ******");
 		for (PronosticoPartido pronostico : pronosticoPartidos) {
 			pronostico.pintarme();
