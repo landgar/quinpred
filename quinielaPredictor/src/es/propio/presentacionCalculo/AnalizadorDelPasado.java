@@ -58,7 +58,9 @@ public class AnalizadorDelPasado {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
 		for (Jornada jornada : temporada.getJornadasPasadas()) {
-			pronosticosJornadas.addAll(pronosticarJornada(jornada, division));
+			List<PronosticoJornada> pronosticosJornada = pronosticarJornada(
+					jornada, division);
+			pronosticosJornadas.addAll(pronosticosJornada);
 		}
 
 		List<PronosticoJornada> resultadosReales = obtenerResultadosReales(temporada);
@@ -79,32 +81,39 @@ public class AnalizadorDelPasado {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
 
-		// EXTRAIGO INFO DE CADA PARTIDO PASADO
-		List<PronosticoPartido> partidos = new ArrayList<PronosticoPartido>();
-		for (Partido partido : jornada.getPartidos()) {
-			PronosticoPartido pronostico = new PronosticoPartido();
-			pronostico.setPartido(partido);
-			partidos.add(pronostico);
-		}
-
 		// TODOS LOS ALGORITMOS
+		List<PronosticoPartido> pronosticosPartidos;
 		for (AbstractAlgoritmo algor : algoritmos) {
-
 			if (division.equals(Division.PRIMERA)) {
+				pronosticosPartidos = crearPronosticosPartidosVacios(jornada);
 				algor.setEstimacionJornadaPrimera(new PronosticoJornada(
-						partidos, jornada.getNumeroJornada(), algor.getId()));
+						pronosticosPartidos, jornada.getNumeroJornada(), algor
+								.getId()));
 				algor.calcularPronosticoPrimera();
 				pronosticosJornadas.add(algor.getEstimacionJornadaPrimera());
 
 			} else if (division.equals(Division.SEGUNDA)) {
+				pronosticosPartidos = crearPronosticosPartidosVacios(jornada);
 				algor.setEstimacionJornadaSegunda(new PronosticoJornada(
-						partidos, jornada.getNumeroJornada(), algor.getId()));
+						pronosticosPartidos, jornada.getNumeroJornada(), algor
+								.getId()));
 				algor.calcularPronosticoSegunda();
 				pronosticosJornadas.add(algor.getEstimacionJornadaSegunda());
 			}
 		}
 
 		return pronosticosJornadas;
+	}
+
+	private static List<PronosticoPartido> crearPronosticosPartidosVacios(
+			final Jornada jornada) {
+		List<PronosticoPartido> pronosticoPartidos = new ArrayList<PronosticoPartido>();
+		for (Partido partido : jornada.getPartidos()) {
+			PronosticoPartido pronostico = new PronosticoPartido();
+			pronostico.setPartido(partido);
+			pronosticoPartidos.add(pronostico);
+		}
+		return pronosticoPartidos;
 	}
 
 	private static List<PronosticoJornada> obtenerResultadosReales(

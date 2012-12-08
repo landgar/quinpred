@@ -95,11 +95,9 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 				}
 			}
 		}
-if(num!=null){
-	System.out.println("Jornada "+numeroJornada+" *************-->número de aciertos: "+num);
-	numeroAciertos = num;
-}
-		
+		if (num != null) {
+			numeroAciertos = num;
+		}
 
 	}
 

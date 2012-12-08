@@ -20,6 +20,7 @@ import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.Algoritmo1;
+import es.propio.procesadoInfo.Algoritmo2;
 
 /**
  * @author i3casa
@@ -52,6 +53,7 @@ public class Principal {
 				.println("PASADO: Comparando algoritmos con datos pasados...");
 		List<AbstractAlgoritmo> algoritmosUsados = new ArrayList<AbstractAlgoritmo>();
 		algoritmosUsados.add(new Algoritmo1());
+		algoritmosUsados.add(new Algoritmo2());
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda);
 
