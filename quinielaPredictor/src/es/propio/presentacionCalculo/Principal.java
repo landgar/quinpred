@@ -57,9 +57,9 @@ public class Principal {
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda);
 
-		System.out.println("FUTURO: PREDICCION DEL BOLETO ACTUAL...");
-		PredictorDelFuturo.analizarJornadaActual(temporadaPrimera,
-				temporadaSegunda);
+//		System.out.println("FUTURO: PREDICCION DEL BOLETO ACTUAL...");
+//		PredictorDelFuturo.analizarJornadaActual(temporadaPrimera,
+//				temporadaSegunda);
 
 		System.out.println("FIN");
 	}

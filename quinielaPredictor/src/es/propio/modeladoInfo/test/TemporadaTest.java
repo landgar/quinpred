@@ -51,17 +51,23 @@ public class TemporadaTest {
 		System.out.println("Jornada actual: "
 				+ temporada.getNumeroJornadaActual());
 		System.out.println("Goles en casa a favor: "
-				+ temporada.getGolesEnCasaAFavor(equipo));
+				+ temporada.getGolesEnCasaAFavorAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Goles fuera a favor: "
-				+ temporada.getGolesFueraAFavor(equipo));
+				+ temporada.getGolesFueraAFavorAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Goles totales a favor: "
-				+ temporada.getGolesTotalesAFavor(equipo));
+				+ temporada.getGolesTotalesAFavorAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Goles en casa en contra: "
-				+ temporada.getGolesEnCasaEnContra(equipo));
+				+ temporada.getGolesEnCasaEnContraAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Goles fuera en contra: "
-				+ temporada.getGolesFueraEnContra(equipo));
+				+ temporada.getGolesFueraEnContraAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Goles totales en contra: "
-				+ temporada.getGolesTotalesEnContra(equipo));
+				+ temporada.getGolesTotalesEnContraAnterioresA(equipo,
+						numeroJornada));
 		System.out.println("Jornada actual: # partidos: "
 				+ temporada.getJornadaActual().getPartidos().size());
 	}

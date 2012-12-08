@@ -30,6 +30,16 @@ public class Partido {
 	 */
 	private Integer golesVisitante;
 
+	public String getID() {
+		String id = "";
+		if (equipoLocal != null && equipoVisitante != null) {
+			id = equipoLocal.getNombre() + "-" + equipoVisitante.getNombre();
+		} else {
+			logger.error("Se está devolviendo in ID vacío para este partido");
+		}
+		return id;
+	}
+
 	public ResultadoEquipo getResultadoEquipo(final Equipo equipo) {
 		ResultadoEquipo resultado = new ResultadoEquipo(
 				ValorResultadoEquipo.INVALIDO);
@@ -200,6 +210,16 @@ public class Partido {
 	 */
 	public void setSeHaJugado(Boolean seHaJugado) {
 		this.seHaJugado = seHaJugado;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getID();
 	}
 
 }

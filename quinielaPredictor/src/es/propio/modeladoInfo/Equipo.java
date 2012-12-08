@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jfree.util.StringUtils;
 
-public class Equipo implements Comparable<Equipo>{
+public class Equipo implements Comparable<Equipo> {
 
 	static final Logger logger = Logger.getLogger(Equipo.class);
 	/**
@@ -30,6 +29,10 @@ public class Equipo implements Comparable<Equipo>{
 	public Equipo(final String nombre) {
 		super();
 		this.nombre = nombre;
+	}
+
+	public String getID() {
+		return getNombre();
 	}
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
@@ -56,12 +59,14 @@ public class Equipo implements Comparable<Equipo>{
 		}
 		this.nombre = nombreEncontrado;
 	}
-	
+
 	@Override
 	public int compareTo(Equipo o) {
-		int comparison=-1; //defaults different
-		if(nombre!=null && !nombre.isEmpty() && o!=null && o.getNombre()!=null && !o.getNombre().isEmpty() && nombre.equals(o.getNombre())){
-			comparison=0;
+		int comparison = -1; // defaults different
+		if (nombre != null && !nombre.isEmpty() && o != null
+				&& o.getNombre() != null && !o.getNombre().isEmpty()
+				&& nombre.equals(o.getNombre())) {
+			comparison = 0;
 		}
 		return comparison;
 	}
@@ -229,14 +234,18 @@ public class Equipo implements Comparable<Equipo>{
 		}
 	}
 
-	/**Es el identificador unico del equipo.
+	/**
+	 * Es el identificador unico del equipo.
+	 * 
 	 * @return the nombre
 	 */
 	public String getNombre() {
 		return nombre;
 	}
 
-	/**Es el identificador unico del equipo.
+	/**
+	 * Es el identificador unico del equipo.
+	 * 
 	 * @param nombre
 	 *            the nombre to set
 	 */
@@ -244,6 +253,14 @@ public class Equipo implements Comparable<Equipo>{
 		this.nombre = nombre;
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getNombre();
+	}
 
 }

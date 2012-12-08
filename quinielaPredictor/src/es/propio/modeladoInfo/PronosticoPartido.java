@@ -87,6 +87,16 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 		return comparison;
 	}
 
+	public void reseteaPorcentajes(){
+		setPorcentaje1(0F);
+		setPorcentaje12(0F);
+		setPorcentaje1X(0F);
+		setPorcentaje1X2(0F);
+		setPorcentaje2(0F);
+		setPorcentajeX(0F);
+		setPorcentajeX2(0F);
+	}
+	
 	/**
 	 * @return the porcentaje1
 	 * @uml.property name="porcentaje1"

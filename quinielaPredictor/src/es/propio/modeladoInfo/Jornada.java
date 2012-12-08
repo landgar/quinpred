@@ -125,8 +125,7 @@ public class Jornada {
 		}
 		if (partido == null) {
 			logger.warn("WARNING: no hay partidos de " + equipo.getNombre()
-					+ " en la jornada " + this.getFecha()
-					+ " con número de jornada: " + this.getNumeroJornada());
+					+ " en la jornada " + this.getNumeroJornada());
 		}
 		return partido;
 	}

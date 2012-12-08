@@ -59,7 +59,7 @@ public class Temporada {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		Integer min = Math.min(jornadas.size(), numeroJornada);
+		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
 		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
@@ -98,7 +98,7 @@ public class Temporada {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		Integer min = Math.min(jornadas.size(), numeroJornada);
+		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
 		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
@@ -117,6 +117,12 @@ public class Temporada {
 	public Integer getPuntosAnterioresA(final Equipo equipo,
 			final Integer numeroJornada) {
 		return 3 * getNumeroGanadosAnteriores(equipo, numeroJornada)
+				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
+	}
+	
+	public Integer getPuntosSimplesAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return 2* getNumeroGanadosAnteriores(equipo, numeroJornada)
 				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
 	}
 
@@ -162,24 +168,31 @@ public class Temporada {
 		return numeroJornadaActual;
 	}
 
-	public Integer getGolesTotalesAFavor(final Equipo equipo) {
-		return getGolesEnCasaAFavor(equipo) + getGolesFueraAFavor(equipo);
+	public Integer getGolesTotalesAFavorAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesEnCasaAFavorAnterioresA(equipo, numeroJornada)
+				+ getGolesFueraAFavorAnterioresA(equipo, numeroJornada);
 	}
 
-	public Integer getGolesEnCasaAFavor(final Equipo equipo) {
-		return getGolesPorLugarAFavor(equipo, Boolean.TRUE);
+	public Integer getGolesEnCasaAFavorAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesPorLugarAFavorAnterioresA(equipo, Boolean.TRUE,
+				numeroJornada);
 	}
 
-	public Integer getGolesFueraAFavor(final Equipo equipo) {
-		return getGolesPorLugarAFavor(equipo, Boolean.FALSE);
+	public Integer getGolesFueraAFavorAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesPorLugarAFavorAnterioresA(equipo, Boolean.FALSE,
+				numeroJornada);
 	}
 
-	private Integer getGolesPorLugarAFavor(final Equipo equipo,
-			final Boolean enCasaOFuera) {
+	private Integer getGolesPorLugarAFavorAnterioresA(final Equipo equipo,
+			final Boolean enCasaOFuera, final Integer numeroJornada) {
 		Integer golesTotales = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		for (int i = 0; i < jornadas.size(); i++) {
+		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
+		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
 			if (partido != null && partido.getSeHaJugado()) {
@@ -194,24 +207,31 @@ public class Temporada {
 		return golesTotales;
 	}
 
-	public Integer getGolesTotalesEnContra(final Equipo equipo) {
-		return getGolesEnCasaEnContra(equipo) + getGolesFueraEnContra(equipo);
+	public Integer getGolesTotalesEnContraAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesEnCasaEnContraAnterioresA(equipo, numeroJornada)
+				+ getGolesFueraEnContraAnterioresA(equipo, numeroJornada);
 	}
 
-	public Integer getGolesEnCasaEnContra(final Equipo equipo) {
-		return getGolesPorLugarEnContra(equipo, Boolean.TRUE);
+	public Integer getGolesEnCasaEnContraAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesPorLugarEnContraAnterioresA(equipo, Boolean.TRUE,
+				numeroJornada);
 	}
 
-	public Integer getGolesFueraEnContra(final Equipo equipo) {
-		return getGolesPorLugarEnContra(equipo, Boolean.FALSE);
+	public Integer getGolesFueraEnContraAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getGolesPorLugarEnContraAnterioresA(equipo, Boolean.FALSE,
+				numeroJornada);
 	}
 
-	private Integer getGolesPorLugarEnContra(final Equipo equipo,
-			final Boolean enCasaOFuera) {
+	private Integer getGolesPorLugarEnContraAnterioresA(final Equipo equipo,
+			final Boolean enCasaOFuera, final Integer numeroJornada) {
 		Integer golesTotales = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
-		for (int i = 0; i < jornadas.size(); i++) {
+		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
+		for (int i = 0; i < min; i++) {
 			jornada = jornadas.get(i);
 			Partido partido = jornada.getPartidoDondeJuega(equipo);
 			if (partido != null && partido.getSeHaJugado()) {

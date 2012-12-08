@@ -89,6 +89,13 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 								&& realp.getResultadoMasProbable().equals(
 										pronosticop.getResultadoMasProbable())) {
 							num++;
+						} else {
+							System.out.println("Fallo en predicción jornada: "
+									+ resultadoRealJornada.getNumeroJornada()
+									+ " Partido: " + realp.getPartido().getID()
+									+ " con resultado: "
+									+ realp.getPartido().getGolesLocal() + "-"
+									+ realp.getPartido().getGolesVisitante());
 						}
 
 					}
