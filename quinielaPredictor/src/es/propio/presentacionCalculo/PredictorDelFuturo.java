@@ -37,7 +37,7 @@ public class PredictorDelFuturo {
 
 		// ALGORITMOS factory
 		if (algo1 == null) {
-			algo1 = new Algoritmo1();
+			algo1 = new Algoritmo1(temporadaPrimera, temporadaSegunda);
 		}
 
 		// WEB QUINIELISTA

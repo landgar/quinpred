@@ -52,14 +52,16 @@ public class Principal {
 		System.out
 				.println("PASADO: Comparando algoritmos con datos pasados...");
 		List<AbstractAlgoritmo> algoritmosUsados = new ArrayList<AbstractAlgoritmo>();
-		algoritmosUsados.add(new Algoritmo1());
-		algoritmosUsados.add(new Algoritmo2());
+		algoritmosUsados
+				.add(new Algoritmo1(temporadaPrimera, temporadaSegunda));
+		algoritmosUsados
+				.add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda);
 
-//		System.out.println("FUTURO: PREDICCION DEL BOLETO ACTUAL...");
-//		PredictorDelFuturo.analizarJornadaActual(temporadaPrimera,
-//				temporadaSegunda);
+		// System.out.println("FUTURO: PREDICCION DEL BOLETO ACTUAL...");
+		// PredictorDelFuturo.analizarJornadaActual(temporadaPrimera,
+		// temporadaSegunda);
 
 		System.out.println("FIN");
 	}

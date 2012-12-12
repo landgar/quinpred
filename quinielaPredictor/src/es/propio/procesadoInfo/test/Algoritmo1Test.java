@@ -9,12 +9,14 @@ import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
+import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
 import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
+import es.propio.modeladoInfo.Temporada;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -29,9 +31,14 @@ public class Algoritmo1Test {
 	 */
 	public static void main(String[] args) throws Exception {
 		System.out.println("TEST Algoritmo1Test");
-		Algoritmo1 alg = new Algoritmo1();
-		 calcula(alg);
-		 alg.pintame();
+		// Relleno el universo Temporada
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		cargador.cargar();
+		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
+		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
+		Algoritmo1 alg = new Algoritmo1(temporadaPrimera, temporadaSegunda);
+		calcula(alg);
+		alg.pintame();
 		generadorAleatorio();
 	}
 

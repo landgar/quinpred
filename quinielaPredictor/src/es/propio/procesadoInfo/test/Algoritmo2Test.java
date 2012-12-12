@@ -13,6 +13,7 @@ import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
+import es.propio.modeladoInfo.Temporada;
 import es.propio.procesadoInfo.Algoritmo2;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -28,7 +29,12 @@ public class Algoritmo2Test {
 	public static void main(String[] args) throws Exception {
 		BasicConfigurator.configure();
 		System.out.println("TEST Algoritmo2Test");
-		Algoritmo2 alg = new Algoritmo2();
+		// Relleno el universo Temporada
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		cargador.cargar();
+		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
+		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
+		Algoritmo2 alg = new Algoritmo2(temporadaPrimera, temporadaSegunda);
 		calcula(alg);
 		alg.pintame();
 	}

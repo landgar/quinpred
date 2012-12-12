@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.propio.modeladoInfo.Temporada;
 
@@ -52,6 +54,13 @@ public class CargadorInformacionWebResultados {
 		temporadaPrimera = HandlerHtmlResultados.extraerDatos(webpage);
 		temporadaSegunda = HandlerHtmlResultados.extraerDatos(webpage2);
 
+	}
+
+	public List<Temporada> getTemporadas() {
+		List<Temporada> temporadas = new ArrayList<Temporada>();
+		temporadas.add(getTemporadaPrimera());
+		temporadas.add(getTemporadaSegunda());
+		return temporadas;
 	}
 
 	/**

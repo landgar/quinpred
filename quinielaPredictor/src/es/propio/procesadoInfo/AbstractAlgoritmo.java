@@ -17,6 +17,7 @@ public abstract class AbstractAlgoritmo {
 
 	private PronosticoJornada estimacionJornadaPrimera;
 	private PronosticoJornada estimacionJornadaSegunda;
+	private Temporada temporadaPrimera, temporadaSegunda;
 
 	public abstract void calcularPronosticoPrimera() throws Exception;
 
@@ -24,8 +25,8 @@ public abstract class AbstractAlgoritmo {
 
 	public static Integer calcularNumerosJornadas(Division division) {
 		Integer numJornadas = 0;
-		numJornadas = division.equals(Division.PRIMERA) ? ((Temporada.NUM_EQUIPOS_PRIMERA-1)*2)
-				: ((Temporada.NUM_EQUIPOS_SEGUNDA-1)*2);
+		numJornadas = division.equals(Division.PRIMERA) ? ((Temporada.NUM_EQUIPOS_PRIMERA - 1) * 2)
+				: ((Temporada.NUM_EQUIPOS_SEGUNDA - 1) * 2);
 		return numJornadas;
 	}
 
@@ -72,6 +73,36 @@ public abstract class AbstractAlgoritmo {
 	public void setEstimacionJornadaSegunda(
 			PronosticoJornada estimacionJornadaSegunda) {
 		this.estimacionJornadaSegunda = estimacionJornadaSegunda;
+	}
+
+	/**
+	 * @return the temporadaPrimera
+	 */
+	public Temporada getTemporadaPrimera() {
+		return temporadaPrimera;
+	}
+
+	/**
+	 * @param temporadaPrimera
+	 *            the temporadaPrimera to set
+	 */
+	public void setTemporadaPrimera(Temporada temporadaPrimera) {
+		this.temporadaPrimera = temporadaPrimera;
+	}
+
+	/**
+	 * @return the temporadaSegunda
+	 */
+	public Temporada getTemporadaSegunda() {
+		return temporadaSegunda;
+	}
+
+	/**
+	 * @param temporadaSegunda
+	 *            the temporadaSegunda to set
+	 */
+	public void setTemporadaSegunda(Temporada temporadaSegunda) {
+		this.temporadaSegunda = temporadaSegunda;
 	}
 
 }

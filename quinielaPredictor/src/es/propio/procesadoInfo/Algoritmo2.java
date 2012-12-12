@@ -25,9 +25,12 @@ import es.propio.modeladoInfo.Temporada;
 public class Algoritmo2 extends AbstractAlgoritmo {
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	public Algoritmo2() {
+	public Algoritmo2(final Temporada temporadaPrimera,
+			final Temporada temporadaSegunda) {
 		super();
 		setId(IdAlgoritmoEnum.ALGORITMO2);
+		setTemporadaPrimera(temporadaPrimera);
+		setTemporadaSegunda(temporadaSegunda);
 	}
 
 	/**
@@ -106,13 +109,13 @@ public class Algoritmo2 extends AbstractAlgoritmo {
 			Partido partido = pronostico.getPartido();
 			Float valorLocal, valorVisitante;
 			if (division.equals(Division.PRIMERA)) {
-				valorLocal = Float
-						.valueOf(temporada.getPuntosSimplesAnterioresA(
-								partido.getEquipoLocal(),
+				valorLocal = Float.valueOf(temporada
+						.getPuntosSimplesAnterioresA(partido.getEquipoLocal(),
 								estimacion.getNumeroJornada()));
-				valorVisitante = Float.valueOf(temporada.getPuntosSimplesAnterioresA(
-						partido.getEquipoVisitante(),
-						estimacion.getNumeroJornada()));
+				valorVisitante = Float.valueOf(temporada
+						.getPuntosSimplesAnterioresA(
+								partido.getEquipoVisitante(),
+								estimacion.getNumeroJornada()));
 			} else {
 				valorLocal = 1F / temporada
 						.getGolesTotalesEnContraAnterioresA(

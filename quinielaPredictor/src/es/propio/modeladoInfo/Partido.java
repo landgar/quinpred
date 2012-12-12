@@ -1,5 +1,8 @@
 package es.propio.modeladoInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class Partido {
@@ -29,6 +32,8 @@ public class Partido {
 	 * @uml.property name="golesVisitante"
 	 */
 	private Integer golesVisitante;
+
+	private List<Parametro> parametros;
 
 	public String getID() {
 		String id = "";
@@ -197,6 +202,13 @@ public class Partido {
 		return salida;
 	}
 
+	public List<Equipo> getEquipos() {
+		List<Equipo> equipos = new ArrayList<Equipo>();
+		equipos.add(getEquipoLocal());
+		equipos.add(getEquipoVisitante());
+		return equipos;
+	}
+
 	/**
 	 * @return the seHaJugado
 	 */
@@ -220,6 +232,21 @@ public class Partido {
 	@Override
 	public String toString() {
 		return getID();
+	}
+
+	/**
+	 * @return the parametros
+	 */
+	public List<Parametro> getParametros() {
+		return parametros;
+	}
+
+	/**
+	 * @param parametros
+	 *            the parametros to set
+	 */
+	public void setParametros(List<Parametro> parametros) {
+		this.parametros = parametros;
 	}
 
 }

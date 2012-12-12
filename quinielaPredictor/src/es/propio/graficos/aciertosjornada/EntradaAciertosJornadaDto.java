@@ -33,9 +33,15 @@ public class EntradaAciertosJornadaDto {
 	 * pronosticos que acertaron.
 	 */
 	public void marcarAciertos() {
+
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {
 				for (PronosticoJornada pronosticoj : pronosticosJornadaBulk) {
+					System.out
+							.println("*********************************************ALGORITMO "
+									+ pronosticoj.getIdAlgoritmoPronosticador()
+											.getIdAlgoritmo()
+									+ " *******************************************************");
 					pronosticoj.obtenerNumAciertos(realj);
 				}
 			}
