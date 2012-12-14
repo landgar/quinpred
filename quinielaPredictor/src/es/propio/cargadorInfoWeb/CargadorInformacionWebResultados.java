@@ -90,6 +90,7 @@ public class CargadorInformacionWebResultados {
 		in.close();
 
 		return acumulado;
+
 	}
 
 	public List<Temporada> getTemporadas() {
