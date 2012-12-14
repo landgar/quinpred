@@ -1,5 +1,8 @@
 package es.propio.modeladoInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class Partido {
@@ -29,6 +32,18 @@ public class Partido {
 	 * @uml.property name="golesVisitante"
 	 */
 	private Integer golesVisitante;
+
+	private List<Parametro> parametros;
+
+	public String getID() {
+		String id = "";
+		if (equipoLocal != null && equipoVisitante != null) {
+			id = equipoLocal.getNombre() + "-" + equipoVisitante.getNombre();
+		} else {
+			logger.error("Se está devolviendo in ID vacío para este partido");
+		}
+		return id;
+	}
 
 	public ResultadoEquipo getResultadoEquipo(final Equipo equipo) {
 		ResultadoEquipo resultado = new ResultadoEquipo(
@@ -85,6 +100,22 @@ public class Partido {
 		}
 
 		return resultado;
+	}
+
+	public Integer goles(final Equipo equipo) {
+		Integer goles = -1;
+		if (getSeHaJugado()) {
+			if (equipo.getNombre().equals(equipoLocal.getNombre())) {
+				goles = golesLocal;
+			} else if (equipo.getNombre().equals(equipoVisitante.getNombre())) {
+				goles = golesVisitante;
+			} else {
+				logger.error("Se están intentando obtener los goles de un quipo no presente en este partido");
+			}
+		} else {
+			logger.error("Se están intentando obtener los goles de un partido no jugado");
+		}
+		return goles;
 	}
 
 	/**
@@ -171,6 +202,13 @@ public class Partido {
 		return salida;
 	}
 
+	public List<Equipo> getEquipos() {
+		List<Equipo> equipos = new ArrayList<Equipo>();
+		equipos.add(getEquipoLocal());
+		equipos.add(getEquipoVisitante());
+		return equipos;
+	}
+
 	/**
 	 * @return the seHaJugado
 	 */
@@ -184,6 +222,31 @@ public class Partido {
 	 */
 	public void setSeHaJugado(Boolean seHaJugado) {
 		this.seHaJugado = seHaJugado;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getID();
+	}
+
+	/**
+	 * @return the parametros
+	 */
+	public List<Parametro> getParametros() {
+		return parametros;
+	}
+
+	/**
+	 * @param parametros
+	 *            the parametros to set
+	 */
+	public void setParametros(List<Parametro> parametros) {
+		this.parametros = parametros;
 	}
 
 }

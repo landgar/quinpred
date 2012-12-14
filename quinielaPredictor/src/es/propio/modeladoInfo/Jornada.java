@@ -15,6 +15,8 @@ public class Jornada {
 		this.partidos = partidos;
 		this.numeroJornada = numeroJornada;
 	}
+	
+	
 
 	/**
 	 * @uml.property name="fecha"
@@ -123,10 +125,18 @@ public class Jornada {
 		}
 		if (partido == null) {
 			logger.warn("WARNING: no hay partidos de " + equipo.getNombre()
-					+ " en la jornada " + this.getFecha()
-					+ " con número de jornada: " + this.getNumeroJornada());
+					+ " en la jornada " + this.getNumeroJornada());
 		}
 		return partido;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Numero="+numeroJornada;
 	}
 
 }

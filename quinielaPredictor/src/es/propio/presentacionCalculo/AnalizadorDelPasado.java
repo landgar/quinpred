@@ -3,15 +3,20 @@ package es.propio.presentacionCalculo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.jfree.ui.RefineryUtilities;
 
+import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
-import es.propio.graficos.aciertosjornada.test.GraficoAciertosJornadaTest;
 import es.propio.modeladoInfo.Division;
+import es.propio.modeladoInfo.Jornada;
+import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
-import es.propio.procesadoInfo.Algoritmo1;
+import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.ValorResultado;
+import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 /**
@@ -21,8 +26,8 @@ import es.propio.procesadoInfo.IdAlgoritmoEnum;
  * 
  */
 public class AnalizadorDelPasado {
-
-	static Algoritmo1 algo1;
+	static final Logger logger = Logger.getLogger(AnalizadorDelPasado.class);
+	static List<AbstractAlgoritmo> algoritmos;
 
 	public AnalizadorDelPasado() {
 	}
@@ -33,7 +38,9 @@ public class AnalizadorDelPasado {
 	 * 
 	 * @throws Exception
 	 */
-	public static void estudiarJornadasPasadas(int numeroUltimoBoleto)
+	public static void estudiarJornadasPasadas(
+			final List<AbstractAlgoritmo> algoritmosUsados,
+			final Temporada temporadaPrimera, final Temporada temporadaSegunda)
 			throws Exception {
 		System.out
 				.println("Pintando GRAFICOS para comparar los algoritmos ...");
@@ -41,95 +48,127 @@ public class AnalizadorDelPasado {
 				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
 		System.out
 				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
-
-		// ALGORITMOS factory
-		if (algo1 == null) {
-			algo1 = new Algoritmo1();
-		}
-
-		// Boletos analizados
-		List<String> numBoletos = numerosBoletoAnalizados(numeroUltimoBoleto);
-
-		graficosPrimeraDivision(numBoletos);
-		graficosSegundaDivision(numBoletos);
+		algoritmos = algoritmosUsados;
+		graficosDivision(temporadaPrimera, Division.PRIMERA);
+		graficosDivision(temporadaSegunda, Division.SEGUNDA);
 	}
 
-	private static List<String> numerosBoletoAnalizados(int numeroUltimoBoleto) {
-		List<String> numerosBoleto = new ArrayList<String>();
-
-		// Analizo todos los boletos pasados
-		for (int i = 1; i <= numeroUltimoBoleto; i++) {
-			numerosBoleto.add(String.valueOf(i));
-		}
-		return numerosBoleto;
-	}
-
-	private static void graficosPrimeraDivision(List<String> numBoletos)
+	private static void graficosDivision(Temporada temporada, Division division)
 			throws Exception {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
-
-		// TODO numBoleto es numero de jornada??
-
-		for (String numBoleto : numBoletos) {
-
-			List<PronosticoPartido> partidos = Principal.obtenerPartidos(
-					Division.PRIMERA, numBoleto);
-
-			// ALGORITMO 1
-			algo1.setEstimacionJornadaPrimera(new PronosticoJornada(partidos,
-					Integer.valueOf(numBoleto), IdAlgoritmoEnum.ALGORITMO1));
-			algo1.calcularPronosticoPrimera();
-			pronosticosJornadas.add(algo1.getEstimacionJornadaPrimera());
-
-			// TODO ALGORITMO 2
-			// rellenar con todos los algoritmos, para PRIMERA
+		for (Jornada jornada : temporada.getJornadasPasadas()) {
+			List<PronosticoJornada> pronosticosJornada = pronosticarJornada(
+					jornada, division);
+			pronosticosJornadas.addAll(pronosticosJornada);
 		}
 
+		List<PronosticoJornada> resultadosReales = obtenerResultadosReales(temporada);
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
-				pronosticosJornadas, obtenerResultadosRealesPrimera());
-		graficoNumAciertosVsJornada(inDto, Division.PRIMERA);
+				pronosticosJornadas, resultadosReales);
+		graficoNumAciertosVsJornada(inDto, division);
 	}
 
-	private static List<PronosticoJornada> obtenerResultadosRealesPrimera() {
-		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
-		List<PronosticoJornada> resultadosRealesPrimera = GraficoAciertosJornadaTest
-				.generarPronosticosJornadaAlgoritmoDivisionMock(
-						IdAlgoritmoEnum.REAL, Division.PRIMERA);
-		return resultadosRealesPrimera;
-	}
-
-	private static void graficosSegundaDivision(List<String> numBoletos)
-			throws Exception {
+	/**
+	 * Aplicando todos los algoritmos, pronostica la jornada entera.
+	 * 
+	 * @param jornada
+	 * @return Lista de pronosticos de jornada, uno por cada algoritmo.
+	 * @throws Exception
+	 */
+	private static List<PronosticoJornada> pronosticarJornada(Jornada jornada,
+			Division division) throws Exception {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
-		// TODO numBoleto es numero de jornada??
-		for (String numBoleto : numBoletos) {
 
-			List<PronosticoPartido> partidos = Principal.obtenerPartidos(
-					Division.SEGUNDA, numBoleto);
+		// TODOS LOS ALGORITMOS
+		List<PronosticoPartido> pronosticosPartidos;
+		for (AbstractAlgoritmo algor : algoritmos) {
+			if (division.equals(Division.PRIMERA)) {
+				pronosticosPartidos = crearPronosticosPartidosVacios(jornada);
+				algor.setEstimacionJornadaPrimera(new PronosticoJornada(
+						pronosticosPartidos, jornada.getNumeroJornada(), algor
+								.getId()));
+				algor.calcularPronosticoPrimera();
+				pronosticosJornadas.add(algor.getEstimacionJornadaPrimera());
 
-			// ALGORITMO 1
-			algo1.setEstimacionJornadaSegunda(new PronosticoJornada(partidos,
-					Integer.valueOf(numBoleto), IdAlgoritmoEnum.ALGORITMO1));
-			algo1.calcularPronosticoSegunda();
-			pronosticosJornadas.add(algo1.getEstimacionJornadaSegunda());
-
-			// TODO ALGORITMO 2
-			// rellenar con todos los algoritmos, para SEGUNDA
+			} else if (division.equals(Division.SEGUNDA)) {
+				pronosticosPartidos = crearPronosticosPartidosVacios(jornada);
+				algor.setEstimacionJornadaSegunda(new PronosticoJornada(
+						pronosticosPartidos, jornada.getNumeroJornada(), algor
+								.getId()));
+				algor.calcularPronosticoSegunda();
+				pronosticosJornadas.add(algor.getEstimacionJornadaSegunda());
+			}
 		}
 
-		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
-				pronosticosJornadas, obtenerResultadosRealesSegunda());
-		graficoNumAciertosVsJornada(inDto, Division.SEGUNDA);
+		return pronosticosJornadas;
 	}
 
-	private static List<PronosticoJornada> obtenerResultadosRealesSegunda() {
-		// TODO Quitar MOCK. Rellenar los resultados reales!!!!!!
-		List<PronosticoJornada> resultadosRealesSegunda = GraficoAciertosJornadaTest
-				.generarPronosticosJornadaAlgoritmoDivisionMock(
-						IdAlgoritmoEnum.REAL, Division.SEGUNDA);
-		return resultadosRealesSegunda;
+	private static List<PronosticoPartido> crearPronosticosPartidosVacios(
+			final Jornada jornada) {
+		List<PronosticoPartido> pronosticoPartidos = new ArrayList<PronosticoPartido>();
+		for (Partido partido : jornada.getPartidos()) {
+			PronosticoPartido pronostico = new PronosticoPartido();
+			pronostico.setPartido(partido);
+			pronosticoPartidos.add(pronostico);
+		}
+		return pronosticoPartidos;
+	}
+
+	private static List<PronosticoJornada> obtenerResultadosReales(
+			final Temporada temporada) throws Exception {
+
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				Principal.MODO_MOCK);
+		cargador.cargar();
+		List<Jornada> jornadasPasadas = new ArrayList<Jornada>();
+		if (temporada.getDivision().equals(Division.PRIMERA)) {
+			jornadasPasadas = cargador.getTemporadaPrimera()
+					.getJornadasPasadas();
+		} else if (temporada.getDivision().equals(Division.SEGUNDA)) {
+			jornadasPasadas = cargador.getTemporadaSegunda()
+					.getJornadasPasadas();
+		}
+
+		List<PronosticoJornada> resultadosReales = new ArrayList<PronosticoJornada>();
+		List<PronosticoPartido> pronosticosPartidosReales;
+		PronosticoJornada pronosticoJornada;
+		PronosticoPartido pronosticoPartido;
+		for (Jornada jornada : jornadasPasadas) {
+			pronosticoJornada = new PronosticoJornada(
+					jornada.getNumeroJornada(), IdAlgoritmoEnum.REAL);
+			pronosticosPartidosReales = new ArrayList<PronosticoPartido>();
+			for (Partido partido : jornada.getPartidos()) {
+				pronosticoPartido = new PronosticoPartido();
+				pronosticoPartido.setPartido(partido);
+				ValorResultado resultadoReal = partido.getResultadoQuiniela()
+						.getValor();
+				pronosticoPartido.setPorcentaje1(0F);
+				pronosticoPartido.setPorcentajeX(0F);
+				pronosticoPartido.setPorcentaje2(0F);
+				if (resultadoReal.equals(ValorResultado.UNO)) {
+					pronosticoPartido.setPorcentaje1(1F);
+				} else if (resultadoReal.equals(ValorResultado.EQUIS)) {
+					pronosticoPartido.setPorcentajeX(1F);
+				} else if (resultadoReal.equals(ValorResultado.DOS)) {
+					pronosticoPartido.setPorcentaje2(1F);
+				} else {
+					logger.error("El resultado real del partido siguiente no es correcto: "
+							+ partido.getEquipoLocal().getNombre()
+							+ " - "
+							+ partido.getEquipoVisitante().getNombre());
+				}
+				pronosticosPartidosReales.add(pronosticoPartido);
+			}
+			pronosticoJornada.setPronosticoPartidos(pronosticosPartidosReales);
+			resultadosReales.add(pronosticoJornada);
+		}
+		// List<PronosticoJornada> resultadosReales = GraficoAciertosJornadaTest
+		// .generarPronosticosJornadaAlgoritmoDivisionMock(
+		// IdAlgoritmoEnum.REAL, temporada.getDivision());
+		return resultadosReales;
+
 	}
 
 	private static void graficoNumAciertosVsJornada(
@@ -143,6 +182,21 @@ public class AnalizadorDelPasado {
 		grafico.pack();
 		RefineryUtilities.centerFrameOnScreen(grafico);
 		grafico.setVisible(true);
+	}
+
+	/**
+	 * @return the algoritmos
+	 */
+	public static List<AbstractAlgoritmo> getAlgoritmos() {
+		return algoritmos;
+	}
+
+	/**
+	 * @param algoritmos
+	 *            the algoritmos to set
+	 */
+	public static void setAlgoritmos(List<AbstractAlgoritmo> algoritmos) {
+		AnalizadorDelPasado.algoritmos = algoritmos;
 	}
 
 }

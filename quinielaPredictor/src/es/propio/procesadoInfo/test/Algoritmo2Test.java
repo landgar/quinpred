@@ -5,59 +5,59 @@ package es.propio.procesadoInfo.test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.log4j.BasicConfigurator;
 
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
-import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
-import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
-import es.propio.procesadoInfo.Algoritmo1;
+import es.propio.procesadoInfo.Algoritmo2;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 /**
  * @author nosotros
  * 
  */
-public class Algoritmo1Test {
+public class Algoritmo2Test {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		System.out.println("TEST Algoritmo1Test");
+		BasicConfigurator.configure();
+		System.out.println("TEST Algoritmo2Test");
 		// Relleno el universo Temporada
 		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
 				true);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
-		Algoritmo1 alg = new Algoritmo1(temporadaPrimera, temporadaSegunda);
+		Algoritmo2 alg = new Algoritmo2(temporadaPrimera, temporadaSegunda);
 		calcula(alg);
 		alg.pintame();
-		generadorAleatorio();
 	}
 
-	private static void calcula(Algoritmo1 alg) throws Exception {
-		// Carga de boleto
-		CargadorWebNombresProximaQuiniela cargadorBoleto = new CargadorWebNombresProximaQuiniela();
-		cargadorBoleto.cargar("24");
+	private static void calcula(Algoritmo2 alg) throws Exception {
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				true);
+		cargador.cargar();
+		List<Partido> partidos = new ArrayList<Partido>();
+		partidos.addAll(cargador.getTemporadaPrimera().getJornadaActual()
+				.getPartidos());
+		partidos.addAll(cargador.getTemporadaSegunda().getJornadaActual()
+				.getPartidos());
 		// Traspaso de partidos a listas para su predicción
 		List<PronosticoPartido> listaPartidosPrimera = new ArrayList<PronosticoPartido>();
 		List<PronosticoPartido> listaPartidosSegunda = new ArrayList<PronosticoPartido>();
 		PronosticoPartido pronostico;
 		Partido partido;
-		Boleto boleto = cargadorBoleto.getBoleto();
-		for (Map.Entry<Integer, Partido> entry : boleto.getPartidos()
-				.entrySet()) {
-			partido = entry.getValue();
+		for (int i = 0; i < partidos.size(); i++) {
+			partido = partidos.get(i);
 			pronostico = new PronosticoPartido();
-			pronostico.setPosicionPartido(entry.getKey());
+			pronostico.setPosicionPartido(i);
 			pronostico.setPartido(partido);
 			if (partido.getEquipoLocal().getDivision().equals(Division.PRIMERA)) {
 				listaPartidosPrimera.add(pronostico);
@@ -68,29 +68,17 @@ public class Algoritmo1Test {
 		}
 		// Predicción de resultados
 		PronosticoJornada pronosticoPrimera = new PronosticoJornada(
-				listaPartidosPrimera, 1, IdAlgoritmoEnum.ALGORITMO1);
+				listaPartidosPrimera, 1, IdAlgoritmoEnum.ALGORITMO2);
+		// FIXME: para evitar que tome la primera jornada
+		pronosticoPrimera.setNumeroJornada(10);
 		alg.setEstimacionJornadaPrimera(pronosticoPrimera);
 		alg.calcularPronosticoPrimera();
 		PronosticoJornada pronosticoSegunda = new PronosticoJornada(
-				listaPartidosSegunda, 1, IdAlgoritmoEnum.ALGORITMO1);
+				listaPartidosSegunda, 1, IdAlgoritmoEnum.ALGORITMO2);
+		// FIXME: para evitar que tome la primera jornada
+		pronosticoSegunda.setNumeroJornada(10);
 		alg.setEstimacionJornadaSegunda(pronosticoSegunda);
 		alg.calcularPronosticoSegunda();
-	}
-
-	public static void generadorAleatorio() {
-		System.out.println("Generador aleatorio de valores normalizados: ");
-		// Get a DescriptiveStatistics instance
-		DescriptiveStatistics stats = new DescriptiveStatistics();
-		// Add the data from the array
-		for (int i = 0; i < 1000; i++) {
-			stats.addValue(Algoritmo1.generateNormalizedRandomNumber());
-		}
-		Double mean = stats.getMean();
-		Double std = stats.getStandardDeviation();
-		Double median = stats.getPercentile(50);
-		System.out.println("Media: " + mean);
-		System.out.println("Desviación típica: " + std);
-		System.out.println("Mediana: " + median);
 	}
 
 }

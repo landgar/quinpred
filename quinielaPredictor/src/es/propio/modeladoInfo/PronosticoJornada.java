@@ -37,7 +37,7 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 	private Integer numeroAciertos;
 
 	public void pintarme() {
-		System.out.println("***** Pronostico Jornada: " + numeroJornada
+		System.out.println("***** Pronostico Jornada/Boleto: " + numeroJornada
 				+ " ******");
 		for (PronosticoPartido pronostico : pronosticoPartidos) {
 			pronostico.pintarme();
@@ -64,9 +64,21 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 
 				for (PronosticoPartido pronosticop : pronosticoPartidos) {
 
-					// mismo partido (posicion)
-					if (realp.getPosicionPartido().equals(
-							pronosticop.getPosicionPartido())) {
+					boolean mismoLocal = realp
+							.getPartido()
+							.getEquipoLocal()
+							.getNombre()
+							.equals(pronosticop.getPartido().getEquipoLocal()
+									.getNombre());
+					boolean mismoVisitante = realp
+							.getPartido()
+							.getEquipoVisitante()
+							.getNombre()
+							.equals(pronosticop.getPartido()
+									.getEquipoVisitante().getNombre());
+
+					// mismo partido
+					if (mismoLocal && mismoVisitante) {
 
 						if (num == null) {
 							num = Integer.valueOf(0);
@@ -77,14 +89,22 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 								&& realp.getResultadoMasProbable().equals(
 										pronosticop.getResultadoMasProbable())) {
 							num++;
+						} else {
+							System.out.println("Fallo en predicción jornada: "
+									+ resultadoRealJornada.getNumeroJornada()
+									+ " Partido: " + realp.getPartido().getID()
+									+ " con resultado: "
+									+ realp.getPartido().getGolesLocal() + "-"
+									+ realp.getPartido().getGolesVisitante());
 						}
 
 					}
 				}
 			}
 		}
-
-		numeroAciertos = num;
+		if (num != null) {
+			numeroAciertos = num;
+		}
 
 	}
 

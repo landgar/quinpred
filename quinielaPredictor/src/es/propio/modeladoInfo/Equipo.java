@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class Equipo {
+public class Equipo implements Comparable<Equipo> {
 
 	static final Logger logger = Logger.getLogger(Equipo.class);
 	/**
@@ -26,9 +26,16 @@ public class Equipo {
 	 */
 	private Float pesoPerdidos;
 
+	private List<Parametro> parametros;
+
 	public Equipo(final String nombre) {
 		super();
 		this.nombre = nombre;
+		parametros = new ArrayList<Parametro>();
+	}
+
+	public String getID() {
+		return getNombre();
 	}
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
@@ -54,6 +61,17 @@ public class Equipo {
 			}
 		}
 		this.nombre = nombreEncontrado;
+	}
+
+	@Override
+	public int compareTo(Equipo o) {
+		int comparison = -1; // defaults different
+		if (nombre != null && !nombre.isEmpty() && o != null
+				&& o.getNombre() != null && !o.getNombre().isEmpty()
+				&& nombre.equals(o.getNombre())) {
+			comparison = 0;
+		}
+		return comparison;
 	}
 
 	public Division getDivision() {
@@ -220,6 +238,8 @@ public class Equipo {
 	}
 
 	/**
+	 * Es el identificador unico del equipo.
+	 * 
 	 * @return the nombre
 	 */
 	public String getNombre() {
@@ -227,11 +247,31 @@ public class Equipo {
 	}
 
 	/**
+	 * Es el identificador unico del equipo.
+	 * 
 	 * @param nombre
 	 *            the nombre to set
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public List<Parametro> getParametros() {
+		return parametros;
+	}
+
+	public void setParametros(List<Parametro> parametros) {
+		this.parametros = parametros;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getNombre();
 	}
 
 }

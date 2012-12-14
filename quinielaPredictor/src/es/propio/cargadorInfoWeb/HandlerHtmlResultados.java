@@ -15,7 +15,12 @@ import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.Temporada;
 
+/**
+ * Parser desde un String (html) hacia estructura de clases Java.
+ * 
+ */
 public class HandlerHtmlResultados {
+
 	static final Logger logger = Logger.getLogger(HandlerHtmlResultados.class);
 
 	public static Temporada extraerDatos(final String paginaHtml) {
@@ -39,9 +44,9 @@ public class HandlerHtmlResultados {
 		List<Jornada> jornadas;
 
 		if (temporada.getDivision().equals(Division.PRIMERA)) {
-			totalJornadas = Temporada.NUM_JORNADAS_PRIMERA * 2;
+			totalJornadas = (Temporada.NUM_EQUIPOS_PRIMERA - 1) * 2;
 		} else if (temporada.getDivision().equals(Division.SEGUNDA)) {
-			totalJornadas = Temporada.NUM_JORNADAS_SEGUNDA * 2;
+			totalJornadas = (Temporada.NUM_EQUIPOS_SEGUNDA - 1) * 2;
 		} else {
 			logger.error("No se pueden crear jornadas para la división: "
 					+ temporada.getDivision().getCodigo());
@@ -195,6 +200,13 @@ public class HandlerHtmlResultados {
 		return temporada;
 	}
 
+	/**
+	 * Parsea los nombres de los equipos a los estaticos buenos nuestros:
+	 * Equipo.getNombresEquiposPrimera() y Equipo.getNombresEquiposSegunda
+	 * 
+	 * @param nombreEquipoWeb
+	 * @return
+	 */
 	public static String conversionNombreEquipos(final String nombreEquipoWeb) {
 		String nombreEquipoSistema = "";
 		// Sólo tendremos problemas para los equipos de segunda. Por ello, se
