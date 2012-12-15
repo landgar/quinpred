@@ -18,10 +18,10 @@ public class CargadorInformacionWebResultados {
 	private static final String EL_PAIS_CALENDARIO_PRIMERA = "http://www.elpais.com/deportes/futbol/competicion/primera/calendario";
 	private static final String EL_PAIS_CALENDARIO_SEGUNDA = "http://www.elpais.com/deportes/futbol/competicion/segunda/calendario";
 
-	private static final String EL_PAIS_CLASIFICACION_PRIMERA_MOCK = "websSimuladas/marca_primera_clasificacion.htm";
-	private static final String EL_PAIS_CLASIFICACION_SEGUNDA_MOCK = "websSimuladas/marca_segunda_clasificacion.htm";
-	private static final String EL_PAIS_CLASIFICACION_PRIMERA = "http://www.marca.com/estadisticas/futbol/primera/2012_13";
-	private static final String EL_PAIS_CLASIFICACION_SEGUNDA = "http://www.marca.com/estadisticas/futbol/segunda/2012_13";
+	private static final String MARCA_CLASIFICACION_PRIMERA_MOCK = "websSimuladas/marca_primera_clasificacion.htm";
+	private static final String MARCA_CLASIFICACION_SEGUNDA_MOCK = "websSimuladas/marca_segunda_clasificacion.htm";
+	private static final String MARCA_CLASIFICACION_PRIMERA = "http://www.marca.com/estadisticas/futbol/primera/2012_13";
+	private static final String MARCA_CLASIFICACION_SEGUNDA = "http://www.marca.com/estadisticas/futbol/segunda/2012_13";
 
 	private Temporada temporadaPrimera;
 	private Temporada temporadaSegunda;
@@ -55,11 +55,9 @@ public class CargadorInformacionWebResultados {
 	private void cargarParametrosComunesEquipos() throws IOException {
 		// LEER WEBS
 		String webPrimeraParamComunes = leerContenidoHtml(
-				EL_PAIS_CLASIFICACION_PRIMERA_MOCK,
-				EL_PAIS_CLASIFICACION_PRIMERA);
+				MARCA_CLASIFICACION_PRIMERA_MOCK, MARCA_CLASIFICACION_PRIMERA);
 		String webSegundaParamComunes = leerContenidoHtml(
-				EL_PAIS_CLASIFICACION_SEGUNDA_MOCK,
-				EL_PAIS_CLASIFICACION_SEGUNDA);
+				MARCA_CLASIFICACION_SEGUNDA_MOCK, MARCA_CLASIFICACION_SEGUNDA);
 
 		// RELLENO LA ESTRUCTURA DE CLASES
 		HandlerHtmlParamComunes.build(webPrimeraParamComunes,

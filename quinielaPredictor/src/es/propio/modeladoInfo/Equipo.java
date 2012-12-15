@@ -1,7 +1,9 @@
 package es.propio.modeladoInfo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -26,12 +28,15 @@ public class Equipo implements Comparable<Equipo> {
 	 */
 	private Float pesoPerdidos;
 
-	private List<Parametro> parametros;
+	/**
+	 * Extraidos de marca.com
+	 */
+	private Set<ParametroEquipo> parametros;
 
 	public Equipo(final String nombre) {
 		super();
 		this.nombre = nombre;
-		parametros = new ArrayList<Parametro>();
+		parametros = new HashSet<ParametroEquipo>();// elementos no repetidos
 	}
 
 	public String getID() {
@@ -40,6 +45,8 @@ public class Equipo implements Comparable<Equipo> {
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
+		parametros = new HashSet<ParametroEquipo>();// elementos no repetidos
+
 		List<String> nombresPrimera = getNombresEquiposPrimera();
 		List<String> nombresSegunda = getNombresEquiposSegunda();
 		String nombreEncontrado = "invalido";
@@ -256,11 +263,11 @@ public class Equipo implements Comparable<Equipo> {
 		this.nombre = nombre;
 	}
 
-	public List<Parametro> getParametros() {
+	public Set<ParametroEquipo> getParametros() {
 		return parametros;
 	}
 
-	public void setParametros(List<Parametro> parametros) {
+	public void setParametros(Set<ParametroEquipo> parametros) {
 		this.parametros = parametros;
 	}
 
