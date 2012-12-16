@@ -25,7 +25,8 @@ public class TemporadaTest {
 	}
 
 	private static void obtenerResultadosAnteriores() throws Exception {
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				true);
 		cargador.cargar();
 		Temporada temporada = cargador.getTemporadaPrimera();
 		Equipo equipo = new Equipo("Valladolid");

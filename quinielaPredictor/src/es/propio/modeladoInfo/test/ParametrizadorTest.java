@@ -22,7 +22,8 @@ public class ParametrizadorTest {
 	public static void main(String[] args) throws Exception {
 		System.out.println("TEST ParametrizadorTest");
 		// Relleno el universo Temporada
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				true);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Parametrizador.cargarParametros(temporadaPrimera);

@@ -32,7 +32,8 @@ public class Algoritmo1Test {
 	public static void main(String[] args) throws Exception {
 		System.out.println("TEST Algoritmo1Test");
 		// Relleno el universo Temporada
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				true);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();

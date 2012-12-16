@@ -30,6 +30,11 @@ public class Principal {
 
 	static final String LOG_PROPERTIES_FILE = "logging/log4j.properties";
 
+	/**
+	 * MUY IMPORTANTE
+	 */
+	public static final boolean MODO_MOCK = true;
+
 	public Principal(String title) {
 		super();
 	}
@@ -44,7 +49,8 @@ public class Principal {
 		PropertyConfigurator.configure(logProperties);
 
 		// Relleno el universo Temporada
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				MODO_MOCK);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();

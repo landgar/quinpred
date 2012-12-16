@@ -26,9 +26,12 @@ public class Equipo implements Comparable<Equipo> {
 	 */
 	private Float pesoPerdidos;
 
+	private List<Parametro> parametros;
+
 	public Equipo(final String nombre) {
 		super();
 		this.nombre = nombre;
+		parametros = new ArrayList<Parametro>();
 	}
 
 	public String getID() {
@@ -251,6 +254,14 @@ public class Equipo implements Comparable<Equipo> {
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public List<Parametro> getParametros() {
+		return parametros;
+	}
+
+	public void setParametros(List<Parametro> parametros) {
+		this.parametros = parametros;
 	}
 
 	/*

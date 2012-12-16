@@ -15,7 +15,12 @@ import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.Temporada;
 
+/**
+ * Parser desde un String (html) hacia estructura de clases Java.
+ * 
+ */
 public class HandlerHtmlResultados {
+
 	static final Logger logger = Logger.getLogger(HandlerHtmlResultados.class);
 
 	public static Temporada extraerDatos(final String paginaHtml) {
@@ -195,6 +200,13 @@ public class HandlerHtmlResultados {
 		return temporada;
 	}
 
+	/**
+	 * Parsea los nombres de los equipos a los estaticos buenos nuestros:
+	 * Equipo.getNombresEquiposPrimera() y Equipo.getNombresEquiposSegunda
+	 * 
+	 * @param nombreEquipoWeb
+	 * @return
+	 */
 	public static String conversionNombreEquipos(final String nombreEquipoWeb) {
 		String nombreEquipoSistema = "";
 		// Sólo tendremos problemas para los equipos de segunda. Por ello, se

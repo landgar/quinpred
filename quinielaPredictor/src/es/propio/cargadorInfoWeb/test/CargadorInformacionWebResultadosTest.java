@@ -3,6 +3,7 @@
  */
 package es.propio.cargadorInfoWeb.test;
 
+import junit.framework.TestCase;
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Partido;
@@ -12,14 +13,26 @@ import es.propio.modeladoInfo.Temporada;
  * @author i3casa
  * 
  */
-public class CargadorInformacionWebResultadosTest {
+public class CargadorInformacionWebResultadosTest extends TestCase {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) throws Exception {
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
-		cargador.cargar();
+	private CargadorInformacionWebResultados cargador;
+
+	@Override
+	protected void setUp() {
+		cargador = new CargadorInformacionWebResultados(true);
+
+	}
+
+	public void testCargar() {
+		try {
+			cargador.cargar();
+
+			assertTrue(true);
+
+		} catch (Exception e) {
+			System.err.println("Error!!!!!!");
+			e.printStackTrace();
+		}
 		pintar(cargador);
 	}
 
@@ -30,12 +43,13 @@ public class CargadorInformacionWebResultadosTest {
 	}
 
 	private static void pintarTemporada(final Temporada temporada) {
-		System.out.println("******************** Temporada: "
-				+ temporada.getDivision().getCodigo()
-				+ "ª ********************");
+		System.out
+				.println("******************** Temporada: "
+						+ temporada.getDivision().getCodigo()
+						+ " ********************");
 		for (Jornada jornada : temporada.getJornadas()) {
 			System.out.println("******************** Jornada: "
-					+ jornada.getNumeroJornada() + "ª ********************");
+					+ jornada.getNumeroJornada() + " ********************");
 			for (Partido partido : jornada.getPartidos()) {
 				System.out.println(partido.getEquipoLocal().getNombre() + " - "
 						+ partido.getEquipoVisitante().getNombre() + " --> "
@@ -45,4 +59,5 @@ public class CargadorInformacionWebResultadosTest {
 			}
 		}
 	}
+
 }

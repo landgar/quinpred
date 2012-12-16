@@ -119,7 +119,8 @@ public class AnalizadorDelPasado {
 	private static List<PronosticoJornada> obtenerResultadosReales(
 			final Temporada temporada) throws Exception {
 
-		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados();
+		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
+				Principal.MODO_MOCK);
 		cargador.cargar();
 		List<Jornada> jornadasPasadas = new ArrayList<Jornada>();
 		if (temporada.getDivision().equals(Division.PRIMERA)) {
