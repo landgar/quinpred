@@ -1,6 +1,5 @@
 package es.propio.cargadorInfoWeb;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,8 +108,10 @@ public class HandlerHtmlResultados {
 					equipo2NombrePropio = cadenaAParsear.substring(0,
 							cadenaAParsear.indexOf("\""));
 
-					equipo1NombrePropio = conversionNombreEquipos(equipo1NombrePropio);
-					equipo2NombrePropio = conversionNombreEquipos(equipo2NombrePropio);
+					equipo1NombrePropio = ConversorElPais
+							.conversionNombreEquipos(equipo1NombrePropio);
+					equipo2NombrePropio = ConversorElPais
+							.conversionNombreEquipos(equipo2NombrePropio);
 
 					cadenaAParsear = cadenaAParsear.substring(cadenaAParsear
 							.indexOf(cadena2) + cadena2.length());
@@ -198,6 +199,7 @@ public class HandlerHtmlResultados {
 			}
 		}
 		return temporada;
+
 	}
 
 	/**
@@ -231,6 +233,7 @@ public class HandlerHtmlResultados {
 			nombreEquipoSistema = "R-Sociedad";
 		}
 		return nombreEquipoSistema;
+
 	}
 
 	public static void meterPartidoEnJornada(List<Jornada> jornadas,

@@ -54,7 +54,24 @@ public class Algoritmo2 extends AbstractAlgoritmo {
 	private List<Parametro> buscaPesosParametrosOptimos(final Division division) {
 		List<Parametro> parametrosOptimos = new ArrayList<Parametro>();
 
-		return parametrosOptimos;
+
+		Map<String, Float> base;
+
+		public ValueComparator(Map<String, Float> base) {
+			this.base = base;
+		}
+
+		// Note: this comparator imposes orderings that are inconsistent with
+		// equals.
+		@Override
+		public int compare(String a, String b) {
+			if (base.get(a) <= base.get(b)) {
+				return -1;
+			} else {
+				return 1;
+			} // returning 0 would merge keys
+		}
+
 	}
 
 	// /**
@@ -201,4 +218,5 @@ public class Algoritmo2 extends AbstractAlgoritmo {
 	// }
 	// }
 	// }
+
 }

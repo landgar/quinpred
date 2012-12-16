@@ -300,6 +300,7 @@ public class Temporada {
 	 */
 	public List<Jornada> getJornadas() {
 		Collections.sort(jornadas, new Comparator<Jornada>() {
+			@Override
 			public int compare(Jornada o1, Jornada o2) {
 				return o1.getNumeroJornada().compareTo(o2.getNumeroJornada());
 			}
@@ -403,6 +404,19 @@ public class Temporada {
 	 */
 	public void setStd2PorJornada(StandardDeviation std2PorJornada) {
 		this.std2PorJornada = std2PorJornada;
+	}
+	public Jornada getJornadaExacta(Integer numeroJornada) {
+		Jornada jornada = null;
+		if (numeroJornada != null) {
+			for (Jornada j : jornadas) {
+				if (j.getNumeroJornada().equals(numeroJornada)) {
+					jornada = j;
+					break;
+				}
+			}
+		}
+
+		return jornada;
 	}
 
 }

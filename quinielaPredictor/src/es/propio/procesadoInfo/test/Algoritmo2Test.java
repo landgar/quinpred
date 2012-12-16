@@ -72,6 +72,7 @@ public class Algoritmo2Test {
 
 	private static void calcula(Algoritmo2 alg,
 			CargadorInformacionWebResultados cargador) throws Exception {
+
 		List<Partido> partidos = new ArrayList<Partido>();
 		partidos.addAll(cargador.getTemporadaPrimera().getJornadaActual()
 				.getPartidos());

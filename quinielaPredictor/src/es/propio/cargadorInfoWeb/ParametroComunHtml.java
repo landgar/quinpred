@@ -11,7 +11,7 @@ package es.propio.cargadorInfoWeb;
  */
 public class ParametroComunHtml {
 
-	private String nombre;
+	private String nombre; // nombre equipo
 	private Integer posicion;
 	private Integer partidosJugados;
 	private Integer partidosGanados;
@@ -103,7 +103,4 @@ public class ParametroComunHtml {
 	public void setPuntos(Integer puntos) {
 		this.puntos = puntos;
 	}
-	
-	
-
 }
