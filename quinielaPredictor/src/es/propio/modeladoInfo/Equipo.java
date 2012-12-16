@@ -43,6 +43,16 @@ public class Equipo implements Comparable<Equipo> {
 		return getNombre();
 	}
 
+	public Set<ParametroEquipo> getParametrosComunes() {
+		Set<ParametroEquipo> comunes = new HashSet<ParametroEquipo>();
+		for (ParametroEquipo pe : parametros) {
+			if (pe.getNombre().isParametroComunDeEquipo()) {
+				comunes.add(pe);
+			}
+		}
+		return comunes;
+	}
+
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
 		parametros = new HashSet<ParametroEquipo>();// elementos no repetidos

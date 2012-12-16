@@ -11,6 +11,13 @@ public class ParametroEquipo {
 		this.valor = valor;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "ParametroEquipo:" + " nombre=" + nombre.toString() + " valor="
+				+ valor;
+	}
+
 	/**
 	 * @return the nombre
 	 */

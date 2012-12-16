@@ -32,6 +32,12 @@ public class ConversorMarca {
 			salida = "R-Sociedad";
 		} else if (salida.equals("Zaragoza")) {
 			salida = "Real-Zaragoza";
+		} else if (salida.equals("RM Castilla")) {
+			salida = "RM-Castilla";
+		} else if (salida.equals("Barcelona B")) {
+			salida = "Barcelona-B";
+		} else if (salida.equals("Las Palmas")) {
+			salida = "Palmas";
 		}
 		return salida;
 	}

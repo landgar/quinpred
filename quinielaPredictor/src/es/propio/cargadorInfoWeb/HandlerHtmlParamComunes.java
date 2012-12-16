@@ -4,6 +4,7 @@
 package es.propio.cargadorInfoWeb;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -170,9 +171,8 @@ public class HandlerHtmlParamComunes {
 		} else {
 
 			for (ParametroComunHtml param : params) {
-
 				meteParametroEnPartido(param, jornadaAfectada.getPartidos());
-
+				int x = 0;
 			}
 		}
 
@@ -188,48 +188,55 @@ public class HandlerHtmlParamComunes {
 	private void meteParametroEnPartido(ParametroComunHtml paramHtml,
 			Set<Partido> partidos) {
 
+		Set<ParametroEquipo> parametrosEquipo = convertirParametro(paramHtml);
+
 		for (Partido p : partidos) {
 			if (p.getEquipoLocal().getNombre().equals(paramHtml.getNombre())) {
-				p.getEquipoLocal().getParametros()
-						.add(convertirParametro(paramHtml));
+				p.getEquipoLocal().getParametros().addAll(parametrosEquipo);
+
 			} else if (p.getEquipoVisitante().getNombre()
 					.equals(paramHtml.getNombre())) {
-				p.getEquipoVisitante().getParametros()
-						.add(convertirParametro(paramHtml));
+				p.getEquipoVisitante().getParametros().addAll(parametrosEquipo);
 			}
 		}
 
 	}
 
-	private ParametroEquipo convertirParametro(ParametroComunHtml paramHtml) {
+	private Set<ParametroEquipo> convertirParametro(ParametroComunHtml paramHtml) {
 
-		ParametroEquipo param = null;
+		Set<ParametroEquipo> params = new HashSet<ParametroEquipo>();
 
 		if (paramHtml.getPosicion() != null) {
-			param = new ParametroEquipo(
-					ParametroNombre.POSICION_EN_CLASIFICACION,
-					paramHtml.getPosicion());
-		} else if (paramHtml.getPartidosJugados() != null) {
-			param = new ParametroEquipo(ParametroNombre.PARTIDOS_JUGADOS,
-					paramHtml.getPartidosJugados());
-		} else if (paramHtml.getPartidosGanados() != null) {
-			param = new ParametroEquipo(ParametroNombre.PARTIDOS_GANADOS,
-					paramHtml.getPartidosGanados());
-		} else if (paramHtml.getPartidosEmpatados() != null) {
-			param = new ParametroEquipo(ParametroNombre.PARTIDOS_EMPATADOS,
-					paramHtml.getPartidosEmpatados());
-		} else if (paramHtml.getPartidosPerdidos() != null) {
-			param = new ParametroEquipo(ParametroNombre.PARTIDOS_PERDIDOS,
-					paramHtml.getPartidosPerdidos());
-		} else if (paramHtml.getGolesFavor() != null) {
-			param = new ParametroEquipo(ParametroNombre.GOLES_A_FAVOR,
-					paramHtml.getGolesFavor());
-		} else if (paramHtml.getGolesContra() != null) {
-			param = new ParametroEquipo(ParametroNombre.GOLES_EN_CONTRA,
-					paramHtml.getGolesContra());
+			params.add(new ParametroEquipo(
+					ParametroNombre.POSICION_EN_CLASIFICACION, paramHtml
+							.getPosicion()));
+		}
+		if (paramHtml.getPartidosJugados() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_JUGADOS,
+					paramHtml.getPartidosJugados()));
+		}
+		if (paramHtml.getPartidosGanados() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_GANADOS,
+					paramHtml.getPartidosGanados()));
+		}
+		if (paramHtml.getPartidosEmpatados() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_EMPATADOS,
+					paramHtml.getPartidosEmpatados()));
+		}
+		if (paramHtml.getPartidosPerdidos() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_PERDIDOS,
+					paramHtml.getPartidosPerdidos()));
+		}
+		if (paramHtml.getGolesFavor() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GOLES_A_FAVOR,
+					paramHtml.getGolesFavor()));
+		}
+		if (paramHtml.getGolesContra() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GOLES_EN_CONTRA,
+					paramHtml.getGolesContra()));
 		}
 
-		return param;
+		return params;
 	}
 
 	public static HandlerHtmlParamComunes getInstancia() {

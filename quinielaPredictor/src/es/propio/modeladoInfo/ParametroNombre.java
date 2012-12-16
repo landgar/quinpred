@@ -16,26 +16,35 @@ public enum ParametroNombre {
 			"TARJETAS_ROJAS"), JUGADORES_UTILIZADOS("JUGADORES_UTILIZADOS"), PARADAS_DEL_PORTERO(
 			"PARADAS_DEL_PORTERO"), INVALIDO("-");
 
-	/**
-	 * @uml.property name="valor"
-	 */
 	private String nombre;
 
 	private ParametroNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	/**
-	 * @return the nombre
-	 */
+	@Override
+	public String toString() {
+		return name();
+	}
+
+	public boolean isParametroComunDeEquipo() {
+		boolean esComun = false;
+		if (this.equals(POSICION_EN_CLASIFICACION)
+				|| this.equals(PARTIDOS_JUGADOS)
+				|| this.equals(PARTIDOS_GANADOS)
+				|| this.equals(PARTIDOS_EMPATADOS)
+				|| this.equals(PARTIDOS_PERDIDOS) || this.equals(GOLES_A_FAVOR)
+				|| this.equals(GOLES_EN_CONTRA)) {
+			esComun = true;
+		}
+
+		return esComun;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
 
-	/**
-	 * @param nombre
-	 *            the nombre to set
-	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
