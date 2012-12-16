@@ -5,7 +5,6 @@ package es.propio.cargadorInfoWeb.test;
 
 import java.util.Set;
 
->>>>>>> refs/remotes/origin/master
 import junit.framework.TestCase;
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Equipo;
