@@ -24,7 +24,6 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 	@Override
 	protected void setUp() {
 		cargador = new CargadorInformacionWebResultados(true);
-
 	}
 
 	public void testCargar() {

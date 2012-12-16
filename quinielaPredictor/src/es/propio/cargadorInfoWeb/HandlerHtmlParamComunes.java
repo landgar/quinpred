@@ -172,7 +172,6 @@ public class HandlerHtmlParamComunes {
 
 			for (ParametroComunHtml param : params) {
 				meteParametroEnPartido(param, jornadaAfectada.getPartidos());
-				int x = 0;
 			}
 		}
 

@@ -1,6 +1,5 @@
 package es.propio.cargadorInfoWeb;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,8 +108,10 @@ public class HandlerHtmlResultados {
 					equipo2NombrePropio = cadenaAParsear.substring(0,
 							cadenaAParsear.indexOf("\""));
 
-					equipo1NombrePropio = conversionNombreEquipos(equipo1NombrePropio);
-					equipo2NombrePropio = conversionNombreEquipos(equipo2NombrePropio);
+					equipo1NombrePropio = ConversorElPais
+							.conversionNombreEquipos(equipo1NombrePropio);
+					equipo2NombrePropio = ConversorElPais
+							.conversionNombreEquipos(equipo2NombrePropio);
 
 					cadenaAParsear = cadenaAParsear.substring(cadenaAParsear
 							.indexOf(cadena2) + cadena2.length());
@@ -198,39 +199,6 @@ public class HandlerHtmlResultados {
 			}
 		}
 		return temporada;
-	}
-
-	/**
-	 * Parsea los nombres de los equipos a los estaticos buenos nuestros:
-	 * Equipo.getNombresEquiposPrimera() y Equipo.getNombresEquiposSegunda
-	 * 
-	 * @param nombreEquipoWeb
-	 * @return
-	 */
-	public static String conversionNombreEquipos(final String nombreEquipoWeb) {
-		String nombreEquipoSistema = "";
-		// Sólo tendremos problemas para los equipos de segunda. Por ello, se
-		// implementará esta conversión.
-		nombreEquipoSistema = Normalizer.normalize(nombreEquipoWeb,
-				Normalizer.Form.NFD);
-		nombreEquipoSistema = nombreEquipoSistema.replaceAll("[^\\p{ASCII}]",
-				"");
-		nombreEquipoSistema = nombreEquipoSistema.replaceAll("-", "");
-		// Casos raros
-		if (nombreEquipoWeb.equals("LasPalmas")) {
-			nombreEquipoSistema = "Palmas";
-		} else if (nombreEquipoWeb.equals("RMCastilla")) {
-			nombreEquipoSistema = "RM-Castilla";
-		} else if (nombreEquipoWeb.equals("BarcelonaB")) {
-			nombreEquipoSistema = "Barcelona-B";
-		} else if (nombreEquipoWeb.equals("RealZaragoza")) {
-			nombreEquipoSistema = "Real-Zaragoza";
-		} else if (nombreEquipoWeb.equals("RealMadrid")) {
-			nombreEquipoSistema = "Real-Madrid";
-		} else if (nombreEquipoWeb.equals("R.Sociedad")) {
-			nombreEquipoSistema = "R-Sociedad";
-		}
-		return nombreEquipoSistema;
 	}
 
 	public static void meterPartidoEnJornada(List<Jornada> jornadas,
