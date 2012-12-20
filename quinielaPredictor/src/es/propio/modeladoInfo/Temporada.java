@@ -171,6 +171,17 @@ public class Temporada {
 		return pasadas;
 	}
 
+	public List<Partido> getPartidosPasados() {
+		List<Jornada> todas = getJornadas();
+		List<Partido> partidos = new ArrayList<Partido>();
+		Integer actual = getNumeroJornadaActual();
+		int indiceActual = actual - 1;
+		for (int i = 0; i < indiceActual; i++) {
+			partidos.addAll(todas.get(i).getPartidos());
+		}
+		return partidos;
+	}
+
 	public Jornada getJornadaActual() {
 		Jornada jornada = new Jornada();
 		List<Jornada> jornadas = getJornadas();
@@ -405,6 +416,7 @@ public class Temporada {
 	public void setStd2PorJornada(StandardDeviation std2PorJornada) {
 		this.std2PorJornada = std2PorJornada;
 	}
+
 	public Jornada getJornadaExacta(Integer numeroJornada) {
 		Jornada jornada = null;
 		if (numeroJornada != null) {

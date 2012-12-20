@@ -43,30 +43,7 @@ public class Algoritmo2Test {
 		// TODO: descomentar
 		// alg.pintame();
 
-		// FIXME: Esto sólo lo pinto para hacer pruebas en Matlab sobre redes
-		// neuronales:
-		for (Jornada jornada : temporadaPrimera.getJornadasPasadas()) {
-			for (Partido partido : jornada.getPartidos()) {
-				// Pinto en una línea todas las caracteristicas de cada partido.
-				// En Matlab tendré que invertir la matriz
-				List<Parametro> parametros = partido.getParametros();
-				String resultado = "";
-				for (Parametro parametro : parametros) {
-					// DIFERENCIADEGOLESENCONTRA, DIFERENCIADEGOLESAFAVOR,
-					// GOLESENCASAAFAVOR, GOLESFUERAAFAVOR, GOLESENCASAENCONTRA,
-					// GOLESFUERAENCONTRA, GOLESTOTALESAFAVOR,
-					// GOLESTOTALESENCONTRA, PUNTOSSIMPLES, GANADOS, EMPATADOS,
-					// PERDIDOS, PUNTOSNORMALES, GOLESENCASAAFAVOR,
-					// GOLESFUERAAFAVOR, GOLESENCASAENCONTRA,
-					// GOLESFUERAENCONTRA, GOLESTOTALESAFAVOR,
-					// GOLESTOTALESENCONTRA, PUNTOSSIMPLES, GANADOS, EMPATADOS,
-					// PERDIDOS, PUNTOSNORMALES
-					resultado += parametro.getValor() + ";";
-				}
-				System.out.println(partido.getID() + ";" + resultado
-						+ partido.getResultadoQuiniela().getValor().getValor());
-			}
-		}
+		
 
 	}
 
