@@ -10,9 +10,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Division;
-import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.Parametrizador;
-import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
@@ -42,8 +40,6 @@ public class Algoritmo2Test {
 		calcula(alg, cargador);
 		// TODO: descomentar
 		// alg.pintame();
-
-		
 
 	}
 
@@ -86,8 +82,8 @@ public class Algoritmo2Test {
 		PronosticoJornada pronosticoSegunda = new PronosticoJornada(
 				listaPartidosSegunda, 1, IdAlgoritmoEnum.ALGORITMO2);
 		// FIXME: para evitar que tome la primera jornada
-		pronosticoSegunda.setNumeroJornada(10);
-		alg.setEstimacionJornadaSegunda(pronosticoSegunda);
-		alg.calcularPronosticoSegunda();
+//		pronosticoSegunda.setNumeroJornada(10);
+//		alg.setEstimacionJornadaSegunda(pronosticoSegunda);
+//		alg.calcularPronosticoSegunda();
 	}
 }
