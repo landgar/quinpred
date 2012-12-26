@@ -172,10 +172,13 @@ public class Temporada {
 	}
 
 	public List<Partido> getPartidosPasados() {
+		return getPartidosPasados(getNumeroJornadaActual());
+	}
+
+	public List<Partido> getPartidosPasados(final Integer numeroJornada) {
 		List<Jornada> todas = getJornadas();
 		List<Partido> partidos = new ArrayList<Partido>();
-		Integer actual = getNumeroJornadaActual();
-		int indiceActual = actual - 1;
+		int indiceActual = numeroJornada - 1;
 		for (int i = 0; i < indiceActual; i++) {
 			partidos.addAll(todas.get(i).getPartidos());
 		}
