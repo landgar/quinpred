@@ -10,7 +10,8 @@ import org.apache.log4j.BasicConfigurator;
 
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Division;
-import es.propio.modeladoInfo.Parametrizador;
+import es.propio.modeladoInfo.Jornada;
+import es.propio.modeladoInfo.ParametrizadorPartido;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
@@ -46,16 +47,21 @@ public class Algoritmo2Test {
 	private static void calcula(Algoritmo2 alg,
 			CargadorInformacionWebResultados cargador) throws Exception {
 
+		Jornada jornadaActualPrimera = cargador.getTemporadaPrimera()
+				.getJornadaActual();
+		Jornada jornadaActualSegunda = cargador.getTemporadaSegunda()
+				.getJornadaActual();
+
 		List<Partido> partidos = new ArrayList<Partido>();
-		partidos.addAll(cargador.getTemporadaPrimera().getJornadaActual()
-				.getPartidos());
-		partidos.addAll(cargador.getTemporadaSegunda().getJornadaActual()
-				.getPartidos());
+		partidos.addAll(jornadaActualPrimera.getPartidos());
+		partidos.addAll(jornadaActualSegunda.getPartidos());
+
 		// Traspaso de partidos a listas para su predicción
 		List<PronosticoPartido> listaPartidosPrimera = new ArrayList<PronosticoPartido>();
 		List<PronosticoPartido> listaPartidosSegunda = new ArrayList<PronosticoPartido>();
 		PronosticoPartido pronostico;
 		Partido partido;
+
 		for (int i = 0; i < partidos.size(); i++) {
 			partido = partidos.get(i);
 			pronostico = new PronosticoPartido();
@@ -68,22 +74,32 @@ public class Algoritmo2Test {
 				listaPartidosSegunda.add(pronostico);
 			}
 		}
-		// Parametrizador
-		Parametrizador.cargarParametros(cargador.getTemporadaPrimera());
-		Parametrizador.cargarParametros(cargador.getTemporadaSegunda());
 
-		// Predicción de resultados
+		cargarParametrosDePartidos(cargador);
+
+		// PRIMERA
+		System.out.println("Predicción de resultados de PRIMERA:");
 		PronosticoJornada pronosticoPrimera = new PronosticoJornada(
-				listaPartidosPrimera, 1, IdAlgoritmoEnum.ALGORITMO2);
-		// FIXME: para evitar que tome la primera jornada
-		pronosticoPrimera.setNumeroJornada(10);
+				listaPartidosPrimera, jornadaActualPrimera.getNumeroJornada(),
+				IdAlgoritmoEnum.ALGORITMO2);
 		alg.setEstimacionJornadaPrimera(pronosticoPrimera);
 		alg.calcularPronosticoPrimera();
+
+		// SEGUNDA
+		System.out.println("Predicción de resultados de SEGUNDA:");
 		PronosticoJornada pronosticoSegunda = new PronosticoJornada(
-				listaPartidosSegunda, 1, IdAlgoritmoEnum.ALGORITMO2);
-		// FIXME: para evitar que tome la primera jornada
-//		pronosticoSegunda.setNumeroJornada(10);
-//		alg.setEstimacionJornadaSegunda(pronosticoSegunda);
-//		alg.calcularPronosticoSegunda();
+				listaPartidosSegunda, jornadaActualSegunda.getNumeroJornada(),
+				IdAlgoritmoEnum.ALGORITMO2);
+		alg.setEstimacionJornadaSegunda(pronosticoSegunda);
+		alg.calcularPronosticoSegunda();
 	}
+
+	private static void cargarParametrosDePartidos(
+			CargadorInformacionWebResultados cargador) throws Exception {
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador
+				.getTemporadaPrimera());
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador
+				.getTemporadaSegunda());
+	}
+
 }

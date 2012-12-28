@@ -20,6 +20,7 @@ public class ParametroComunHtml {
 	private Integer golesFavor;
 	private Integer golesContra;
 	private Integer puntos;
+	private Integer numJornada;// util solo para red neuronal
 
 	@Override
 	public String toString() {
@@ -29,7 +30,7 @@ public class ParametroComunHtml {
 				+ " partidosGanados=" + partidosGanados + " partidosEmpatados="
 				+ partidosEmpatados + " partidosPerdidos=" + partidosPerdidos
 				+ " golesFavor=" + golesFavor + " golesContra=" + golesContra
-				+ " puntos=" + puntos;
+				+ " puntos=" + puntos + " numJornada=" + numJornada;
 	}
 
 	public String getNombre() {
@@ -103,4 +104,13 @@ public class ParametroComunHtml {
 	public void setPuntos(Integer puntos) {
 		this.puntos = puntos;
 	}
+
+	public Integer getNumJornada() {
+		return numJornada;
+	}
+
+	public void setNumJornada(Integer numJornada) {
+		this.numJornada = numJornada;
+	}
+
 }

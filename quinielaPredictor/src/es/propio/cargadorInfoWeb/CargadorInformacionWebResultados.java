@@ -12,8 +12,13 @@ import java.util.List;
 import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Temporada;
 
+/**
+ * Cargador de parametros de EQUIPO (no de partido).
+ * 
+ * @author nosotros
+ * 
+ */
 public class CargadorInformacionWebResultados {
-
 
 	// ESTRUCTURA DE TEMPORADA
 	private static final String EL_PAIS_CALENDARIO_PRIMERA_MOCK = "websSimuladas/primeraResultados.htm";
@@ -42,7 +47,6 @@ public class CargadorInformacionWebResultados {
 	private static final String EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=46";
 	private static final String EL_PAIS_PRIMERA_PARADAS_PORTERO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=47";
 
-
 	private Temporada temporadaPrimera;
 	private Temporada temporadaSegunda;
 
@@ -54,9 +58,8 @@ public class CargadorInformacionWebResultados {
 
 	public void cargar() throws Exception {
 		cargarEstructuraTemporadas();
-		cargarParametrosComunesEquipos();
-		cargarParametrosPrimeraEquipos();
-
+		int numJornadaActualPrimera = cargarParametrosComunesEquipos();
+		cargarParametrosPrimeraEquipos(numJornadaActualPrimera);
 	}
 
 	private void cargarEstructuraTemporadas() throws IOException {
@@ -74,63 +77,77 @@ public class CargadorInformacionWebResultados {
 				.extraerDatos(webSegundaCalendario);
 	}
 
-	private void cargarParametrosComunesEquipos() throws IOException {
+	/**
+	 * Carga los parametros comunes de los equipos SOLO PARA LA ULTIMA JORNADA
+	 * (¡¡ y los copio a las jornadas anteriores: DECISION TOMADA !!).
+	 * 
+	 * @throws IOException
+	 */
+	private int cargarParametrosComunesEquipos() throws IOException {
 		// LEER WEBS
 		String webPrimeraParamComunes = leerContenidoHtml(
-
 				MARCA_CLASIFICACION_PRIMERA_MOCK, MARCA_CLASIFICACION_PRIMERA);
 		String webSegundaParamComunes = leerContenidoHtml(
 				MARCA_CLASIFICACION_SEGUNDA_MOCK, MARCA_CLASIFICACION_SEGUNDA);
 
 		// RELLENO LA ESTRUCTURA DE CLASES
-		HandlerHtmlParamComunes.build(webPrimeraParamComunes,
-				webSegundaParamComunes).cargarParamsComunes(temporadaPrimera,
-				temporadaSegunda);
-
+		int numJornadaActualPrimera = HandlerHtmlParamComunes.build(
+				webPrimeraParamComunes, webSegundaParamComunes)
+				.cargarParamsComunes(temporadaPrimera, temporadaSegunda);
+		return numJornadaActualPrimera;
 	}
 
 	/**
-	 * Carga los parametros avanzados (solo los conocemos para Primera division)
+	 * Carga los parametros avanzados (solo los conocemos para la ultima jornada
+	 * de Primera division). ¡¡¡¡ DECISION TOMADA: los replicamos para las
+	 * jornadas anteriores de Primera division !!!!
 	 * 
 	 * @throws IOException
 	 * 
 	 */
-	private void cargarParametrosPrimeraEquipos() throws IOException {
+	private void cargarParametrosPrimeraEquipos(int numJornadaActualPrimera)
+			throws IOException {
 
 		cargarParamPrimera(ParametroNombre.REMATES_A_FAVOR,
 				EL_PAIS_PRIMERA_REMATES_FAVOR_MOCK,
-				EL_PAIS_PRIMERA_REMATES_FAVOR);
+				EL_PAIS_PRIMERA_REMATES_FAVOR, numJornadaActualPrimera);
 		cargarParamPrimera(ParametroNombre.REMATES_EN_CONTRA,
 				EL_PAIS_PRIMERA_REMATES_CONTRA_MOCK,
-				EL_PAIS_PRIMERA_REMATES_CONTRA);
+				EL_PAIS_PRIMERA_REMATES_CONTRA, numJornadaActualPrimera);
 
 		cargarParamPrimera(ParametroNombre.TARJETAS_AMARILLAS,
 				EL_PAIS_PRIMERA_TARJETAS_AMARILLAS_MOCK,
-				EL_PAIS_PRIMERA_TARJETAS_AMARILLAS);
+				EL_PAIS_PRIMERA_TARJETAS_AMARILLAS, numJornadaActualPrimera);
 		cargarParamPrimera(ParametroNombre.TARJETAS_ROJAS,
 				EL_PAIS_PRIMERA_TARJETAS_ROJAS_MOCK,
-				EL_PAIS_PRIMERA_TARJETAS_ROJAS);
+				EL_PAIS_PRIMERA_TARJETAS_ROJAS, numJornadaActualPrimera);
 
 		cargarParamPrimera(ParametroNombre.JUGADORES_UTILIZADOS,
 				EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS_MOCK,
-				EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS);
+				EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS, numJornadaActualPrimera);
 		cargarParamPrimera(ParametroNombre.PARADAS_DEL_PORTERO,
 				EL_PAIS_PRIMERA_PARADAS_PORTERO_MOCK,
-				EL_PAIS_PRIMERA_PARADAS_PORTERO);
+				EL_PAIS_PRIMERA_PARADAS_PORTERO, numJornadaActualPrimera);
+
+		// // util para red neuronal
+		// cargarParamPrimera(ParametroNombre.NUMEROJORNADA, "", "",
+		// numJornadaActualPrimera);
 
 	}
 
 	private void cargarParamPrimera(ParametroNombre tipoParam,
-			String pathRelativoHtmlMock, String URLHtmlOnline)
-			throws IOException {
+			String pathRelativoHtmlMock, String URLHtmlOnline,
+			int numJornadaActualPrimera) throws IOException {
 
 		// LEER WEBS
-		String webStr = leerContenidoHtml(pathRelativoHtmlMock, URLHtmlOnline);
+		String webStr = "";
+		// if (!pathRelativoHtmlMock.isEmpty() && !URLHtmlOnline.isEmpty()) {
+		webStr = leerContenidoHtml(pathRelativoHtmlMock, URLHtmlOnline);
+		// }
 
 		// RELLENO LA ESTRUCTURA DE CLASES
 		HandlerHtmlParamPrimera.build(webStr, tipoParam).cargarParamsAvanzados(
-				temporadaPrimera);
-
+				temporadaPrimera, numJornadaActualPrimera);
 
 	}
 

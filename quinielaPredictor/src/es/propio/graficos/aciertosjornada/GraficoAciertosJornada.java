@@ -142,7 +142,6 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 
 	public static HashMap<Integer, Double> ordenarMapa(
 			HashMap<String, Double> in) {
-		HashMap<Integer, Double> out = new HashMap<Integer, Double>();
 
 		Set<String> keysStr = in.keySet();
 		List<Integer> keys = new ArrayList<Integer>();
@@ -151,6 +150,7 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 		}
 		Collections.sort(keys);
 
+		HashMap<Integer, Double> out = new HashMap<Integer, Double>(keys.size());
 		for (Integer key : keys) {
 			out.put(key, in.get(String.valueOf(key)));
 		}
@@ -161,7 +161,10 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	public static void rellenarLinea(DefaultCategoryDataset dataset,
 			String nombreLinea, HashMap<Integer, Double> mapaxy) {
 		Set<Integer> keys = mapaxy.keySet();
-		for (Integer key : keys) {
+		List<Integer> keysOrdenadas = new ArrayList<Integer>(keys);
+		Collections.sort(keysOrdenadas);
+
+		for (Integer key : keysOrdenadas) {
 			dataset.addValue(mapaxy.get(key), nombreLinea, key);
 		}
 	}

@@ -5,7 +5,7 @@ package es.propio.modeladoInfo.test;
 
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Jornada;
-import es.propio.modeladoInfo.Parametrizador;
+import es.propio.modeladoInfo.ParametrizadorPartido;
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.Temporada;
@@ -26,7 +26,7 @@ public class ParametrizadorTest {
 				true);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
-		Parametrizador.cargarParametros(temporadaPrimera);
+		ParametrizadorPartido.cargarParametrosDePartidos(temporadaPrimera);
 		for (Jornada jornada : temporadaPrimera.getJornadas()) {
 			System.out.println("**************************** Jornada "
 					+ jornada.getNumeroJornada()

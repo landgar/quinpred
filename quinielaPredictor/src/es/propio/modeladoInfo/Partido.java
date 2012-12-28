@@ -1,6 +1,7 @@
 package es.propio.modeladoInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -238,6 +239,7 @@ public class Partido {
 	 * @return the parametros
 	 */
 	public List<Parametro> getParametros() {
+		Collections.sort(parametros);
 		return parametros;
 	}
 

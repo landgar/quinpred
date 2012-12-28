@@ -1,6 +1,7 @@
 package es.propio.modeladoInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,12 +32,12 @@ public class Equipo implements Comparable<Equipo> {
 	/**
 	 * Extraidos de marca.com
 	 */
-	private Set<ParametroEquipo> parametros;
+	private List<ParametroEquipo> parametros;
 
 	public Equipo(final String nombre) {
 		super();
 		this.nombre = nombre;
-		parametros = new HashSet<ParametroEquipo>();// elementos no repetidos
+		parametros = new ArrayList<ParametroEquipo>();// elementos no repetidos
 	}
 
 	public String getID() {
@@ -55,7 +56,7 @@ public class Equipo implements Comparable<Equipo> {
 
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
-		parametros = new HashSet<ParametroEquipo>();// elementos no repetidos
+		parametros = new ArrayList<ParametroEquipo>();// elementos no repetidos
 
 		List<String> nombresPrimera = getNombresEquiposPrimera();
 		List<String> nombresSegunda = getNombresEquiposSegunda();
@@ -273,11 +274,12 @@ public class Equipo implements Comparable<Equipo> {
 		this.nombre = nombre;
 	}
 
-	public Set<ParametroEquipo> getParametros() {
+	public List<ParametroEquipo> getParametros() {
+		Collections.sort(parametros);
 		return parametros;
 	}
 
-	public void setParametros(Set<ParametroEquipo> parametros) {
+	public void setParametros(List<ParametroEquipo> parametros) {
 		this.parametros = parametros;
 	}
 

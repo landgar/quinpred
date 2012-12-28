@@ -49,10 +49,35 @@ public class HandlerHtmlParamPrimera {
 		return instancia;
 	}
 
-	public void cargarParamsAvanzados(Temporada temporadaPrimera) {
+	/**
+	 * Rellena los parametros avanzados de los equipos de primera en las
+	 * jornadas actual y ¡¡ anteriores !! (DECISION TOMADA: duplicando los de la
+	 * jornada actual)
+	 * 
+	 * @param temporadaPrimera
+	 * @param numJornadaActualPrimera
+	 *            Numero de jornada actual en primera
+	 */
+	public void cargarParamsAvanzados(Temporada temporadaPrimera,
+			int numJornadaActualPrimera) {
+
+		List<ParametroAvanzadoPrimeraHtml> parametrosHtmlPrimera = new ArrayList<ParametroAvanzadoPrimeraHtml>();
+
+		// if (webStr.isEmpty()) {
+		// // Parametro numero de jornada
+		// ParametroAvanzadoPrimeraHtml param = new
+		// ParametroAvanzadoPrimeraHtml();
+		// param.setNumJornada(numJornadaActualPrimera);
+		// parametrosHtmlPrimera.add(param);
+		//
+		// } else {
 		Document docPrimera = Jsoup.parse(webStr);
-		List<ParametroAvanzadoPrimeraHtml> parametrosHtmlPrimera = parsearDoc(docPrimera);
-		rellenarTemporada(temporadaPrimera, parametrosHtmlPrimera);
+		parametrosHtmlPrimera.addAll(parsearDoc(docPrimera));
+		// }
+
+		// Params avanzados de actual y anteriores
+		rellenarTemporadaActualyAnteriores(temporadaPrimera,
+				numJornadaActualPrimera, parametrosHtmlPrimera);
 	}
 
 	/**
@@ -117,29 +142,35 @@ public class HandlerHtmlParamPrimera {
 	}
 
 	/**
-	 * Los parametros de entrada son datos de la última jornada, pero hemos
-	 * decidido incluir estos datos en los equipos de todas las jornadas (es
-	 * incorrecto, pero lo hemos decidido así).
+	 * Los parametros de entrada son datos de la última jornada. DECISION
+	 * TOMADA: rellenar jornada actual y anteriores (es incorrecto, pero lo
+	 * hemos decidido así).
 	 * 
 	 * @param temporada
 	 * @param params
 	 */
-	private void rellenarTemporada(Temporada temporada,
-			List<ParametroAvanzadoPrimeraHtml> params) {
+	private void rellenarTemporadaActualyAnteriores(Temporada temporada,
+			int numJornadaActual, List<ParametroAvanzadoPrimeraHtml> params) {
 
-		Jornada jornadaAfectada = null;
+		List<Jornada> jornadasAfectadas = new ArrayList<Jornada>();
 
 		for (Jornada j : temporada.getJornadas()) {
-			jornadaAfectada = j;
+
+			if (j.getNumeroJornada().intValue() <= numJornadaActual) {
+				jornadasAfectadas.add(j);
+			}
 		}
 
-		if (jornadaAfectada == null) {
+		if (jornadasAfectadas.isEmpty()) {
 			System.err
 					.println("ERROR: jornada no encontrada en el html de EL PAIS");
 		} else {
 
-			for (ParametroAvanzadoPrimeraHtml param : params) {
-				meteParametroEnPartido(param, jornadaAfectada.getPartidos());
+			// DECISION TOMADA: rellenar jornada actual y anteriores
+			for (Jornada j : jornadasAfectadas) {
+				for (ParametroAvanzadoPrimeraHtml param : params) {
+					meteParametroEnPartido(param, j.getPartidos());
+				}
 			}
 		}
 

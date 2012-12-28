@@ -61,7 +61,14 @@ public class HandlerHtmlParamComunes {
 		return instancia;
 	}
 
-	public void cargarParamsComunes(Temporada temporadaPrimera,
+	/**
+	 * Carga los parametros comunes de la jornada actual (¡¡¡ y los copia para
+	 * todas las jornadas anteriores: DECISION TOMADA !!!).
+	 * 
+	 * @param temporadaPrimera
+	 * @param temporadaSegunda
+	 */
+	public int cargarParamsComunes(Temporada temporadaPrimera,
 			Temporada temporadaSegunda) {
 
 		Document docPrimera = Jsoup.parse(webPrimeraParamComunes);
@@ -70,28 +77,32 @@ public class HandlerHtmlParamComunes {
 		List<ParametroComunHtml> parametrosHtmlPrimera = parsearDoc(docPrimera);
 		List<ParametroComunHtml> parametrosHtmlSegunda = parsearDoc(docSegunda);
 
-		int numJornadaPrimera = extraerNumJornada(docPrimera);
-		int numJornadaSegunda = extraerNumJornada(docSegunda);
+		// Estas son las jornadas ACTUALES (todavia sin jugar)
+		int numJornadaActualPrimera = temporadaPrimera.getJornadaActual()
+				.getNumeroJornada();
+		int numJornadaActualSegunda = temporadaSegunda.getJornadaActual()
+				.getNumeroJornada();
 
-		rellenarTemporada(temporadaPrimera, numJornadaPrimera,
-				parametrosHtmlPrimera);
-		rellenarTemporada(temporadaSegunda, numJornadaSegunda,
-				parametrosHtmlSegunda);
+		rellenarTemporadaActualyAnteriores(temporadaPrimera,
+				numJornadaActualPrimera, parametrosHtmlPrimera);
+		rellenarTemporadaActualyAnteriores(temporadaSegunda,
+				numJornadaActualSegunda, parametrosHtmlSegunda);
 
+		return numJornadaActualPrimera;
 	}
 
-	private int extraerNumJornada(Document doc) {
-		Element contenido = doc.getElementById("contenido");
-		Elements encabezados = contenido.getElementsByClass("encabezado");
-		Elements titulosh3 = encabezados.select("h3");
-
-		Element jornadaynum = titulosh3.get(0);
-		String jornadaynumStr = jornadaynum.text();
-
-		String numero = jornadaynumStr.substring("Jornada ".length());
-
-		return Integer.parseInt(numero);
-	}
+	// private int extraerNumUltimaJornadaJugada(Document doc) {
+	// Element contenido = doc.getElementById("contenido");
+	// Elements encabezados = contenido.getElementsByClass("encabezado");
+	// Elements titulosh3 = encabezados.select("h3");
+	//
+	// Element jornadaynum = titulosh3.get(0);
+	// String jornadaynumStr = jornadaynum.text();
+	//
+	// String numero = jornadaynumStr.substring("Jornada ".length());
+	//
+	// return Integer.parseInt(numero);
+	// }
 
 	/**
 	 * Parsea HTML con la herramienta JSOUP
@@ -122,9 +133,11 @@ public class HandlerHtmlParamComunes {
 
 				param.setPosicion(Integer.valueOf(row
 						.getElementsByClass(CSS_PARAM_POSICION).get(0).text()));
+
 				param.setPartidosJugados(Integer.valueOf(row
 						.getElementsByClass(CSS_PARAM_PARTIDOS_JUGADOS).get(0)
 						.text()));
+
 				param.setPartidosGanados(Integer.valueOf(row
 						.getElementsByClass(CSS_PARAM_PARTIDOS_GANADOS).get(0)
 						.text()));
@@ -154,24 +167,42 @@ public class HandlerHtmlParamComunes {
 		return parametros;
 	}
 
-	private void rellenarTemporada(Temporada temporada, int numJornada,
-			List<ParametroComunHtml> params) {
+	/**
+	 * Rellena los parametros COMUNES de EQUIPOS de las jornadas actual y
+	 * anteriores. DECISION TOMADA: solo usar los parametros comunes de la
+	 * ultima jornada jugada (actual-1) y replicarlo en la jornada actual y
+	 * anteriores.
+	 * 
+	 * @param temporada
+	 * @param numJornadaActual
+	 *            Numero de jornada actual (todavia sin jugar)
+	 * @param params
+	 */
+	private void rellenarTemporadaActualyAnteriores(Temporada temporada,
+			int numJornadaActual, List<ParametroComunHtml> params) {
 
-		Jornada jornadaAfectada = null;
+		List<Jornada> jornadasAfectadas = new ArrayList<Jornada>();
 
 		for (Jornada j : temporada.getJornadas()) {
-			if (j.getNumeroJornada().intValue() == numJornada) {
-				jornadaAfectada = j;
+			if (j.getNumeroJornada().intValue() <= numJornadaActual) {
+				jornadasAfectadas.add(j);
 			}
 		}
 
-		if (jornadaAfectada == null) {
+		if (jornadasAfectadas.isEmpty()) {
 			System.err
 					.println("ERROR: jornada no encontrada en el html de marca.com");
 		} else {
 
-			for (ParametroComunHtml param : params) {
-				meteParametroEnPartido(param, jornadaAfectada.getPartidos());
+			// Meto los mismos parametros comunes para la jornada actual ¡¡¡¡¡ y
+			// todas las anteriores!!!!!! (hemos decidido que la red neuronal se
+			// entrenara mejor si conoce los datos de la ultima jornada, al
+			// calcular las primeras)
+
+			for (Jornada j : jornadasAfectadas) {
+				for (ParametroComunHtml param : params) {
+					meteParametroEnPartido(param, j.getPartidos());
+				}
 			}
 		}
 
@@ -210,10 +241,14 @@ public class HandlerHtmlParamComunes {
 					ParametroNombre.POSICION_EN_CLASIFICACION, paramHtml
 							.getPosicion()));
 		}
-		if (paramHtml.getPartidosJugados() != null) {
-			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_JUGADOS,
-					paramHtml.getPartidosJugados()));
-		}
+
+		// TODO Partidos jugados no aporta informacion: todos juegan el
+		// mismo numero de partidos.
+		// if (paramHtml.getPartidosJugados() != null) {
+		// params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_JUGADOS,
+		// paramHtml.getPartidosJugados()));
+		// }
+
 		if (paramHtml.getPartidosGanados() != null) {
 			params.add(new ParametroEquipo(ParametroNombre.PARTIDOS_GANADOS,
 					paramHtml.getPartidosGanados()));
@@ -233,6 +268,12 @@ public class HandlerHtmlParamComunes {
 		if (paramHtml.getGolesContra() != null) {
 			params.add(new ParametroEquipo(ParametroNombre.GOLES_EN_CONTRA,
 					paramHtml.getGolesContra()));
+		}
+
+		// Util para red neuronal
+		if (paramHtml.getNumJornada() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.NUMEROJORNADA,
+					paramHtml.getNumJornada()));
 		}
 
 		return params;

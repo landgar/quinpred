@@ -6,7 +6,7 @@ package es.propio.modeladoInfo;
  */
 public enum ParametroNombre {
 
-	GOLESENCASAAFAVOR("GOLESENCASAAFAVOR"), GOLESENCASAENCONTRA(
+	NUMEROJORNADA("NUMEROJORNADA"), GOLESENCASAAFAVOR("GOLESENCASAAFAVOR"), GOLESENCASAENCONTRA(
 			"GOLESENCASAENCONTRA"), GOLESFUERAAFAVOR("GOLESFUERAAFAVOR"), GOLESFUERAENCONTRA(
 			"GOLESFUERAENCONTRA"), GOLESTOTALESAFAVOR("GOLESTOTALESAFAVOR"), GOLESTOTALESENCONTRA(
 			"GOLESTOTALESENCONTRA"), PUNTOSSIMPLES("PUNTOSSIMPLES"), GANADOS(
@@ -53,6 +53,10 @@ public enum ParametroNombre {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public int compareTo(String anotherString) {
+		return nombre.compareTo(anotherString);
 	}
 
 }

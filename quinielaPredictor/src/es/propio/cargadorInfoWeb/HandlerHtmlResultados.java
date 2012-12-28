@@ -1,6 +1,5 @@
 package es.propio.cargadorInfoWeb;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +22,15 @@ public class HandlerHtmlResultados {
 
 	static final Logger logger = Logger.getLogger(HandlerHtmlResultados.class);
 
+	/**
+	 * @param paginaHtml
+	 *            Pagina de EL PAIS con los resultados de todas las jornadas
+	 *            hasta la actual. Es la pagina de una Division. Incluye
+	 *            partidos de ida y vuelta.
+	 * @return
+	 */
 	public static Temporada extraerDatos(final String paginaHtml) {
+
 		Temporada temporada = new Temporada();
 		// División
 		if (paginaHtml.lastIndexOf("<strong>Primera</strong>") != -1) {
