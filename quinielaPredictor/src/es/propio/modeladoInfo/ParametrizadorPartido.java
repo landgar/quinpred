@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Carga los parametros de los PARTIDOs (no de equipos). No se distingue entre
+ * Carga los parámetros de los PARTIDOs (no de equipos). No se distingue entre
  * jornadas.
  * 
  * @author i3casa
@@ -13,8 +13,8 @@ import java.util.List;
 public class ParametrizadorPartido {
 
 	/**
-	 * Carga los parametros de los partidos (no de los equipos). Los parametros
-	 * del partido son: info de parametros de sus equipos y mas info.
+	 * Carga los parámetros de los partidos (no de los equipos). Los parámetros
+	 * del partido son: info de parámetros de sus equipos y más info.
 	 */
 	public static void cargarParametrosDePartidos(Temporada temporada)
 			throws Exception {
@@ -32,6 +32,7 @@ public class ParametrizadorPartido {
 				local = partido.getEquipoLocal();
 				visitante = partido.getEquipoVisitante();
 				parametros = new ArrayList<Parametro>();
+
 				// Parámetros
 				parametro = new Parametro(ParametroNombre.NUMEROJORNADA,
 						numeroJornadaActual, partido);
@@ -53,22 +54,6 @@ public class ParametrizadorPartido {
 				parametro = new Parametro(
 						ParametroNombre.DIFERENCIADEGOLESAFAVOR, valor, partido);
 				parametros.add(parametro);
-
-				// // Parámetros de partidos calculados a partir de los
-				// parametros
-				// // de equipo (calculados previamente).
-				// for (Equipo equipo : partido.getEquipos()) {
-				//
-				// for (ParametroEquipo parametroEquipo : equipo
-				// .getParametros()) {
-				//
-				// valor = parametroEquipo.getValor();
-				// parametro = new Parametro(parametroEquipo.getNombre(),
-				// valor, partido);
-				// parametros.add(parametro);
-				// }
-				//
-				// }
 
 				partido.setParametros(parametros);
 

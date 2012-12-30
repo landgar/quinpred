@@ -41,7 +41,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = Integer.valueOf(10);
+	private static final Integer NUM_ITERACIONES = 100;
+	Integer NUM_NEURONAS_HIDDEN_LAYER = 20;
+	Double LEARNING_RATE = 0.2D;
+	Double MOMENTUM = 0.7D;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -80,7 +83,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	/**
 	 * @param temporada
 	 * @param pronosticos
-	 *            Lista de pronosticos prerellena en la que solo falta rellenar
+	 *            Lista de pronósticos prerrellena en la que sólo falta rellenar
 	 *            las probabilidades de 1 X 2.
 	 */
 	private void predecir(Temporada temporada,
@@ -88,219 +91,248 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			final Integer numeroJornadaActual) throws Exception {
 		List<Partido> partidosYaJugados = temporada
 				.getPartidosPasados(numeroJornadaActual);
-		List<Partido> partidosAPredecir = extraerPartidos(pronosticos);
 
 		if (!partidosYaJugados.isEmpty()) {
 
-			// INPUTS
 			Partido partidoDeReferencia = partidosYaJugados.get(0);
 			int numParamsPartido = partidoDeReferencia.getParametros().size();
 			int numParamsEquipoLocal = partidoDeReferencia.getEquipoLocal()
 					.getParametros().size();
-			int numParamsEquipoVisit = partidoDeReferencia.getEquipoVisitante()
-					.getParametros().size();
+			int numParamsEquipoVisitante = partidoDeReferencia
+					.getEquipoVisitante().getParametros().size();
 
 			Integer numeroParametros = numParamsPartido + numParamsEquipoLocal
-					+ numParamsEquipoVisit;
+					+ numParamsEquipoVisitante;
 			RealMatrix matrixInputs = new Array2DRowRealMatrix(
 					partidosYaJugados.size(), numeroParametros);
-			System.out.println("RED NEURONAL: numero de INPUTS = "
-					+ String.valueOf(numParamsPartido) + "+"
-					+ String.valueOf(numParamsEquipoLocal) + "+"
-					+ String.valueOf(numParamsEquipoVisit) + "="
-					+ numeroParametros);
 
-			// TARGETS
 			Integer numeroTargets = 3;// 1X2
 			RealMatrix matrixTargets = new Array2DRowRealMatrix(
 					partidosYaJugados.size(), numeroTargets);
-			System.out.println("RED NEURONAL: numero de TARGETS = "
-					+ numeroTargets);
 
-			Map<String, RealVector> mapInputsAPredecir = new HashMap<String, RealVector>();
-
-			System.out.println("Se rellenan las matrices de entrenamiento...");
-
-			for (int i = 0; i < partidosYaJugados.size(); i++) {
-				Partido partido = partidosYaJugados.get(i);
-				List<Parametro> parametros = partido.getParametros();
-				RealVector fila = matrixInputs.getRowVector(i);
-
-				// Parámetros del partido
-				rellenarFilaMatriz(parametros, partido, fila);
-
-				// control
-				controlarDimensiones("PARTIDOS YA JUGADOS", fila, parametros,
-						partido);
-
-				matrixInputs.setRowVector(i, fila);
-				// Targets (resultados esperados)
-				ValorResultado resultado = partido.getResultadoQuiniela()
-						.getValor();
-				if (resultado.equals(ValorResultado.UNO)) {
-					matrixTargets.addToEntry(i, 0, 1);
-				} else {
-					matrixTargets.addToEntry(i, 0, 0);
-				}
-				if (resultado.equals(ValorResultado.EQUIS)) {
-					matrixTargets.addToEntry(i, 1, 1);
-				} else {
-					matrixTargets.addToEntry(i, 1, 0);
-				}
-				if (resultado.equals(ValorResultado.DOS)) {
-					matrixTargets.addToEntry(i, 2, 1);
-				} else {
-					matrixTargets.addToEntry(i, 2, 0);
-				}
-			}
-			System.out.println("Matrices de entrenamiento rellenas.");
-
-			System.out.println("Se rellenan las matrices de prediccion...");
-			for (Partido partido : partidosAPredecir) {
-				List<Parametro> parametros = partido.getParametros();
-				numeroParametros = partido.getParametros().size()
-						+ partido.getEquipoLocal().getParametros().size()
-						+ partido.getEquipoVisitante().getParametros().size();
-				RealVector fila = new ArrayRealVector(numeroParametros);
-
-				rellenarFilaMatriz(parametros, partido, fila);
-
-				// control
-				controlarDimensiones("PARTIDOS A PREDECIR", fila, parametros,
-						partido);
-
-				System.out.println("RED NEURONAL:"
-						+ "Creando Input (fila de tamanio="
-						+ fila.getDimension() + ")" + " para partido="
-						+ partido.getID() + " ...");
-				mapInputsAPredecir.put(partido.getID(), fila);
-			}
-			System.out.println("Matrices de prediccion rellenas.");
+			rellenarMatricesEntrenamiento(partidosYaJugados, matrixInputs,
+					matrixTargets);
 
 			// Preparación para el uso de redes neuronales
-			// http://neuroph.sourceforge.net/tutorials/zoo/classification_of_animal_species_using_neural_network.html
-			// 1º. Normalización por columnas. Se normaliza linealmente entre 0
-			// y 1
-			System.out
-					.println("Preparación para el uso de redes neuronales (normalizamos todas las columnas)...");
-			Double maximo, minimo, valor;
-			for (int col = 0; col < matrixInputs.getColumnDimension(); col++) {
-				RealVector columna = matrixInputs.getColumnVector(col);
-				maximo = columna.getMaxValue();
-				minimo = columna.getMinValue();
-				Double diferencia = maximo - minimo;
-				if (diferencia == 0) {
-					// TODO no hay que lanzar excepcion
-					// throw new Exception(
-					// "No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
-					// + col);
-					diferencia = maximo;
-				}
+			normalizarMatriz(matrixInputs);
 
-				// Se normalizan todos sus valores
-				for (int z = 0; z < columna.getDimension(); z++) {
-					valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
-					columna.setEntry(z, valor);
-				}
-
-				// Se reemplaza la columna poniendo la columna normalizada
-				matrixInputs.setColumnVector(col, columna);
-			}
-
-			// 3º. Creo la red neuronal, la entreno y la uso
-
-			System.out.println("CREANDO RED NEURONAL...");
-			// create training set
-			DataSet trainingSet = new DataSet(
-					matrixInputs.getColumnDimension(),
-					matrixTargets.getColumnDimension());
-			for (int i = 0; i < matrixInputs.getRowDimension(); i++) {
-				trainingSet.addRow(new DataSetRow(matrixInputs.getRow(i),
-						matrixTargets.getRow(i)));
-			}
-
-			// create multi layer perceptron
-			List<Integer> numberOfNeuronsInLayers = new ArrayList<Integer>();
-			// Fijado según indicaciones de:
-			// http://www.heatonresearch.com/node/707
-			// Aumento hasta 2f según:
-			// http://neuroph.sourceforge.net/tutorials/SportsPrediction/Premier%20League%20Prediction.html
-			final float AUMENTO_NEURONAS = 1F;
-			final Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
-					Math.floor(AUMENTO_NEURONAS * (2 / 3) * numeroParametros
-							+ matrixTargets.getColumnDimension())).intValue();
-			numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
-			numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
-			numberOfNeuronsInLayers.add(matrixTargets.getColumnDimension());
-			MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(
-					numberOfNeuronsInLayers);
-			((SupervisedLearning) myMlPerceptron.getLearningRule())
-					.setMaxError(0.05);
-			((SupervisedLearning) myMlPerceptron.getLearningRule())
-					.setLearningRate(0.2);
-
-			// TODO revisar el maximo numero de iteraciones (el error debe
-			// converger hacia 0)
-			((SupervisedLearning) myMlPerceptron.getLearningRule())
-					.setMaxIterations(NUM_ITERACIONES);
-
-			// enable batch if using MomentumBackpropagation
-			if (myMlPerceptron.getLearningRule() instanceof MomentumBackpropagation) {
-				((MomentumBackpropagation) myMlPerceptron.getLearningRule())
-						.setBatchMode(true);
-				((MomentumBackpropagation) myMlPerceptron.getLearningRule())
-						.setMomentum(0.7);
-			}
-
-			LearningRule learningRule = myMlPerceptron.getLearningRule();
-			learningRule.addListener(this);
+			// Creo la red neuronal, la entreno y la uso
+			MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
+					matrixInputs, matrixTargets, numeroParametros);
 
 			// learn the training set
-			System.out.println("ENTRENANDO RED NEURONAL...");
-			myMlPerceptron.learn(trainingSet);
+			entrenarRedNeuronal(matrixInputs, matrixTargets, myMlPerceptron);
 
-			// test loaded neural network
-			System.out.println("TESTEANDO RED NEURONAL CARGADA...");
+			// Predicción de salidas
 			Map<String, RealVector> resultados = testNeuralNetwork(
-					myMlPerceptron, mapInputsAPredecir);
+					myMlPerceptron,
+					rellenarMatricesPrediccion(pronosticos, numeroParametros));
 
 			// Para los resultados obtenidos, se obtendrá una predicción
-			for (Map.Entry<String, RealVector> entry : resultados.entrySet()) {
-				for (PronosticoPartido pronostico : pronosticos) {
-					if (pronostico.getPartido().getID().equals(entry.getKey())) {
-						pronostico.setPorcentaje1(0F);
-						pronostico.setPorcentajeX(0F);
-						pronostico.setPorcentaje2(0F);
-						RealVector prediccionPartido = entry.getValue();
+			generarPronosticos(resultados, pronosticos);
+
+			// Comprobación de efectividad del sistema
+			validacionEfectividadAlgoritmo(pronosticos);
+		}
+	}
+
+	private void validacionEfectividadAlgoritmo(
+			final List<PronosticoPartido> pronosticos) {
+		Map<String, ValorResultado> resultadosCiertos = new HashMap<>();
+		resultadosCiertos.put("Deportivo-Malaga", ValorResultado.UNO);
+		resultadosCiertos.put("Barcelona-Espanyol", ValorResultado.UNO);
+		resultadosCiertos.put("Sevilla-Osasuna", ValorResultado.UNO);
+		resultadosCiertos.put("Rayo-Getafe", ValorResultado.UNO);
+		resultadosCiertos.put("Granada-Valencia", ValorResultado.UNO);
+		resultadosCiertos.put("Levante-Athletic", ValorResultado.UNO);
+		resultadosCiertos.put("Real-Zaragoza-Betis", ValorResultado.UNO);
+		resultadosCiertos.put("Mallorca-Atletico", ValorResultado.UNO);
+		resultadosCiertos.put("Celta-Valladolid", ValorResultado.UNO);
+		resultadosCiertos.put("Real-Madrid-R-Sociedad", ValorResultado.UNO);
+		resultadosCiertos.put("Murcia-Hercules", ValorResultado.UNO);
+		resultadosCiertos.put("Numancia-Palmas", ValorResultado.UNO);
+		resultadosCiertos.put("Villarreal-Barcelona-B", ValorResultado.UNO);
+		resultadosCiertos.put("Elche-Sabadell", ValorResultado.UNO);
+		resultadosCiertos.put("Racing-Ponferradina", ValorResultado.UNO);
+		resultadosCiertos.put("Lugo-Guadalajara", ValorResultado.UNO);
+		resultadosCiertos.put("Xerez-Huesca", ValorResultado.UNO);
+		resultadosCiertos.put("Girona-Almeria", ValorResultado.UNO);
+		resultadosCiertos.put("Recreativo-Sporting", ValorResultado.UNO);
+		resultadosCiertos.put("Alcorcon-RM-Castilla", ValorResultado.UNO);
+		resultadosCiertos.put("Mirandes-Cordoba", ValorResultado.UNO);
+
+		Integer totalUNOSCiertos = 0, totalDOSESCiertos = 0, totalEQUISCiertos = 0, totalCiertos = 0, totalPartidos = 0;
+		Integer totalUNOSAcertados = 0, totalDOSESAcertados = 0, totalEQUISAcertados = 0, totalAcertados = 0;
+		Double porcentajeUNOSAcertados = 0D, porcentajeDOSESAcertados = 0D, porcentajeEQUISAcertados = 0D, porcentajeTotalAcertados = 0D;
+
+		for (Map.Entry<String, ValorResultado> entry : resultadosCiertos
+				.entrySet()) {
+			for (PronosticoPartido pronostico : pronosticos) {
+				if (pronostico.getPartido().getID().equals(entry.getKey())) {
+					// Para cada pronóstico, se va a comprobar si coincide con
+					// el real, y se van a guardar los datos.
+					totalPartidos++;
+
+				}
+			}
+		}
+	}
+
+	private void generarPronosticos(final Map<String, RealVector> resultados,
+			List<PronosticoPartido> pronosticos) {
+		for (Map.Entry<String, RealVector> entry : resultados.entrySet()) {
+			for (PronosticoPartido pronostico : pronosticos) {
+				if (pronostico.getPartido().getID().equals(entry.getKey())) {
+					pronostico.setPorcentaje1(0F);
+					pronostico.setPorcentajeX(0F);
+					pronostico.setPorcentaje2(0F);
+					RealVector prediccionPartido = entry.getValue();
+					if (prediccionPartido.getEntry(0) > prediccionPartido
+							.getEntry(1)) {
 						if (prediccionPartido.getEntry(0) > prediccionPartido
-								.getEntry(1)) {
-							if (prediccionPartido.getEntry(0) > prediccionPartido
-									.getEntry(2)) {
-								pronostico.setPorcentaje1(1F);
-							} else {
-								pronostico.setPorcentaje2(1F);
-							}
-						} else if (prediccionPartido.getEntry(1) > prediccionPartido
 								.getEntry(2)) {
-							pronostico.setPorcentajeX(1F);
+							pronostico.setPorcentaje1(1F);
 						} else {
 							pronostico.setPorcentaje2(1F);
 						}
-						// pronostico.setPorcentaje1(Double.valueOf(
-						// prediccionPartido.getEntry(0)).floatValue());
-						// pronostico.setPorcentajeX(Double.valueOf(
-						// prediccionPartido.getEntry(1)).floatValue());
-						// pronostico.setPorcentaje2(Double.valueOf(
-						// prediccionPartido.getEntry(2)).floatValue());
+					} else if (prediccionPartido.getEntry(1) > prediccionPartido
+							.getEntry(2)) {
+						pronostico.setPorcentajeX(1F);
+					} else {
+						pronostico.setPorcentaje2(1F);
 					}
 				}
 			}
 		}
 	}
 
+	private void entrenarRedNeuronal(final RealMatrix matrixInputs,
+			final RealMatrix matrixTargets, MultiLayerPerceptron myMlPerceptron) {
+		// create training set
+		DataSet trainingSet = new DataSet(matrixInputs.getColumnDimension(),
+				matrixTargets.getColumnDimension());
+		for (int i = 0; i < matrixInputs.getRowDimension(); i++) {
+			trainingSet.addRow(new DataSetRow(matrixInputs.getRow(i),
+					matrixTargets.getRow(i)));
+		}
+		myMlPerceptron.learn(trainingSet);
+	}
+
+	private MultiLayerPerceptron crearRedNeuronal(
+			final RealMatrix matrixInputs, final RealMatrix matrixTargets,
+			final Integer numeroParametros) {
+		List<Integer> numberOfNeuronsInLayers = new ArrayList<Integer>();
+		// Fijado según indicaciones de:
+		// http://www.heatonresearch.com/node/707
+		// Aumento hasta 2f según:
+		// http://neuroph.sourceforge.net/tutorials/SportsPrediction/Premier%20League%20Prediction.html
+		final float AUMENTO_NEURONAS = 0.5F;
+		Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
+				Math.floor(AUMENTO_NEURONAS * (2 / 3D) * numeroParametros
+						+ matrixTargets.getColumnDimension())).intValue();
+		NUMERO_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER;
+		numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
+		numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
+		numberOfNeuronsInLayers.add(matrixTargets.getColumnDimension());
+		MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(
+				numberOfNeuronsInLayers);
+		((SupervisedLearning) myMlPerceptron.getLearningRule())
+				.setMaxError(0.1);
+		((SupervisedLearning) myMlPerceptron.getLearningRule())
+				.setLearningRate(LEARNING_RATE);
+		((SupervisedLearning) myMlPerceptron.getLearningRule())
+				.setMaxIterations(NUM_ITERACIONES);
+
+		// enable batch if using MomentumBackpropagation
+		if (myMlPerceptron.getLearningRule() instanceof MomentumBackpropagation) {
+			((MomentumBackpropagation) myMlPerceptron.getLearningRule())
+					.setBatchMode(true);
+			((MomentumBackpropagation) myMlPerceptron.getLearningRule())
+					.setMomentum(MOMENTUM);
+		}
+
+		LearningRule learningRule = myMlPerceptron.getLearningRule();
+		learningRule.addListener(this);
+
+		return myMlPerceptron;
+	}
+
+	private void rellenarMatricesEntrenamiento(
+			final List<Partido> partidosYaJugados, RealMatrix matrixInputs,
+			RealMatrix matrixTargets) {
+		for (int i = 0; i < partidosYaJugados.size(); i++) {
+			Partido partido = partidosYaJugados.get(i);
+			List<Parametro> parametros = partido.getParametros();
+			RealVector fila = matrixInputs.getRowVector(i);
+
+			// Parámetros del partido
+			rellenarFilaMatriz(parametros, partido, fila);
+
+			matrixInputs.setRowVector(i, fila);
+			// Targets (resultados esperados)
+			ValorResultado resultado = partido.getResultadoQuiniela()
+					.getValor();
+			if (resultado.equals(ValorResultado.UNO)) {
+				matrixTargets.addToEntry(i, 0, 1);
+			} else {
+				matrixTargets.addToEntry(i, 0, 0);
+			}
+			if (resultado.equals(ValorResultado.EQUIS)) {
+				matrixTargets.addToEntry(i, 1, 1);
+			} else {
+				matrixTargets.addToEntry(i, 1, 0);
+			}
+			if (resultado.equals(ValorResultado.DOS)) {
+				matrixTargets.addToEntry(i, 2, 1);
+			} else {
+				matrixTargets.addToEntry(i, 2, 0);
+			}
+		}
+	}
+
+	private Map<String, RealVector> rellenarMatricesPrediccion(
+			final List<PronosticoPartido> pronosticos,
+			final Integer numeroParametros) {
+		List<Partido> partidosAPredecir = extraerPartidos(pronosticos);
+		Map<String, RealVector> mapInputsAPredecir = new HashMap<String, RealVector>();
+		for (Partido partido : partidosAPredecir) {
+			List<Parametro> parametros = partido.getParametros();
+			RealVector fila = new ArrayRealVector(numeroParametros);
+
+			rellenarFilaMatriz(parametros, partido, fila);
+			mapInputsAPredecir.put(partido.getID(), fila);
+		}
+		return mapInputsAPredecir;
+	}
+
+	private void normalizarMatriz(RealMatrix matrixInputs) throws Exception {
+		// http://neuroph.sourceforge.net/tutorials/zoo/classification_of_animal_species_using_neural_network.html
+		// 1º. Normalización por columnas. Se normaliza linealmente entre 0
+		// y 1
+		Double maximo, minimo, valor;
+		for (int col = 0; col < matrixInputs.getColumnDimension(); col++) {
+			RealVector columna = matrixInputs.getColumnVector(col);
+			maximo = columna.getMaxValue();
+			minimo = columna.getMinValue();
+			Double diferencia = maximo - minimo;
+			if (diferencia == 0) {
+				throw new Exception(
+						"No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
+								+ col);
+			}
+			// Se normalizan todos sus valores
+			for (int z = 0; z < columna.getDimension(); z++) {
+				valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
+				columna.setEntry(z, valor);
+			}
+			// Se reemplaza la columna poniendo la columna normalizada
+			matrixInputs.setColumnVector(col, columna);
+		}
+
+	}
+
 	private void rellenarFilaMatriz(List<Parametro> parametros,
 			Partido partido, RealVector fila) {
-
 		int j;
 		for (j = 0; j < parametros.size(); j++) {
 			fila.addToEntry(j, parametros.get(j).getValor());
@@ -331,18 +363,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	 */
 	public static Map<String, RealVector> testNeuralNetwork(
 			NeuralNetwork neuralNet, Map<String, RealVector> mapInputsAPredecir) {
-
 		Map<String, RealVector> resultados = new HashMap<String, RealVector>();
-
-		System.out.println("RED NEURONAL: numero de entradas esperadas="
-				+ neuralNet.getInputNeurons().length);
-
 		for (Map.Entry<String, RealVector> entry : mapInputsAPredecir
 				.entrySet()) {
-
-			System.out.println("RED NEURONAL: metiendo entrada de tamanio="
-					+ entry.getValue().toArray().length);
-
 			neuralNet.setInput(entry.getValue().toArray());
 			neuralNet.calculate();
 			resultados.put(entry.getKey(),
@@ -361,28 +384,4 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
-	private void controlarDimensiones(String tipo, RealVector fila,
-			List<Parametro> parametros, Partido partido) {
-		int tamanoFila = fila.getDimension();
-		int numParamsPartido = parametros.size();
-		int numParamsEquipoLocal = partido.getEquipoLocal().getParametros()
-				.size();
-		int numParamsEquipoVisitante = partido.getEquipoVisitante()
-				.getParametros().size();
-
-		String nombreLocal = partido.getEquipoLocal().getNombre();
-		String nombreVisitante = partido.getEquipoVisitante().getNombre();
-
-		// System.out.println("CONTROL de " + tipo + ":" + " fila=" + tamanoFila
-		// + " partido=" + numParamsPartido + " local (" + nombreLocal
-		// + ")=" + numParamsEquipoLocal + " visitante ("
-		// + nombreVisitante + ")=" + numParamsEquipoVisitante);
-
-		if (numParamsEquipoLocal != numParamsEquipoVisitante) {
-			System.out.println(" ** DISTINTOS:" + " local="
-					+ partido.getEquipoLocal().getNombre() + " visitante="
-					+ partido.getEquipoVisitante().getNombre());
-		}
-
-	}
 }
