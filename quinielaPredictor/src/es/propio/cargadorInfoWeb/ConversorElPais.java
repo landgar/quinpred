@@ -2,6 +2,8 @@ package es.propio.cargadorInfoWeb;
 
 import java.text.Normalizer;
 
+import es.propio.modeladoInfo.Equipo;
+
 /**
  * Convierte los nombres de los equipos de El Pais a los que entiende nuestro
  * sistSema.
@@ -23,44 +25,59 @@ public class ConversorElPais {
 	 * @return
 	 */
 	public static String conversionNombreEquipos(final String nombreEquipoWeb) {
-		String nombreEquipoSistema = "";
-		nombreEquipoSistema = Normalizer.normalize(nombreEquipoWeb,
-				Normalizer.Form.NFD);
-		nombreEquipoSistema = nombreEquipoSistema.replaceAll("[^\\p{ASCII}]",
-				"");
-		nombreEquipoSistema = nombreEquipoSistema.replaceAll("-", "");
+		String normalizado = "";
+		normalizado = Normalizer
+				.normalize(nombreEquipoWeb, Normalizer.Form.NFD);
+		normalizado = normalizado.replaceAll("[^\\p{ASCII}]", "");
+		normalizado = normalizado.replaceAll("-", "");
+
 		// Casos raros
-		if (nombreEquipoWeb.trim().equalsIgnoreCase("LasPalmas")) {
-			nombreEquipoSistema = "Palmas";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("RMCastilla")) {
-			nombreEquipoSistema = "RM-Castilla";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("BarcelonaB")) {
-			nombreEquipoSistema = "Barcelona-B";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("RealZaragoza")
-				|| nombreEquipoWeb.trim().equalsIgnoreCase("Zaragoza")) {
-			nombreEquipoSistema = "Real-Zaragoza";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("RealMadrid")
-				|| nombreEquipoWeb.trim().equalsIgnoreCase("Real Madrid")) {
-			nombreEquipoSistema = "Real-Madrid";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("R.Sociedad")
-				|| nombreEquipoWeb.trim().equalsIgnoreCase("Real Sociedad")) {
-			nombreEquipoSistema = "R-Sociedad";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("Celta de Vigo")) {
-			nombreEquipoSistema = "Celta";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("Athletic Club")) {
-			nombreEquipoSistema = "Athletic";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("Rayo Vallecano")) {
-			nombreEquipoSistema = "Rayo";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("Granada C.F")) {
-			nombreEquipoSistema = "Granada";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase(
-				"Deportivo de La Coruña")) {
-			nombreEquipoSistema = "Deportivo";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("Málaga")) {
-			nombreEquipoSistema = "Malaga";
-		} else if (nombreEquipoWeb.trim().equalsIgnoreCase("At. Madrid")) {
-			nombreEquipoSistema = "Atletico";
+		if (normalizado.trim().equalsIgnoreCase("LasPalmas")) {
+			normalizado = Equipo.S_LAS_PALMAS;
+		} else if (normalizado.trim().equalsIgnoreCase("RMCastilla")) {
+			normalizado = Equipo.S_RM_CASTILLA;
+		} else if (normalizado.trim().equalsIgnoreCase("BarcelonaB")) {
+			normalizado = Equipo.S_BARCELONA_B;
+		} else if (normalizado.trim().equalsIgnoreCase("RealZaragoza")
+				|| normalizado.trim().equalsIgnoreCase("Zaragoza")) {
+			normalizado = Equipo.P_ZARAGOZA;
+		} else if (normalizado.trim().equalsIgnoreCase("RealMadrid")
+				|| normalizado.trim().equalsIgnoreCase("Real Madrid")) {
+			normalizado = Equipo.P_REAL_MADRID;
+		} else if (normalizado.trim().equalsIgnoreCase("R.Sociedad")
+				|| normalizado.trim().equalsIgnoreCase("Real Sociedad")) {
+			normalizado = Equipo.P_REAL_SOCIEDAD;
+		} else if (normalizado.trim().equalsIgnoreCase("Celta de Vigo")) {
+			normalizado = Equipo.P_CELTA;
+		} else if (normalizado.trim().equalsIgnoreCase("Athletic Club")) {
+			normalizado = Equipo.P_ATHLETIC;
+		} else if (normalizado.trim().equalsIgnoreCase("Rayo Vallecano")) {
+			normalizado = Equipo.P_RAYO;
+		} else if (normalizado.trim().equalsIgnoreCase("Granada C.F")) {
+			normalizado = Equipo.P_GRANADA;
+		} else if (normalizado.trim()
+				.equalsIgnoreCase("Deportivo de La Coruña")) {
+			normalizado = Equipo.P_DEPORTIVO;
+		} else if (normalizado.trim().equalsIgnoreCase("Málaga")
+				|| normalizado.trim().equalsIgnoreCase("Milaga")) {
+			normalizado = Equipo.P_MALAGA;
+		} else if (normalizado.trim().equalsIgnoreCase("At. Madrid")
+				|| normalizado.trim().equalsIgnoreCase("Atlitico")) {
+			normalizado = Equipo.P_ATLETICO;
+		} else if (normalizado.trim().equalsIgnoreCase("Córdoba")
+				|| normalizado.trim().equalsIgnoreCase("Cirdoba")) {
+			normalizado = Equipo.S_CORDOBA;
+		} else if (normalizado.trim().equalsIgnoreCase("Alcorcón")
+				|| normalizado.trim().equalsIgnoreCase("Alcorcin")) {
+			normalizado = Equipo.S_ALCORCON;
+		} else if (normalizado.trim().equalsIgnoreCase("Hércules")
+				|| normalizado.trim().equalsIgnoreCase("Hircules")) {
+			normalizado = Equipo.S_HERCULES;
+		} else if (normalizado.trim().equalsIgnoreCase("Mirandés")
+				|| normalizado.trim().equalsIgnoreCase("Mirandés")) {
+			normalizado = Equipo.S_MIRANDES;
 		}
-		return nombreEquipoSistema;
+
+		return normalizado;
 	}
 }

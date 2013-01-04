@@ -11,6 +11,51 @@ import org.apache.log4j.Logger;
 public class Equipo implements Comparable<Equipo> {
 
 	static final Logger logger = Logger.getLogger(Equipo.class);
+
+	public static final String P_CELTA = "Celta";
+	public static final String P_MALAGA = "Malaga";
+	public static final String P_ZARAGOZA = "Real-Zaragoza";
+	public static final String P_VALLADOLID = "Valladolid";
+	public static final String P_RAYO = "Rayo";
+	public static final String P_GRANADA = "Granada";
+	public static final String P_REAL_MADRID = "Real-Madrid";
+	public static final String P_VALENCIA = "Valencia";
+	public static final String P_LEVANTE = "Levante";
+	public static final String P_ATLETICO = "Atletico";
+	public static final String P_DEPORTIVO = "Deportivo";
+	public static final String P_OSASUNA = "Osasuna";
+	public static final String P_MALLORCA = "Mallorca";
+	public static final String P_ESPANYOL = "Espanyol";
+	public static final String P_SEVILLA = "Sevilla";
+	public static final String P_GETAFE = "Getafe";
+	public static final String P_ATHLETIC = "Athletic";
+	public static final String P_BETIS = "Betis";
+	public static final String P_BARCELONA = "Barcelona";
+	public static final String P_REAL_SOCIEDAD = "R-Sociedad";
+
+	public static final String S_RACING = "Racing";
+	public static final String S_LAS_PALMAS = "Palmas";
+	public static final String S_MIRANDES = "Mirandes";
+	public static final String S_HUESCA = "Huesca";
+	public static final String S_LUGO = "Lugo";
+	public static final String S_HERCULES = "Hercules";
+	public static final String S_JEREZ = "Xerez";
+	public static final String S_RECREATIVO = "Recreativo";
+	public static final String S_VILLAREAL = "Villarreal";
+	public static final String S_RM_CASTILLA = "RM-Castilla";
+	public static final String S_BARCELONA_B = "Barcelona-B";
+	public static final String S_ALMERIA = "Almeria";
+	public static final String S_ELCHE = "Elche";
+	public static final String S_CORDOBA = "Cordoba";
+	public static final String S_SPORTING = "Sporting";
+	public static final String S_MURCIA = "Murcia";
+	public static final String S_ALCORCON = "Alcorcon";
+	public static final String S_GUADALAJARA = "Guadalajara";
+	public static final String S_PONFERRADINA = "Ponferradina";
+	public static final String S_SABADELL = "Sabadell";
+	public static final String S_GIRONA = "Girona";
+	public static final String S_NUMANCIA = "Numancia";
+
 	/**
 	 * @uml.property name="valor"
 	 * @uml.associationEnd multiplicity="(1 1)"
@@ -110,54 +155,53 @@ public class Equipo implements Comparable<Equipo> {
 
 	public static List<String> getNombresEquiposPrimera() {
 		List<String> nombresPrimera = new ArrayList<>();
-		nombresPrimera.add("Celta");
-		nombresPrimera.add("Malaga");
-		nombresPrimera.add("Real-Zaragoza");
-		nombresPrimera.add("Valladolid");
-		nombresPrimera.add("Rayo");
-		nombresPrimera.add("Granada");
-		nombresPrimera.add("Real-Madrid");
-		nombresPrimera.add("Valencia");
-		nombresPrimera.add("Levante");
-		nombresPrimera.add("Atletico");
-		nombresPrimera.add("Deportivo");
-		nombresPrimera.add("Osasuna");
-		nombresPrimera.add("Mallorca");
-		nombresPrimera.add("Espanyol");
-		nombresPrimera.add("Sevilla");
-		nombresPrimera.add("Getafe");
-		nombresPrimera.add("Athletic");
-		nombresPrimera.add("Betis");
-		nombresPrimera.add("Barcelona");
-		nombresPrimera.add("R-Sociedad");
+		nombresPrimera.add(P_CELTA);
+		nombresPrimera.add(P_MALAGA);
+		nombresPrimera.add(P_ZARAGOZA);
+		nombresPrimera.add(P_VALLADOLID);
+		nombresPrimera.add(P_RAYO);
+		nombresPrimera.add(P_GRANADA);
+		nombresPrimera.add(P_REAL_MADRID);
+		nombresPrimera.add(P_VALENCIA);
+		nombresPrimera.add(P_LEVANTE);
+		nombresPrimera.add(P_ATLETICO);
+		nombresPrimera.add(P_DEPORTIVO);
+		nombresPrimera.add(P_OSASUNA);
+		nombresPrimera.add(P_MALLORCA);
+		nombresPrimera.add(P_ESPANYOL);
+		nombresPrimera.add(P_SEVILLA);
+		nombresPrimera.add(P_GETAFE);
+		nombresPrimera.add(P_ATHLETIC);
+		nombresPrimera.add(P_BETIS);
+		nombresPrimera.add(P_BARCELONA);
+		nombresPrimera.add(P_REAL_SOCIEDAD);
 		return nombresPrimera;
 	}
 
 	public static List<String> getNombresEquiposSegunda() {
 		List<String> nombresSegunda = new ArrayList<>();
-		nombresSegunda.add("Racing");
-		nombresSegunda.add("Palmas");
-		nombresSegunda.add("Mirandes");
-		nombresSegunda.add("Huesca");
-		nombresSegunda.add("Lugo");
-		nombresSegunda.add("Hercules");
-		nombresSegunda.add("Xerez");
-		nombresSegunda.add("Recreativo");
-		nombresSegunda.add("Villarreal");
-		nombresSegunda.add("RM-Castilla");
-		nombresSegunda.add("Barcelona-B");
-		nombresSegunda.add("Almeria");
-		nombresSegunda.add("Elche");
-		nombresSegunda.add("Cordoba");
-		nombresSegunda.add("Sporting");
-		nombresSegunda.add("Murcia");
-		nombresSegunda.add("Alcorcon");
-		nombresSegunda.add("Guadalajara");
-		nombresSegunda.add("Recreativo");
-		nombresSegunda.add("Ponferradina");
-		nombresSegunda.add("Sabadell");
-		nombresSegunda.add("Girona");
-		nombresSegunda.add("Numancia");
+		nombresSegunda.add(S_RACING);
+		nombresSegunda.add(S_LAS_PALMAS);
+		nombresSegunda.add(S_MIRANDES);
+		nombresSegunda.add(S_HUESCA);
+		nombresSegunda.add(S_LUGO);
+		nombresSegunda.add(S_HERCULES);
+		nombresSegunda.add(S_JEREZ);
+		nombresSegunda.add(S_RECREATIVO);
+		nombresSegunda.add(S_VILLAREAL);
+		nombresSegunda.add(S_RM_CASTILLA);
+		nombresSegunda.add(S_BARCELONA_B);
+		nombresSegunda.add(S_ALMERIA);
+		nombresSegunda.add(S_ELCHE);
+		nombresSegunda.add(S_CORDOBA);
+		nombresSegunda.add(S_SPORTING);
+		nombresSegunda.add(S_MURCIA);
+		nombresSegunda.add(S_ALCORCON);
+		nombresSegunda.add(S_GUADALAJARA);
+		nombresSegunda.add(S_PONFERRADINA);
+		nombresSegunda.add(S_SABADELL);
+		nombresSegunda.add(S_GIRONA);
+		nombresSegunda.add(S_NUMANCIA);
 		return nombresSegunda;
 	}
 

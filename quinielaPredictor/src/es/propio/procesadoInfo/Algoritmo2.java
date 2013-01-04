@@ -23,6 +23,7 @@ import org.neuroph.core.learning.SupervisedLearning;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
+import es.propio.modeladoInfo.Equipo;
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.Partido;
@@ -154,27 +155,52 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void validacionEfectividadAlgoritmo(
 			final List<PronosticoPartido> pronosticos) throws Exception {
 		Map<String, ValorResultado> resultadosCiertos = new HashMap<>();
-		resultadosCiertos.put("Deportivo-Malaga", ValorResultado.UNO);
-		resultadosCiertos.put("Barcelona-Espanyol", ValorResultado.UNO);
-		resultadosCiertos.put("Sevilla-Osasuna", ValorResultado.UNO);
-		resultadosCiertos.put("Rayo-Getafe", ValorResultado.UNO);
-		resultadosCiertos.put("Granada-Valencia", ValorResultado.UNO);
-		resultadosCiertos.put("Levante-Athletic", ValorResultado.UNO);
-		resultadosCiertos.put("Real-Zaragoza-Betis", ValorResultado.UNO);
-		resultadosCiertos.put("Mallorca-Atletico", ValorResultado.UNO);
-		resultadosCiertos.put("Celta-Valladolid", ValorResultado.UNO);
-		resultadosCiertos.put("Real-Madrid-R-Sociedad", ValorResultado.UNO);
-		resultadosCiertos.put("Murcia-Hercules", ValorResultado.UNO);
-		resultadosCiertos.put("Numancia-Palmas", ValorResultado.UNO);
-		resultadosCiertos.put("Villarreal-Barcelona-B", ValorResultado.UNO);
-		resultadosCiertos.put("Elche-Sabadell", ValorResultado.UNO);
-		resultadosCiertos.put("Racing-Ponferradina", ValorResultado.UNO);
-		resultadosCiertos.put("Lugo-Guadalajara", ValorResultado.UNO);
-		resultadosCiertos.put("Xerez-Huesca", ValorResultado.UNO);
-		resultadosCiertos.put("Girona-Almeria", ValorResultado.UNO);
-		resultadosCiertos.put("Recreativo-Sporting", ValorResultado.UNO);
-		resultadosCiertos.put("Alcorcon-RM-Castilla", ValorResultado.UNO);
-		resultadosCiertos.put("Mirandes-Cordoba", ValorResultado.UNO);
+
+		// primera: jornada jugada = 17
+		resultadosCiertos.put(Equipo.P_ATHLETIC + "-" + Equipo.P_ZARAGOZA,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.P_ATLETICO + "-" + Equipo.P_CELTA,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.P_OSASUNA + "-" + Equipo.P_GRANADA,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.P_BETIS + "-" + Equipo.P_MALLORCA,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.P_VALLADOLID + "-" + Equipo.P_BARCELONA,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.P_ESPANYOL + "-" + Equipo.P_DEPORTIVO,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.P_REAL_SOCIEDAD + "-" + Equipo.P_SEVILLA,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.P_RAYO + "-" + Equipo.P_LEVANTE,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.P_MALAGA + "-" + Equipo.P_REAL_MADRID,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.P_VALENCIA + "-" + Equipo.P_GETAFE,
+				ValorResultado.UNO);
+
+		// segunda: jornada jugada = 19
+		resultadosCiertos.put(Equipo.S_JEREZ + "-" + Equipo.S_VILLAREAL,
+				ValorResultado.EQUIS);
+		resultadosCiertos.put(Equipo.S_SABADELL + "-" + Equipo.S_LUGO,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.S_ALMERIA + "-" + Equipo.S_ALCORCON,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.S_RM_CASTILLA + "-" + Equipo.S_ELCHE,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.S_CORDOBA + "-" + Equipo.S_RECREATIVO,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.S_SPORTING + "-" + Equipo.S_HUESCA,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.S_PONFERRADINA + "-" + Equipo.S_MURCIA,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.S_GUADALAJARA + "-" + Equipo.S_RACING,
+				ValorResultado.EQUIS);
+		resultadosCiertos.put(Equipo.S_HERCULES + "-" + Equipo.S_NUMANCIA,
+				ValorResultado.DOS);
+		resultadosCiertos.put(Equipo.S_LAS_PALMAS + "-" + Equipo.S_MIRANDES,
+				ValorResultado.UNO);
+		resultadosCiertos.put(Equipo.S_BARCELONA_B + "-" + Equipo.S_GIRONA,
+				ValorResultado.EQUIS);
 
 		Integer totalUNOSCiertos = 0, totalDOSESCiertos = 0, totalEQUISCiertos = 0, totalCiertos = 0, totalPartidos = 0;
 		Integer totalUNOSAcertados = 0, totalDOSESAcertados = 0, totalEQUISAcertados = 0, totalAcertados = 0;
@@ -217,14 +243,18 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				}
 			}
 		}
-		porcentajeUNOSAcertados = totalUNOSAcertados
-				/ Double.valueOf(totalUNOSCiertos);
-		porcentajeEQUISAcertados = totalEQUISAcertados
-				/ Double.valueOf(totalEQUISCiertos);
-		porcentajeDOSESAcertados = totalDOSESAcertados
-				/ Double.valueOf(totalDOSESCiertos);
-		porcentajeTotalAcertados = totalAcertados
-				/ Double.valueOf(totalCiertos);
+
+		porcentajeUNOSAcertados = totalUNOSCiertos == null ? Integer.valueOf(0)
+				: (totalUNOSAcertados / Double.valueOf(totalUNOSCiertos));
+		porcentajeEQUISAcertados = totalEQUISCiertos == null ? Integer
+				.valueOf(0) : (totalEQUISAcertados / Double
+				.valueOf(totalEQUISCiertos));
+		porcentajeDOSESAcertados = totalDOSESCiertos == null ? Integer
+				.valueOf(0) : (totalDOSESAcertados / Double
+				.valueOf(totalDOSESCiertos));
+		porcentajeTotalAcertados = totalCiertos == null ? Integer.valueOf(0)
+				: (totalAcertados / Double.valueOf(totalCiertos));
+
 		System.out.println("Análisis de rendimiento del algoritmo:");
 		System.out.println("num_neuronas_hidden_layer: "
 				+ NUM_NEURONAS_HIDDEN_LAYER + " learning_rate: "
@@ -282,6 +312,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private MultiLayerPerceptron crearRedNeuronal(
 			final RealMatrix matrixInputs, final RealMatrix matrixTargets,
 			final Integer numeroParametros) {
+
+		System.out.println("RED NEURONAL: numero de parametros total = "
+				+ numeroParametros);
+
 		List<Integer> numberOfNeuronsInLayers = new ArrayList<Integer>();
 		// Fijado según indicaciones de:
 		// http://www.heatonresearch.com/node/707
@@ -291,6 +325,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
 				Math.floor(AUMENTO_NEURONAS * (2 / 3D) * numeroParametros
 						+ matrixTargets.getColumnDimension())).intValue();
+
 		NUMERO_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER;
 		numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
 		numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
@@ -321,6 +356,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void rellenarMatricesEntrenamiento(
 			final List<Partido> partidosYaJugados, RealMatrix matrixInputs,
 			RealMatrix matrixTargets) {
+
+		System.out.println("Rellenando matrices de entrenamiento...");
+
 		for (int i = 0; i < partidosYaJugados.size(); i++) {
 			Partido partido = partidosYaJugados.get(i);
 			List<Parametro> parametros = partido.getParametros();
@@ -349,11 +387,16 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				matrixTargets.addToEntry(i, 2, 0);
 			}
 		}
+
+		System.out.println("Matrices de entrenamiento llenas.");
 	}
 
 	private Map<String, RealVector> rellenarMatricesPrediccion(
 			final List<PronosticoPartido> pronosticos,
 			final Integer numeroParametros) {
+
+		System.out.println("Rellenando matrices de prediccion...");
+
 		List<Partido> partidosAPredecir = extraerPartidos(pronosticos);
 		Map<String, RealVector> mapInputsAPredecir = new HashMap<String, RealVector>();
 		for (Partido partido : partidosAPredecir) {
@@ -363,10 +406,15 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			rellenarFilaMatriz(parametros, partido, fila);
 			mapInputsAPredecir.put(partido.getID(), fila);
 		}
+
+		System.out.println("Matrices de prediccion llenas.");
 		return mapInputsAPredecir;
 	}
 
 	private void normalizarMatriz(RealMatrix matrixInputs) throws Exception {
+
+		System.out.println("Normalizando matriz...");
+
 		// http://neuroph.sourceforge.net/tutorials/zoo/classification_of_animal_species_using_neural_network.html
 		// 1º. Normalización por columnas. Se normaliza linealmente entre 0
 		// y 1
@@ -389,6 +437,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			// Se reemplaza la columna poniendo la columna normalizada
 			matrixInputs.setColumnVector(col, columna);
 		}
+
+		System.out.println("Matriz normalizada.");
 
 	}
 
