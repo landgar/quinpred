@@ -2,6 +2,7 @@ package es.propio.modeladoInfo;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -10,13 +11,51 @@ public class Jornada {
 
 	static final Logger logger = Logger.getLogger(Jornada.class);
 
+	private Integer unos;
+	private Integer equises;
+	private Integer doses;
+
 	public Jornada(Set<Partido> partidos, Integer numeroJornada) {
 		super();
 		this.partidos = partidos;
 		this.numeroJornada = numeroJornada;
 	}
-	
-	
+
+	public Boolean getSeHaJugado() {
+		Boolean salida = Boolean.FALSE;
+		Set<Partido> partidos = getPartidos();
+		for (Iterator<Partido> it = partidos.iterator(); it.hasNext();) {
+			Partido f = it.next();
+			salida = f.getSeHaJugado();
+			break;
+		}
+		return salida;
+	}
+
+	public void calcularEstadisticas() {
+		// Para evitar recalcular innecesariamente
+		if (unos == null) {
+			unos = 0;
+			equises = 0;
+			doses = 0;
+			for (Partido partido : getPartidos()) {
+				if (partido.getSeHaJugado()) {
+					if (partido.getResultadoQuiniela().getValor()
+							.equals(ValorResultado.UNO)) {
+						unos++;
+					} else if (partido.getResultadoQuiniela().getValor()
+							.equals(ValorResultado.EQUIS)) {
+						equises++;
+					} else if (partido.getResultadoQuiniela().getValor()
+							.equals(ValorResultado.DOS)) {
+						doses++;
+					} else {
+						logger.error("Error al calcular las estadísticas de la jornada");
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * @uml.property name="fecha"
@@ -130,13 +169,60 @@ public class Jornada {
 		return partido;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Numero="+numeroJornada;
+		return "Numero=" + numeroJornada;
+	}
+
+	/**
+	 * @return the unos
+	 */
+	public Integer getUnos() {
+		return unos;
+	}
+
+	/**
+	 * @param unos
+	 *            the unos to set
+	 */
+	public void setUnos(Integer unos) {
+		this.unos = unos;
+	}
+
+	/**
+	 * @return the equises
+	 */
+	public Integer getEquises() {
+		return equises;
+	}
+
+	/**
+	 * @param equises
+	 *            the equises to set
+	 */
+	public void setEquises(Integer equises) {
+		this.equises = equises;
+	}
+
+	/**
+	 * @return the doses
+	 */
+	public Integer getDoses() {
+		return doses;
+	}
+
+	/**
+	 * @param doses
+	 *            the doses to set
+	 */
+	public void setDoses(Integer doses) {
+		this.doses = doses;
 	}
 
 }

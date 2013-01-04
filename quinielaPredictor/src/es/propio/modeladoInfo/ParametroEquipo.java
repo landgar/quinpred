@@ -1,6 +1,6 @@
 package es.propio.modeladoInfo;
 
-public class ParametroEquipo {
+public class ParametroEquipo implements Comparable<ParametroEquipo> {
 
 	private ParametroNombre nombre;
 	private Integer valor;
@@ -46,6 +46,11 @@ public class ParametroEquipo {
 	 */
 	public void setValor(Integer valor) {
 		this.valor = valor;
+	}
+
+	@Override
+	public int compareTo(ParametroEquipo parametro) {
+		return nombre.compareTo(parametro.getNombre());
 	}
 
 }

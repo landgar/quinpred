@@ -15,6 +15,7 @@ import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
 import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
+import es.propio.modeladoInfo.ParametrizadorPartido;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
@@ -54,6 +55,10 @@ public class Principal {
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
+
+		// Parametrizador
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador.getTemporadaPrimera());
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador.getTemporadaSegunda());
 
 		System.out
 				.println("PASADO: Comparando algoritmos con datos pasados...");

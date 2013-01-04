@@ -6,8 +6,12 @@ package es.propio.modeladoInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 /**
  * Donde se almacenarán los resultados de toda la temporada hasta hoy.
@@ -26,6 +30,13 @@ public class Temporada {
 	private List<Jornada> jornadas;
 	private Division division;
 
+	private Mean media1PorJornada;
+	private Mean mediaXPorJornada;
+	private Mean media2PorJornada;
+	private StandardDeviation std1PorJornada;
+	private StandardDeviation stdXPorJornada;
+	private StandardDeviation std2PorJornada;
+
 	public Temporada() {
 		super();
 	}
@@ -34,6 +45,29 @@ public class Temporada {
 		super();
 		this.jornadas = jornadas;
 		this.division = division;
+	}
+
+	public void calcularEstadisticas() {
+		media1PorJornada = new Mean();
+		mediaXPorJornada = new Mean();
+		media2PorJornada = new Mean();
+		std1PorJornada = new StandardDeviation();
+		stdXPorJornada = new StandardDeviation();
+		std2PorJornada = new StandardDeviation();
+		Iterator<Jornada> iter = jornadas.iterator();
+		while (iter.hasNext()) {
+			Jornada jornada = iter.next();
+			if (jornada.getSeHaJugado()) {
+				jornada.calcularEstadisticas();
+				media1PorJornada.increment(Double.valueOf(jornada.getUnos()));
+				mediaXPorJornada
+						.increment(Double.valueOf(jornada.getEquises()));
+				media2PorJornada.increment(Double.valueOf(jornada.getDoses()));
+				std1PorJornada.increment(Double.valueOf(jornada.getUnos()));
+				stdXPorJornada.increment(Double.valueOf(jornada.getEquises()));
+				std2PorJornada.increment(Double.valueOf(jornada.getDoses()));
+			}
+		}
 	}
 
 	public Integer getNumeroGanadosAnteriores(final Equipo equipo,
@@ -135,6 +169,20 @@ public class Temporada {
 			pasadas.add(todas.get(i));
 		}
 		return pasadas;
+	}
+
+	public List<Partido> getPartidosPasados() {
+		return getPartidosPasados(getNumeroJornadaActual());
+	}
+
+	public List<Partido> getPartidosPasados(final Integer numeroJornada) {
+		List<Jornada> todas = getJornadas();
+		List<Partido> partidos = new ArrayList<Partido>();
+		int indiceActual = numeroJornada - 1;
+		for (int i = 0; i < indiceActual; i++) {
+			partidos.addAll(todas.get(i).getPartidos());
+		}
+		return partidos;
 	}
 
 	public Jornada getJornadaActual() {
@@ -280,6 +328,96 @@ public class Temporada {
 	 */
 	public void setJornadas(List<Jornada> jornadas) {
 		this.jornadas = jornadas;
+	}
+
+	/**
+	 * @return the media1PorJornada
+	 */
+	public Mean getMedia1PorJornada() {
+		return media1PorJornada;
+	}
+
+	/**
+	 * @param media1PorJornada
+	 *            the media1PorJornada to set
+	 */
+	public void setMedia1PorJornada(Mean media1PorJornada) {
+		this.media1PorJornada = media1PorJornada;
+	}
+
+	/**
+	 * @return the mediaXPorJornada
+	 */
+	public Mean getMediaXPorJornada() {
+		return mediaXPorJornada;
+	}
+
+	/**
+	 * @param mediaXPorJornada
+	 *            the mediaXPorJornada to set
+	 */
+	public void setMediaXPorJornada(Mean mediaXPorJornada) {
+		this.mediaXPorJornada = mediaXPorJornada;
+	}
+
+	/**
+	 * @return the media2PorJornada
+	 */
+	public Mean getMedia2PorJornada() {
+		return media2PorJornada;
+	}
+
+	/**
+	 * @param media2PorJornada
+	 *            the media2PorJornada to set
+	 */
+	public void setMedia2PorJornada(Mean media2PorJornada) {
+		this.media2PorJornada = media2PorJornada;
+	}
+
+	/**
+	 * @return the std1PorJornada
+	 */
+	public StandardDeviation getStd1PorJornada() {
+		return std1PorJornada;
+	}
+
+	/**
+	 * @param std1PorJornada
+	 *            the std1PorJornada to set
+	 */
+	public void setStd1PorJornada(StandardDeviation std1PorJornada) {
+		this.std1PorJornada = std1PorJornada;
+	}
+
+	/**
+	 * @return the stdXPorJornada
+	 */
+	public StandardDeviation getStdXPorJornada() {
+		return stdXPorJornada;
+	}
+
+	/**
+	 * @param stdXPorJornada
+	 *            the stdXPorJornada to set
+	 */
+	public void setStdXPorJornada(StandardDeviation stdXPorJornada) {
+		this.stdXPorJornada = stdXPorJornada;
+	}
+
+	/**
+	 * @return the std2PorJornada
+	 */
+	public StandardDeviation getStd2PorJornada() {
+		return std2PorJornada;
+	}
+
+	/**
+	 * @param std2PorJornada
+	 *            the std2PorJornada to set
+	 */
+	public void setStd2PorJornada(StandardDeviation std2PorJornada) {
+		this.std2PorJornada = std2PorJornada;
 	}
 
 	public Jornada getJornadaExacta(Integer numeroJornada) {

@@ -18,6 +18,7 @@ public class ParametroAvanzadoPrimeraHtml {
 	private Integer tarjetasRojas;
 	private Integer jugadoresUtilizados;
 	private Integer paradasPortero;
+	private Integer numJornada;
 
 	@Override
 	public String toString() {
@@ -26,7 +27,8 @@ public class ParametroAvanzadoPrimeraHtml {
 				+ " rematesContra=" + rematesContra + " tarjetasAmarillas="
 				+ tarjetasAmarillas + " tarjetasRojas=" + tarjetasRojas
 				+ " jugadoresUtilizados=" + jugadoresUtilizados
-				+ " paradasPortero=" + paradasPortero;
+				+ " paradasPortero=" + paradasPortero + " numJornada="
+				+ numJornada;
 	}
 
 	public String getNombreEquipo() {
@@ -83,6 +85,14 @@ public class ParametroAvanzadoPrimeraHtml {
 
 	public void setParadasPortero(Integer paradasPortero) {
 		this.paradasPortero = paradasPortero;
+	}
+
+	public Integer getNumJornada() {
+		return numJornada;
+	}
+
+	public void setNumJornada(Integer numJornada) {
+		this.numJornada = numJornada;
 	}
 
 }

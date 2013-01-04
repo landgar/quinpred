@@ -121,6 +121,13 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 		this.idAlgoritmoPronosticador = idAlgoritmoPronosticador;
 	}
 
+	/**
+	 * @param pronosticoPartidos
+	 *            Lista de pronosticos, uno para cada partido.
+	 * @param numeroJornada
+	 *            Numero de la jornada del pronostico.
+	 * @param idAlgoritmoPronosticador
+	 */
 	public PronosticoJornada(List<PronosticoPartido> pronosticoPartidos,
 			Integer numeroJornada, IdAlgoritmoEnum idAlgoritmoPronosticador) {
 		super();

@@ -62,17 +62,23 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 
 	public ValorResultado getResultadoMasProbable() {
 		ValorResultado salida = ValorResultado.INVALIDO;
-		if (porcentaje1 > porcentajeX) {
-			if (porcentaje1 > porcentaje2) {
-				salida = ValorResultado.UNO;
+
+		if (porcentaje1 != null && porcentajeX != null && porcentaje2 != null) {
+
+			if (porcentaje1 > porcentajeX) {
+				if (porcentaje1 > porcentaje2) {
+					salida = ValorResultado.UNO;
+				} else {
+					salida = ValorResultado.DOS;
+				}
+			} else if (porcentajeX > porcentaje2) {
+				salida = ValorResultado.EQUIS;
 			} else {
 				salida = ValorResultado.DOS;
 			}
-		} else if (porcentajeX > porcentaje2) {
-			salida = ValorResultado.EQUIS;
-		} else {
-			salida = ValorResultado.DOS;
+
 		}
+
 		return salida;
 	}
 
@@ -87,7 +93,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 		return comparison;
 	}
 
-	public void reseteaPorcentajes(){
+	public void reseteaPorcentajes() {
 		setPorcentaje1(0F);
 		setPorcentaje12(0F);
 		setPorcentaje1X(0F);
@@ -96,7 +102,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 		setPorcentajeX(0F);
 		setPorcentajeX2(0F);
 	}
-	
+
 	/**
 	 * @return the porcentaje1
 	 * @uml.property name="porcentaje1"
@@ -218,6 +224,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 
 	/**
 	 * Sólo sirve para el boleto.
+	 * 
 	 * @return the posicionPartido
 	 * @uml.property name="posicionPartido"
 	 */
@@ -227,6 +234,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 
 	/**
 	 * Sólo sirve para el boleto.
+	 * 
 	 * @param posicionPartido
 	 *            the posicionPartido to set
 	 * @uml.property name="posicionPartido"
@@ -248,6 +256,12 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 	 */
 	public void setPartido(Partido partido) {
 		this.partido = partido;
+	}
+
+	@Override
+	public String toString() {
+		return getPartido().toString() + "{" + porcentaje1 + "," + porcentajeX
+				+ "," + porcentaje2 + "}";
 	}
 
 }

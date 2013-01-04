@@ -24,6 +24,7 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 	@Override
 	protected void setUp() {
 		cargador = new CargadorInformacionWebResultados(true);
+
 	}
 
 	public void testCargar() {
@@ -31,6 +32,7 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 			cargador.cargar();
 			evaluarEstructuraTemporadas();
 			evaluarParametrosComunesCargados();
+
 
 		} catch (Exception e) {
 			System.err.println("Error!!!!!!");
