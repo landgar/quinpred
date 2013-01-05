@@ -3,7 +3,11 @@
  */
 package es.propio.procesadoInfo;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +45,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 1000;
+	private static final Integer NUM_ITERACIONES = 10000;
 	Integer NUM_NEURONAS_HIDDEN_LAYER = 20;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
@@ -67,9 +71,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	 */
 	@Override
 	public void calcularPronosticoSegunda() throws Exception {
-		// predecir(getTemporadaSegunda(), getEstimacionJornadaSegunda()
-		// .getPronosticoPartidos(), getEstimacionJornadaSegunda()
-		// .getNumeroJornada());
+		predecir(getTemporadaSegunda(), getEstimacionJornadaSegunda()
+				.getPronosticoPartidos(), getEstimacionJornadaSegunda()
+				.getNumeroJornada());
 	}
 
 	private List<Partido> extraerPartidos(List<PronosticoPartido> pronosticos) {
@@ -89,9 +93,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void predecir(Temporada temporada,
 			List<PronosticoPartido> pronosticos,
 			final Integer numeroJornadaActual) throws Exception {
-		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 5,10,15,25,30 };
-		Double LEARNING_RATE_array[] = { 0.2,0.4,0.7 };
-		Double MOMENTUM_array[] = { 0.2,0.4,0.7 };
+		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 1, 2, 5, 10, 20, 30, 50 };
+		Double LEARNING_RATE_array[] = { 0.2, 0.4, 0.6, 0.8 };
+		Double MOMENTUM_array[] = { 0.2, 0.4, 0.6, 0.8 };
 
 		List<Partido> partidosYaJugados = temporada
 				.getPartidosPasados(numeroJornadaActual);
@@ -123,6 +127,13 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			for (int i = 0; i < NUM_NEURONAS_HIDDEN_LAYER_array.length; i++) {
 				for (int j = 0; j < LEARNING_RATE_array.length; j++) {
 					for (int k = 0; k < MOMENTUM_array.length; k++) {
+						Calendar cal = Calendar.getInstance();
+						cal.getTime();
+						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+						System.out
+								.println("************************************************************************"
+										+ sdf.format(cal.getTime()));
+
 						// Creo la red neuronal, la entreno y la uso
 						MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
 								matrixInputs, matrixTargets, numeroParametros);
@@ -130,6 +141,15 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 						NUM_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER_array[i];
 						LEARNING_RATE = LEARNING_RATE_array[j];
 						MOMENTUM = MOMENTUM_array[k];
+
+						// // Guardo los valores en un fichero (para
+						// NeurophStudio)
+						// List<RealMatrix> matrices = new
+						// ArrayList<RealMatrix>();
+						// matrices.add(matrixInputs);
+						// matrices.add(matrixTargets);
+						// guardarMatricesEnFichero(matrices,
+						// "trainingSetQuiniela.txt");
 
 						// learn the training set
 						entrenarRedNeuronal(matrixInputs, matrixTargets,
@@ -143,7 +163,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 						// Para los resultados obtenidos, se obtendrá una
 						// predicción
-						System.out.println("Pronostico: "
+						System.out.println("Pronóstico: "
 								+ resultados.toString());
 						generarPronosticos(resultados, pronosticos);
 
@@ -151,6 +171,36 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 						validacionEfectividadAlgoritmo(pronosticos);
 					}
 				}
+			}
+		}
+	}
+
+	private void guardarMatricesEnFichero(final List<RealMatrix> matrices,
+			final String nombreFichero) {
+		FileWriter fichero = null;
+		PrintWriter pw = null;
+		try {
+			fichero = new FileWriter(nombreFichero);
+			pw = new PrintWriter(fichero);
+			int NUMERO_FILAS = matrices.get(0).getRowDimension();
+			double valoresFila[];
+			for (int i = 0; i < NUMERO_FILAS; i++) {
+				for (RealMatrix matriz : matrices) {
+					valoresFila = matriz.getRow(i);
+					for (int j = 0; j < valoresFila.length; j++) {
+						pw.print(valoresFila[j] + "\t");
+					}
+				}
+				pw.print("\n");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != fichero)
+					fichero.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
 	}
@@ -231,9 +281,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// el real, y se van a guardar los datos.
 					ValorResultado resultadoPronosticado = pronostico
 							.getResultadoMasProbable();
-					System.out.println(entry.getKey() + ": "
-							+ resultadoCierto.getValor() + " . Pronosticado: "
-							+ resultadoPronosticado.getValor());
+					// System.out.println(entry.getKey() + ": "
+					// + resultadoCierto.getValor() + " . Pronosticado: "
+					// + resultadoPronosticado.getValor());
 					totalPartidos++;
 					if (resultadoCierto.equals(resultadoPronosticado)) {
 						totalAcertados++;
@@ -265,9 +315,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				: (totalAcertados / Double.valueOf(totalCiertos));
 
 		System.out.println("Análisis de rendimiento del algoritmo:");
-		System.out.println("num_neuronas_hidden_layer: "
-				+ NUM_NEURONAS_HIDDEN_LAYER + " learning_rate: "
-				+ LEARNING_RATE + " momentum: " + MOMENTUM);
+		System.out
+				.println("Número neuronas: " + NUM_NEURONAS_HIDDEN_LAYER
+						+ " learning_rate: " + LEARNING_RATE + " momentum: "
+						+ MOMENTUM);
 		System.out.println("porcentajeUNOSAcertados: "
 				+ porcentajeUNOSAcertados);
 		System.out.println("porcentajeEQUISAcertados: "
@@ -334,7 +385,6 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
 				Math.floor(AUMENTO_NEURONAS * (2 / 3D) * numeroParametros
 						+ matrixTargets.getColumnDimension())).intValue();
-
 		NUMERO_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER;
 		numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
 		numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
@@ -374,7 +424,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			RealVector fila = matrixInputs.getRowVector(i);
 
 			// Parámetros del partido
-			rellenarFilaMatriz(parametros, partido, fila);
+			rellenarFilaVector(parametros, partido, fila);
 
 			matrixInputs.setRowVector(i, fila);
 			// Targets (resultados esperados)
@@ -402,21 +452,31 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	private Map<String, RealVector> rellenarMatricesPrediccion(
 			final List<PronosticoPartido> pronosticos,
-			final Integer numeroParametros) {
+			final Integer numeroParametros) throws Exception {
 
-		System.out.println("Rellenando matrices de prediccion...");
+		System.out.println("Rellenando matrices de predicción...");
 
 		List<Partido> partidosAPredecir = extraerPartidos(pronosticos);
 		Map<String, RealVector> mapInputsAPredecir = new HashMap<String, RealVector>();
+		RealMatrix matriz = new Array2DRowRealMatrix(pronosticos.size(),
+				numeroParametros);
+		List<Parametro> parametros;
+		RealVector fila;
+		int i = 0;
 		for (Partido partido : partidosAPredecir) {
-			List<Parametro> parametros = partido.getParametros();
-			RealVector fila = new ArrayRealVector(numeroParametros);
-
-			rellenarFilaMatriz(parametros, partido, fila);
-			mapInputsAPredecir.put(partido.getID(), fila);
+			parametros = partido.getParametros();
+			fila = matriz.getRowVector(i);
+			rellenarFilaVector(parametros, partido, fila);
+			matriz.setRowVector(i, fila);
+			i++;
 		}
-
-		System.out.println("Matrices de prediccion llenas.");
+		normalizarMatriz(matriz);
+		i = 0;
+		for (Partido partido : partidosAPredecir) {
+			mapInputsAPredecir.put(partido.getID(), matriz.getRowVector(i));
+			i++;
+		}
+		System.out.println("Matrices de predicción llenas.");
 		return mapInputsAPredecir;
 	}
 
@@ -434,14 +494,20 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			minimo = columna.getMinValue();
 			Double diferencia = maximo - minimo;
 			if (diferencia == 0) {
-				throw new Exception(
-						"No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
-								+ col);
-			}
-			// Se normalizan todos sus valores
-			for (int z = 0; z < columna.getDimension(); z++) {
-				valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
-				columna.setEntry(z, valor);
+				// Se ha comentado, dado que el número de la jornada es un
+				// parámetro, y siempre es el mismo para los partidos a predecir
+				// throw new Exception(
+				// "No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
+				// + col);
+				for (int z = 0; z < columna.getDimension(); z++) {
+					columna.setEntry(z, 1);
+				}
+			} else {
+				// Se normalizan todos sus valores
+				for (int z = 0; z < columna.getDimension(); z++) {
+					valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
+					columna.setEntry(z, valor);
+				}
 			}
 			// Se reemplaza la columna poniendo la columna normalizada
 			matrixInputs.setColumnVector(col, columna);
@@ -451,7 +517,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	}
 
-	private void rellenarFilaMatriz(List<Parametro> parametros,
+	private void rellenarFilaVector(List<Parametro> parametros,
 			Partido partido, RealVector fila) {
 		int j;
 		for (j = 0; j < parametros.size(); j++) {
@@ -481,6 +547,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	 *            test set
 	 * @return Mapa de # fila de partido y resultados.
 	 */
+
 	public static Map<String, RealVector> testNeuralNetwork(
 			NeuralNetwork neuralNet, Map<String, RealVector> mapInputsAPredecir) {
 		Map<String, RealVector> resultados = new HashMap<String, RealVector>();
@@ -499,9 +566,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
-//		BackPropagation bp = (BackPropagation) event.getSource();
-//		System.out.println("Iteración: " + bp.getCurrentIteration()
-//				+ ". Error total: " + bp.getTotalNetworkError());
+		BackPropagation bp = (BackPropagation) event.getSource();
+		if (bp.getCurrentIteration() % 5000 == 0)
+			System.out.println("Iteración: " + bp.getCurrentIteration()
+					+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
 }
