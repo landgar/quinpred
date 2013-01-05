@@ -45,7 +45,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 10000;
+	private static final Integer NUM_ITERACIONES = 1;
 	Integer NUM_NEURONAS_HIDDEN_LAYER = 20;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
@@ -93,9 +93,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void predecir(Temporada temporada,
 			List<PronosticoPartido> pronosticos,
 			final Integer numeroJornadaActual) throws Exception {
-		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 1, 2, 5, 10, 20, 30, 50 };
-		Double LEARNING_RATE_array[] = { 0.2, 0.4, 0.6, 0.8 };
-		Double MOMENTUM_array[] = { 0.2, 0.4, 0.6, 0.8 };
+		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 1 };
+		Double LEARNING_RATE_array[] = { 0.2,};
+		Double MOMENTUM_array[] = { 0.8 };
 
 		List<Partido> partidosYaJugados = temporada
 				.getPartidosPasados(numeroJornadaActual);
@@ -281,9 +281,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// el real, y se van a guardar los datos.
 					ValorResultado resultadoPronosticado = pronostico
 							.getResultadoMasProbable();
-					// System.out.println(entry.getKey() + ": "
-					// + resultadoCierto.getValor() + " . Pronosticado: "
-					// + resultadoPronosticado.getValor());
+					 System.out.println(entry.getKey() + ": "
+					 + resultadoCierto.getValor() + " . Pronosticado: "
+					 + resultadoPronosticado.getValor());
 					totalPartidos++;
 					if (resultadoCierto.equals(resultadoPronosticado)) {
 						totalAcertados++;
