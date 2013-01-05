@@ -159,6 +159,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			final List<PronosticoPartido> pronosticos) throws Exception {
 		Map<String, ValorResultado> resultadosCiertos = new HashMap<>();
 
+		System.out
+				.println("Validacion del algoritmo con resultados jugados de jornada_Primera=17 y jornada_Segunda=19");
+
 		// primera: jornada jugada = 17
 		resultadosCiertos.put(Equipo.P_ATHLETIC + "-" + Equipo.P_ZARAGOZA,
 				ValorResultado.DOS);
