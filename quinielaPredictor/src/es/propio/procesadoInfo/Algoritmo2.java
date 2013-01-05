@@ -3,11 +3,9 @@
  */
 package es.propio.procesadoInfo;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
-import es.propio.modeladoInfo.Equipo;
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.Partido;
@@ -45,8 +43,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 1;
-	Integer NUM_NEURONAS_HIDDEN_LAYER = 20;
+	private static final Integer NUM_ITERACIONES = 10000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
@@ -93,10 +90,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void predecir(Temporada temporada,
 			List<PronosticoPartido> pronosticos,
 			final Integer numeroJornadaActual) throws Exception {
-		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 1 };
-		Double LEARNING_RATE_array[] = { 0.2,};
-		Double MOMENTUM_array[] = { 0.8 };
-
+		System.out
+				.println("*****************************************************");
 		List<Partido> partidosYaJugados = temporada
 				.getPartidosPasados(numeroJornadaActual);
 
@@ -124,236 +119,88 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			// Preparación para el uso de redes neuronales
 			normalizarMatriz(matrixInputs);
 
-			for (int i = 0; i < NUM_NEURONAS_HIDDEN_LAYER_array.length; i++) {
-				for (int j = 0; j < LEARNING_RATE_array.length; j++) {
-					for (int k = 0; k < MOMENTUM_array.length; k++) {
-						Calendar cal = Calendar.getInstance();
-						cal.getTime();
-						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-						System.out
-								.println("************************************************************************"
-										+ sdf.format(cal.getTime()));
+			// Creo la red neuronal, la entreno y la uso
+			MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
+					matrixInputs, matrixTargets, numeroParametros);
 
-						// Creo la red neuronal, la entreno y la uso
-						MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
-								matrixInputs, matrixTargets, numeroParametros);
+			// learn the training set
+			entrenarRedNeuronal(matrixInputs, matrixTargets, myMlPerceptron);
 
-						NUM_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER_array[i];
-						LEARNING_RATE = LEARNING_RATE_array[j];
-						MOMENTUM = MOMENTUM_array[k];
+			// Predicción de salidas
+			Map<String, RealVector> resultados = testNeuralNetwork(
+					myMlPerceptron,
+					rellenarMatricesPrediccion(pronosticos, numeroParametros));
 
-						// // Guardo los valores en un fichero (para
-						// NeurophStudio)
-						// List<RealMatrix> matrices = new
-						// ArrayList<RealMatrix>();
-						// matrices.add(matrixInputs);
-						// matrices.add(matrixTargets);
-						// guardarMatricesEnFichero(matrices,
-						// "trainingSetQuiniela.txt");
+			// Para los resultados obtenidos, se obtendrá una
+			// predicción
+			System.out.println("Pronóstico: " + resultados.toString());
+			generarPronosticos(resultados, pronosticos, temporada.getDivision());
 
-						// learn the training set
-						entrenarRedNeuronal(matrixInputs, matrixTargets,
-								myMlPerceptron);
-
-						// Predicción de salidas
-						Map<String, RealVector> resultados = testNeuralNetwork(
-								myMlPerceptron,
-								rellenarMatricesPrediccion(pronosticos,
-										numeroParametros));
-
-						// Para los resultados obtenidos, se obtendrá una
-						// predicción
-						System.out.println("Pronóstico: "
-								+ resultados.toString());
-						generarPronosticos(resultados, pronosticos);
-
-						// Comprobación de efectividad del sistema
-						validacionEfectividadAlgoritmo(pronosticos);
-					}
-				}
-			}
 		}
-	}
-
-	private void guardarMatricesEnFichero(final List<RealMatrix> matrices,
-			final String nombreFichero) {
-		FileWriter fichero = null;
-		PrintWriter pw = null;
-		try {
-			fichero = new FileWriter(nombreFichero);
-			pw = new PrintWriter(fichero);
-			int NUMERO_FILAS = matrices.get(0).getRowDimension();
-			double valoresFila[];
-			for (int i = 0; i < NUMERO_FILAS; i++) {
-				for (RealMatrix matriz : matrices) {
-					valoresFila = matriz.getRow(i);
-					for (int j = 0; j < valoresFila.length; j++) {
-						pw.print(valoresFila[j] + "\t");
-					}
-				}
-				pw.print("\n");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (null != fichero)
-					fichero.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
-
-	private void validacionEfectividadAlgoritmo(
-			final List<PronosticoPartido> pronosticos) throws Exception {
-		Map<String, ValorResultado> resultadosCiertos = new HashMap<>();
-
-		System.out
-				.println("Validacion del algoritmo con resultados jugados de jornada_Primera=17 y jornada_Segunda=19");
-
-		// primera: jornada jugada = 17
-		resultadosCiertos.put(Equipo.P_ATHLETIC + "-" + Equipo.P_ZARAGOZA,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.P_ATLETICO + "-" + Equipo.P_CELTA,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.P_OSASUNA + "-" + Equipo.P_GRANADA,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.P_BETIS + "-" + Equipo.P_MALLORCA,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.P_VALLADOLID + "-" + Equipo.P_BARCELONA,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.P_ESPANYOL + "-" + Equipo.P_DEPORTIVO,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.P_REAL_SOCIEDAD + "-" + Equipo.P_SEVILLA,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.P_RAYO + "-" + Equipo.P_LEVANTE,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.P_MALAGA + "-" + Equipo.P_REAL_MADRID,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.P_VALENCIA + "-" + Equipo.P_GETAFE,
-				ValorResultado.UNO);
-
-		// segunda: jornada jugada = 19
-		resultadosCiertos.put(Equipo.S_JEREZ + "-" + Equipo.S_VILLAREAL,
-				ValorResultado.EQUIS);
-		resultadosCiertos.put(Equipo.S_SABADELL + "-" + Equipo.S_LUGO,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.S_ALMERIA + "-" + Equipo.S_ALCORCON,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.S_RM_CASTILLA + "-" + Equipo.S_ELCHE,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.S_CORDOBA + "-" + Equipo.S_RECREATIVO,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.S_SPORTING + "-" + Equipo.S_HUESCA,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.S_PONFERRADINA + "-" + Equipo.S_MURCIA,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.S_GUADALAJARA + "-" + Equipo.S_RACING,
-				ValorResultado.EQUIS);
-		resultadosCiertos.put(Equipo.S_HERCULES + "-" + Equipo.S_NUMANCIA,
-				ValorResultado.DOS);
-		resultadosCiertos.put(Equipo.S_LAS_PALMAS + "-" + Equipo.S_MIRANDES,
-				ValorResultado.UNO);
-		resultadosCiertos.put(Equipo.S_BARCELONA_B + "-" + Equipo.S_GIRONA,
-				ValorResultado.EQUIS);
-
-		Integer totalUNOSCiertos = 0, totalDOSESCiertos = 0, totalEQUISCiertos = 0, totalCiertos = 0, totalPartidos = 0;
-		Integer totalUNOSAcertados = 0, totalDOSESAcertados = 0, totalEQUISAcertados = 0, totalAcertados = 0;
-		Double porcentajeUNOSAcertados = 0D, porcentajeDOSESAcertados = 0D, porcentajeEQUISAcertados = 0D, porcentajeTotalAcertados = 0D;
-
-		for (Map.Entry<String, ValorResultado> entry : resultadosCiertos
-				.entrySet()) {
-			ValorResultado resultadoCierto = entry.getValue();
-			totalCiertos++;
-			if (resultadoCierto.equals(ValorResultado.UNO)) {
-				totalUNOSCiertos++;
-			} else if (resultadoCierto.equals(ValorResultado.EQUIS)) {
-				totalEQUISCiertos++;
-			} else if (resultadoCierto.equals(ValorResultado.DOS)) {
-				totalDOSESCiertos++;
-			} else {
-				throw new Exception("Resultado no permitido");
-			}
-			for (PronosticoPartido pronostico : pronosticos) {
-				if (pronostico.getPartido().getID().equals(entry.getKey())) {
-					// Para cada pronóstico, se va a comprobar si coincide con
-					// el real, y se van a guardar los datos.
-					ValorResultado resultadoPronosticado = pronostico
-							.getResultadoMasProbable();
-					 System.out.println(entry.getKey() + ": "
-					 + resultadoCierto.getValor() + " . Pronosticado: "
-					 + resultadoPronosticado.getValor());
-					totalPartidos++;
-					if (resultadoCierto.equals(resultadoPronosticado)) {
-						totalAcertados++;
-						if (resultadoPronosticado.equals(ValorResultado.UNO)) {
-							totalUNOSAcertados++;
-						} else if (resultadoPronosticado
-								.equals(ValorResultado.EQUIS)) {
-							totalEQUISAcertados++;
-						} else if (resultadoPronosticado
-								.equals(ValorResultado.DOS)) {
-							totalDOSESAcertados++;
-						} else {
-							throw new Exception("Resultado no permitido");
-						}
-					}
-				}
-			}
-		}
-
-		porcentajeUNOSAcertados = totalUNOSCiertos == null ? Integer.valueOf(0)
-				: (totalUNOSAcertados / Double.valueOf(totalUNOSCiertos));
-		porcentajeEQUISAcertados = totalEQUISCiertos == null ? Integer
-				.valueOf(0) : (totalEQUISAcertados / Double
-				.valueOf(totalEQUISCiertos));
-		porcentajeDOSESAcertados = totalDOSESCiertos == null ? Integer
-				.valueOf(0) : (totalDOSESAcertados / Double
-				.valueOf(totalDOSESCiertos));
-		porcentajeTotalAcertados = totalCiertos == null ? Integer.valueOf(0)
-				: (totalAcertados / Double.valueOf(totalCiertos));
-
-		System.out.println("Análisis de rendimiento del algoritmo:");
-		System.out
-				.println("Número neuronas: " + NUM_NEURONAS_HIDDEN_LAYER
-						+ " learning_rate: " + LEARNING_RATE + " momentum: "
-						+ MOMENTUM);
-		System.out.println("porcentajeUNOSAcertados: "
-				+ porcentajeUNOSAcertados);
-		System.out.println("porcentajeEQUISAcertados: "
-				+ porcentajeEQUISAcertados);
-		System.out.println("porcentajeDOSESAcertados: "
-				+ porcentajeDOSESAcertados);
-		System.out.println("porcentajeTotalAcertados: "
-				+ porcentajeTotalAcertados);
 	}
 
 	private void generarPronosticos(final Map<String, RealVector> resultados,
-			List<PronosticoPartido> pronosticos) {
+			List<PronosticoPartido> pronosticos, final Division division) {
+		// Habrá 2 empates en primera, y 3 en segunda. Serán los más probables
+		// en esa jornda. Para el resto, será 1 ó 2, según su probabilidad de
+		// partido.
 		for (Map.Entry<String, RealVector> entry : resultados.entrySet()) {
 			for (PronosticoPartido pronostico : pronosticos) {
 				if (pronostico.getPartido().getID().equals(entry.getKey())) {
-					pronostico.setPorcentaje1(0F);
-					pronostico.setPorcentajeX(0F);
-					pronostico.setPorcentaje2(0F);
 					RealVector prediccionPartido = entry.getValue();
-					if (prediccionPartido.getEntry(0) > prediccionPartido
-							.getEntry(1)) {
-						if (prediccionPartido.getEntry(0) > prediccionPartido
-								.getEntry(2)) {
-							pronostico.setPorcentaje1(1F);
-						} else {
-							pronostico.setPorcentaje2(1F);
-						}
-					} else if (prediccionPartido.getEntry(1) > prediccionPartido
-							.getEntry(2)) {
-						pronostico.setPorcentajeX(1F);
+					pronostico.setPorcentaje1((float) prediccionPartido
+							.getEntry(0));
+					pronostico.setPorcentajeX((float) prediccionPartido
+							.getEntry(1));
+					pronostico.setPorcentaje2((float) prediccionPartido
+							.getEntry(2));
+				}
+			}
+		}
+		class ComparatorX implements Comparator<PronosticoPartido> {
+			@Override
+			public int compare(PronosticoPartido o1, PronosticoPartido o2) {
+				return o1.getPorcentajeX().compareTo(o2.getPorcentajeX());
+			}
+		}
+		// Pronósticos ordenados por probabilidad de empates
+		Collections.sort(pronosticos,
+				Collections.reverseOrder(new ComparatorX()));
+		List<PronosticoPartido> pronosticosConEmpates = new ArrayList<PronosticoPartido>();
+		if (division.equals(Division.PRIMERA)) {
+			// Se toman los 2 primeros partidos
+			pronosticosConEmpates.addAll(pronosticos.subList(0, 2));
+		} else if (division.equals(Division.SEGUNDA)) {
+			// Se toman los 3 primeros partidos
+			pronosticosConEmpates.addAll(pronosticos.subList(0, 3));
+		}
+
+		for (PronosticoPartido pronostico : pronosticos) {
+			for (PronosticoPartido pronosticoEmpate : pronosticosConEmpates) {
+				if (pronosticoEmpate.getPartido().getID()
+						.equals(pronostico.getPartido().getID())) {
+					// Se fija el empate
+					pronostico.setPorcentaje1(0F);
+					pronostico.setPorcentajeX(1F);
+					pronostico.setPorcentaje2(0F);
+				} else if (!pronosticosConEmpates.contains(pronostico)) {
+					// No se fija empate. Se toma 1 o 2. El más probable.
+					if (pronostico.getPorcentaje1() > pronostico
+							.getPorcentaje2()) {
+						// Se fija un 1
+						pronostico.setPorcentaje1(1F);
+						pronostico.setPorcentajeX(0F);
+						pronostico.setPorcentaje2(0F);
 					} else {
+						// Se fija un 2
+						pronostico.setPorcentaje1(0F);
+						pronostico.setPorcentajeX(0F);
 						pronostico.setPorcentaje2(1F);
 					}
 				}
 			}
+			System.out.println(pronostico.getPartido().getID() + ": "
+					+ pronostico.getResultadoMasProbable());
 		}
 	}
 
@@ -381,11 +228,12 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		// http://www.heatonresearch.com/node/707
 		// Aumento hasta 2f según:
 		// http://neuroph.sourceforge.net/tutorials/SportsPrediction/Premier%20League%20Prediction.html
-		final float AUMENTO_NEURONAS = 0.5F;
-		Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
+		final float AUMENTO_NEURONAS = 1F;
+		final Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
 				Math.floor(AUMENTO_NEURONAS * (2 / 3D) * numeroParametros
 						+ matrixTargets.getColumnDimension())).intValue();
-		NUMERO_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER;
+		System.out.println("Número de neuronas de capa oculta: "
+				+ NUMERO_NEURONAS_HIDDEN_LAYER);
 		numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
 		numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
 		numberOfNeuronsInLayers.add(matrixTargets.getColumnDimension());
@@ -566,10 +414,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
-		BackPropagation bp = (BackPropagation) event.getSource();
-		if (bp.getCurrentIteration() % 5000 == 0)
-			System.out.println("Iteración: " + bp.getCurrentIteration()
-					+ ". Error total: " + bp.getTotalNetworkError());
+//		BackPropagation bp = (BackPropagation) event.getSource();
+//		if (bp.getCurrentIteration() % 5000 == 0)
+//			System.out.println("Iteración: " + bp.getCurrentIteration()
+//					+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
 }
