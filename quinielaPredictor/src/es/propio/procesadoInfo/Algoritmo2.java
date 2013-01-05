@@ -21,6 +21,7 @@ import org.neuroph.core.learning.DataSetRow;
 import org.neuroph.core.learning.LearningRule;
 import org.neuroph.core.learning.SupervisedLearning;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 import es.propio.modeladoInfo.Equipo;
@@ -40,7 +41,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 10;
+	private static final Integer NUM_ITERACIONES = 1000;
 	Integer NUM_NEURONAS_HIDDEN_LAYER = 20;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
@@ -66,9 +67,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	 */
 	@Override
 	public void calcularPronosticoSegunda() throws Exception {
-		predecir(getTemporadaSegunda(), getEstimacionJornadaSegunda()
-				.getPronosticoPartidos(), getEstimacionJornadaSegunda()
-				.getNumeroJornada());
+		// predecir(getTemporadaSegunda(), getEstimacionJornadaSegunda()
+		// .getPronosticoPartidos(), getEstimacionJornadaSegunda()
+		// .getNumeroJornada());
 	}
 
 	private List<Partido> extraerPartidos(List<PronosticoPartido> pronosticos) {
@@ -88,9 +89,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private void predecir(Temporada temporada,
 			List<PronosticoPartido> pronosticos,
 			final Integer numeroJornadaActual) throws Exception {
-		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 1, 2 };
-		Double LEARNING_RATE_array[] = { 0.1, 0.3 };
-		Double MOMENTUM_array[] = { 0.1, 0.3 };
+		Integer NUM_NEURONAS_HIDDEN_LAYER_array[] = { 5,10,15,25,30 };
+		Double LEARNING_RATE_array[] = { 0.2,0.4,0.7 };
+		Double MOMENTUM_array[] = { 0.2,0.4,0.7 };
 
 		List<Partido> partidosYaJugados = temporada
 				.getPartidosPasados(numeroJornadaActual);
@@ -119,13 +120,13 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			// Preparación para el uso de redes neuronales
 			normalizarMatriz(matrixInputs);
 
-			// Creo la red neuronal, la entreno y la uso
-			MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
-					matrixInputs, matrixTargets, numeroParametros);
-
 			for (int i = 0; i < NUM_NEURONAS_HIDDEN_LAYER_array.length; i++) {
 				for (int j = 0; j < LEARNING_RATE_array.length; j++) {
 					for (int k = 0; k < MOMENTUM_array.length; k++) {
+						// Creo la red neuronal, la entreno y la uso
+						MultiLayerPerceptron myMlPerceptron = crearRedNeuronal(
+								matrixInputs, matrixTargets, numeroParametros);
+
 						NUM_NEURONAS_HIDDEN_LAYER = NUM_NEURONAS_HIDDEN_LAYER_array[i];
 						LEARNING_RATE = LEARNING_RATE_array[j];
 						MOMENTUM = MOMENTUM_array[k];
@@ -142,6 +143,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 						// Para los resultados obtenidos, se obtendrá una
 						// predicción
+						System.out.println("Pronostico: "
+								+ resultados.toString());
 						generarPronosticos(resultados, pronosticos);
 
 						// Comprobación de efectividad del sistema
@@ -225,6 +228,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// el real, y se van a guardar los datos.
 					ValorResultado resultadoPronosticado = pronostico
 							.getResultadoMasProbable();
+					System.out.println(entry.getKey() + ": "
+							+ resultadoCierto.getValor() + " . Pronosticado: "
+							+ resultadoPronosticado.getValor());
 					totalPartidos++;
 					if (resultadoCierto.equals(resultadoPronosticado)) {
 						totalAcertados++;
@@ -333,7 +339,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(
 				numberOfNeuronsInLayers);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())
-				.setMaxError(0.1);
+				.setMaxError(0.02);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())
 				.setLearningRate(LEARNING_RATE);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())
@@ -490,9 +496,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
-		// BackPropagation bp = (BackPropagation) event.getSource();
-		// System.out.println("Iteración: " + bp.getCurrentIteration()
-		// + ". Error total: " + bp.getTotalNetworkError());
+//		BackPropagation bp = (BackPropagation) event.getSource();
+//		System.out.println("Iteración: " + bp.getCurrentIteration()
+//				+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
 }
