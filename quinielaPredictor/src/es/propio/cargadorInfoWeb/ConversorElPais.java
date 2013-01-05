@@ -76,7 +76,7 @@ public class ConversorElPais {
 				|| normalizado.trim().equalsIgnoreCase("Hircules")) {
 			normalizado = Equipo.S_HERCULES;
 		} else if (normalizado.trim().equalsIgnoreCase("Mirandés")
-				|| normalizado.trim().equalsIgnoreCase("Mirandés")) {
+				|| normalizado.trim().equalsIgnoreCase("Mirandis")) {
 			normalizado = Equipo.S_MIRANDES;
 		}
 
