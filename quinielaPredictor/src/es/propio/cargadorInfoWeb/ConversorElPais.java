@@ -56,7 +56,9 @@ public class ConversorElPais {
 		} else if (normalizado.trim().equalsIgnoreCase("Granada C.F")) {
 			normalizado = Equipo.P_GRANADA;
 		} else if (normalizado.trim()
-				.equalsIgnoreCase("Deportivo de La Coruña")) {
+				.equalsIgnoreCase("Deportivo de La Coruña")
+				|| normalizado.trim()
+						.equalsIgnoreCase("Deportivo de La Coruna")) {
 			normalizado = Equipo.P_DEPORTIVO;
 		} else if (normalizado.trim().equalsIgnoreCase("Málaga")
 				|| normalizado.trim().equalsIgnoreCase("Milaga")) {
@@ -77,6 +79,8 @@ public class ConversorElPais {
 				|| normalizado.trim().equalsIgnoreCase("Mirandés")) {
 			normalizado = Equipo.S_MIRANDES;
 		}
+
+		// System.out.println("EL PAIS " + normalizado);
 
 		return normalizado;
 	}
