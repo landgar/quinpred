@@ -26,7 +26,6 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
-import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.Partido;
@@ -420,10 +419,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
-		// BackPropagation bp = (BackPropagation) event.getSource();
-		// if (bp.getCurrentIteration() % 5000 == 0)
-		// System.out.println("Iteración: " + bp.getCurrentIteration()
-		// + ". Error total: " + bp.getTotalNetworkError());
+		BackPropagation bp = (BackPropagation) event.getSource();
+		if (bp.getCurrentIteration() % 5000 == 0)
+			System.out.println("Iteración: " + bp.getCurrentIteration()
+					+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
 }
