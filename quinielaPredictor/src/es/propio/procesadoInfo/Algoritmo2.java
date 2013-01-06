@@ -134,16 +134,17 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			// Para los resultados obtenidos, se obtendrá una
 			// predicción
 			System.out.println("Pronóstico: " + resultados.toString());
-			generarPronosticos(resultados, pronosticos, temporada.getDivision());
+			generarPronosticos(resultados, pronosticos, temporada);
 
 		}
 	}
 
 	private void generarPronosticos(final Map<String, RealVector> resultados,
-			List<PronosticoPartido> pronosticos, final Division division) {
-		// Habrá 2 empates en primera, y 3 en segunda. Serán los más probables
-		// en esa jornda. Para el resto, será 1 ó 2, según su probabilidad de
-		// partido.
+			List<PronosticoPartido> pronosticos, final Temporada temporada) {
+		// Habrá 'x' empates en primera, e 'y' en segunda. Serán los más
+		// probables
+		// en esa jornada. Para el resto, será 1 ó 2, según su probabilidad de
+		// partido. 'x' e 'y' dependen de la media en la temporada.
 		for (Map.Entry<String, RealVector> entry : resultados.entrySet()) {
 			for (PronosticoPartido pronostico : pronosticos) {
 				if (pronostico.getPartido().getID().equals(entry.getKey())) {
@@ -167,13 +168,18 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		Collections.sort(pronosticos,
 				Collections.reverseOrder(new ComparatorX()));
 		List<PronosticoPartido> pronosticosConEmpates = new ArrayList<PronosticoPartido>();
-		if (division.equals(Division.PRIMERA)) {
-			// Se toman los 2 primeros partidos
-			pronosticosConEmpates.addAll(pronosticos.subList(0, 2));
-		} else if (division.equals(Division.SEGUNDA)) {
-			// Se toman los 3 primeros partidos
-			pronosticosConEmpates.addAll(pronosticos.subList(0, 3));
+		Integer numeroEmpatesEnPrediccion;
+		temporada.calcularEstadisticas();
+		if (temporada.getMediaXPorJornada() != null) {
+			numeroEmpatesEnPrediccion = (int) Math.round(temporada
+					.getMediaXPorJornada().getResult());
+		} else {
+			// Caso de la primera jornada
+			numeroEmpatesEnPrediccion = 2;
 		}
+		// Se toman los 'x' primeros partidos
+		pronosticosConEmpates.addAll(pronosticos.subList(0,
+				numeroEmpatesEnPrediccion));
 
 		for (PronosticoPartido pronostico : pronosticos) {
 			for (PronosticoPartido pronosticoEmpate : pronosticosConEmpates) {
@@ -414,10 +420,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
-//		BackPropagation bp = (BackPropagation) event.getSource();
-//		if (bp.getCurrentIteration() % 5000 == 0)
-//			System.out.println("Iteración: " + bp.getCurrentIteration()
-//					+ ". Error total: " + bp.getTotalNetworkError());
+		// BackPropagation bp = (BackPropagation) event.getSource();
+		// if (bp.getCurrentIteration() % 5000 == 0)
+		// System.out.println("Iteración: " + bp.getCurrentIteration()
+		// + ". Error total: " + bp.getTotalNetworkError());
 	}
 
 }
