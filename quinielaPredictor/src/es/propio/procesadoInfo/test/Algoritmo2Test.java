@@ -24,7 +24,7 @@ import es.propio.procesadoInfo.IdAlgoritmoEnum;
  * 
  */
 public class Algoritmo2Test {
-
+	public static final boolean MODO_MOCK = true;
 	/**
 	 * @param args
 	 */
@@ -33,7 +33,7 @@ public class Algoritmo2Test {
 		System.out.println("TEST Algoritmo2Test");
 		// Relleno el universo Temporada
 		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
-				true);
+				MODO_MOCK);
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
