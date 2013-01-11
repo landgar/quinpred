@@ -18,7 +18,7 @@ public class HandlerHtmlParamPrimeraTest extends TestCase {
 	@Override
 	protected void setUp() {
 		handler = new HandlerHtmlParamPrimera("",
-				ParametroNombre.REMATES_A_FAVOR);
+				ParametroNombre.REMATES_FAVOR);
 	}
 
 	public void testCrearParamAvanzado() {

@@ -39,9 +39,6 @@ public class Algoritmo2Test {
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
 		Algoritmo2 alg = new Algoritmo2(temporadaPrimera, temporadaSegunda);
 		calcula(alg, cargador);
-		// TODO: descomentar
-		// alg.pintame();
-
 	}
 
 	private static void calcula(Algoritmo2 alg,

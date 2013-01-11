@@ -42,7 +42,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 10000;
+	private static final Integer NUM_ITERACIONES = 15000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 

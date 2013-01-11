@@ -123,9 +123,7 @@ public class HandlerHtmlParamPrimera {
 		param.setNombreEquipo(ConversorElPais
 				.conversionNombreEquipos(nombreEquipo));
 
-		if (tipoParametro.equals(ParametroNombre.REMATES_A_FAVOR)) {
-			param.setRematesFavor(Integer.valueOf(total));
-		} else if (tipoParametro.equals(ParametroNombre.REMATES_EN_CONTRA)) {
+		if (tipoParametro.equals(ParametroNombre.REMATES_EN_CONTRA)) {
 			param.setRematesContra(Integer.valueOf(total));
 		} else if (tipoParametro.equals(ParametroNombre.TARJETAS_AMARILLAS)) {
 			param.setTarjetasAmarillas(Integer.valueOf(total));
@@ -135,8 +133,53 @@ public class HandlerHtmlParamPrimera {
 			param.setJugadoresUtilizados(Integer.valueOf(total));
 		} else if (tipoParametro.equals(ParametroNombre.PARADAS_DEL_PORTERO)) {
 			param.setParadasPortero(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_BALON_PARADO)) {
+			param.setAfBalonParado(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_CABEZA)) {
+			param.setAfCabeza(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_FALTA_DIRECTA)) {
+			param.setAfFaltaDirecta(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_JUGADA_COLECTIVA)) {
+			param.setAfJugadaColectiva(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_JUGADA_INDIVIDUAL)) {
+			param.setAfJugadaIndividual(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_PENALTY)) {
+			param.setAfPenalty(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_PIE_IZQUIERDO)) {
+			param.setAfPieIzquierdo(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.AF_PIE_DERECHO)) {
+			param.setAfPieDerecho(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.EN_CONTRA)) {
+			param.setEnContra(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.GC_PENALTY)) {
+			param.setGcPenalty(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.GOLES_TITULAR)) {
+			param.setGolesTitular(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.GOLES_SUPLENTES)) {
+			param.setGolesSuplentes(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.REMATES_FAVOR)) {
+			param.setRematesFavor(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_BALON_PARADO)) {
+			param.setRfBalonParado(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_CABEZA)) {
+			param.setRfCabeza(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_FUERA)) {
+			param.setRfFuera(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_JUGADA_COLECTIVA)) {
+			param.setRfJugadaColectiva(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_JUGADA_INDIVIDUAL)) {
+			param.setRfJugadaIndividual(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_PENALTY)) {
+			param.setRfPenalty(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_PIE_IZQUIERDO)) {
+			param.setRfPieIzquierdo(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_PIE_DERECHO)) {
+			param.setRfPieDerecho(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_POSTE)) {
+			param.setRfPoste(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RF_PORTERIA)) {
+			param.setRfPorteria(Integer.valueOf(total));
 		}
-
 		// System.out.println(param.toString());
 		return param;
 	}
@@ -206,10 +249,6 @@ public class HandlerHtmlParamPrimera {
 
 		Set<ParametroEquipo> params = new HashSet<ParametroEquipo>();
 
-		if (paramHtml.getRematesFavor() != null) {
-			params.add(new ParametroEquipo(ParametroNombre.REMATES_A_FAVOR,
-					paramHtml.getRematesFavor()));
-		}
 		if (paramHtml.getRematesContra() != null) {
 			params.add(new ParametroEquipo(ParametroNombre.REMATES_EN_CONTRA,
 					paramHtml.getRematesContra()));
@@ -233,7 +272,104 @@ public class HandlerHtmlParamPrimera {
 			params.add(new ParametroEquipo(ParametroNombre.PARADAS_DEL_PORTERO,
 					paramHtml.getParadasPortero()));
 		}
-
+		if (paramHtml.getAfBalonParado() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_BALON_PARADO,
+					paramHtml.getAfBalonParado()));
+		}
+		if (paramHtml.getAfCabeza() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_CABEZA, paramHtml
+					.getAfCabeza()));
+		}
+		if (paramHtml.getAfFaltaDirecta() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_FALTA_DIRECTA,
+					paramHtml.getAfFaltaDirecta()));
+		}
+		if (paramHtml.getAfJugadaColectiva() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_JUGADA_COLECTIVA,
+					paramHtml.getAfJugadaColectiva()));
+		}
+		if (paramHtml.getAfJugadaIndividual() != null) {
+			params.add(new ParametroEquipo(
+					ParametroNombre.AF_JUGADA_INDIVIDUAL, paramHtml
+							.getAfJugadaIndividual()));
+		}
+		if (paramHtml.getAfPenalty() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_PENALTY,
+					paramHtml.getAfPenalty()));
+		}
+		if (paramHtml.getAfPieIzquierdo() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_PIE_IZQUIERDO,
+					paramHtml.getAfPieIzquierdo()));
+		}
+		if (paramHtml.getAfPieDerecho() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.AF_PIE_DERECHO,
+					paramHtml.getAfPieDerecho()));
+		}
+		if (paramHtml.getEnContra() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.EN_CONTRA, paramHtml
+					.getEnContra()));
+		}
+		if (paramHtml.getGcCabeza() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GC_CABEZA, paramHtml
+					.getGcCabeza()));
+		}
+		if (paramHtml.getGcPenalty() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GC_PENALTY,
+					paramHtml.getGcPenalty()));
+		}
+		if (paramHtml.getGolesTitular() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GOLES_TITULAR,
+					paramHtml.getGolesTitular()));
+		}
+		if (paramHtml.getGolesSuplentes() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.GOLES_SUPLENTES,
+					paramHtml.getGolesSuplentes()));
+		}
+		if (paramHtml.getRematesFavor() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.REMATES_FAVOR,
+					paramHtml.getRematesFavor()));
+		}
+		if (paramHtml.getRfBalonParado() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_BALON_PARADO,
+					paramHtml.getRfBalonParado()));
+		}
+		if (paramHtml.getRfCabeza() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_CABEZA, paramHtml
+					.getRfCabeza()));
+		}
+		if (paramHtml.getRfFuera() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_FUERA, paramHtml
+					.getRfFuera()));
+		}
+		if (paramHtml.getRfJugadaColectiva() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_JUGADA_COLECTIVA,
+					paramHtml.getRfJugadaColectiva()));
+		}
+		if (paramHtml.getRfJugadaIndividual() != null) {
+			params.add(new ParametroEquipo(
+					ParametroNombre.RF_JUGADA_INDIVIDUAL, paramHtml
+							.getRfJugadaIndividual()));
+		}
+		if (paramHtml.getRfPenalty() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_PENALTY,
+					paramHtml.getRfPenalty()));
+		}
+		if (paramHtml.getRfPieIzquierdo() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_PIE_IZQUIERDO,
+					paramHtml.getRfPieIzquierdo()));
+		}
+		if (paramHtml.getRfPieDerecho() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_PIE_DERECHO,
+					paramHtml.getRfPieDerecho()));
+		}
+		if (paramHtml.getRfPoste() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_POSTE, paramHtml
+					.getRfPoste()));
+		}
+		if (paramHtml.getRfPorteria() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RF_PORTERIA,
+					paramHtml.getRfPorteria()));
+		}
 		return params;
 	}
 
