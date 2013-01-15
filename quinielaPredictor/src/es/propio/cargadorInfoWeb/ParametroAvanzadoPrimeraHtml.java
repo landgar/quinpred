@@ -15,8 +15,6 @@ public class ParametroAvanzadoPrimeraHtml {
 
 	private String nombreEquipo; // nombre equipo
 	private Integer rematesContra;
-	private Integer tarjetasAmarillas;
-	private Integer tarjetasRojas;
 	private Integer jugadoresUtilizados;
 	private Integer paradasPortero;
 	private Integer afBalonParado;
@@ -43,6 +41,13 @@ public class ParametroAvanzadoPrimeraHtml {
 	private Integer rfPieDerecho;
 	private Integer rfPoste;
 	private Integer rfPorteria;
+	private Integer rcCabeza;
+	private Integer rcFuera;
+	private Integer rcPorteria;
+	private Integer rcPoste;
+	private Integer tarjetasAmarillas;
+	private Integer tarjetasRojas;
+	
 
 	@Override
 	public String toString() {
@@ -452,6 +457,62 @@ public class ParametroAvanzadoPrimeraHtml {
 	 */
 	public void setRfPorteria(Integer rfPorteria) {
 		this.rfPorteria = rfPorteria;
+	}
+
+	/**
+	 * @return the rcCabeza
+	 */
+	public Integer getRcCabeza() {
+		return rcCabeza;
+	}
+
+	/**
+	 * @param rcCabeza the rcCabeza to set
+	 */
+	public void setRcCabeza(Integer rcCabeza) {
+		this.rcCabeza = rcCabeza;
+	}
+
+	/**
+	 * @return the rcFuera
+	 */
+	public Integer getRcFuera() {
+		return rcFuera;
+	}
+
+	/**
+	 * @param rcFuera the rcFuera to set
+	 */
+	public void setRcFuera(Integer rcFuera) {
+		this.rcFuera = rcFuera;
+	}
+
+	/**
+	 * @return the rcPorteria
+	 */
+	public Integer getRcPorteria() {
+		return rcPorteria;
+	}
+
+	/**
+	 * @param rcPorteria the rcPorteria to set
+	 */
+	public void setRcPorteria(Integer rcPorteria) {
+		this.rcPorteria = rcPorteria;
+	}
+
+	/**
+	 * @return the rcPoste
+	 */
+	public Integer getRcPoste() {
+		return rcPoste;
+	}
+
+	/**
+	 * @param rcPoste the rcPoste to set
+	 */
+	public void setRcPoste(Integer rcPoste) {
+		this.rcPoste = rcPoste;
 	}
 
 

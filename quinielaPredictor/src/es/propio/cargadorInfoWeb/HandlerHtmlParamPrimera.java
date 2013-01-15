@@ -179,7 +179,16 @@ public class HandlerHtmlParamPrimera {
 			param.setRfPoste(Integer.valueOf(total));
 		} else if (tipoParametro.equals(ParametroNombre.RF_PORTERIA)) {
 			param.setRfPorteria(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RC_CABEZA)) {
+			param.setRcCabeza(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RC_FUERA)) {
+			param.setRcFuera(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RC_PORTERIA)) {
+			param.setRcPorteria(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.RC_POSTE)) {
+			param.setRcPoste(Integer.valueOf(total));
 		}
+
 		// System.out.println(param.toString());
 		return param;
 	}
@@ -370,6 +379,23 @@ public class HandlerHtmlParamPrimera {
 			params.add(new ParametroEquipo(ParametroNombre.RF_PORTERIA,
 					paramHtml.getRfPorteria()));
 		}
+		if (paramHtml.getRcCabeza() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RC_CABEZA, paramHtml
+					.getRcCabeza()));
+		}
+		if (paramHtml.getRcFuera() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RC_FUERA, paramHtml
+					.getRcFuera()));
+		}
+		if (paramHtml.getRcPorteria() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RC_PORTERIA,
+					paramHtml.getRcPorteria()));
+		}
+		if (paramHtml.getRcPoste() != null) {
+			params.add(new ParametroEquipo(ParametroNombre.RC_POSTE, paramHtml
+					.getRcPoste()));
+		}
+
 		return params;
 	}
 

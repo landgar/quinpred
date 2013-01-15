@@ -33,11 +33,6 @@ public class CargadorInformacionWebResultados {
 	private static final String MARCA_CLASIFICACION_SEGUNDA = "http://www.marca.com/estadisticas/futbol/segunda/2012_13";
 
 	// PARAMETROS AVANZADOS DE PRIMERA
-	private static final String EL_PAIS_PRIMERA_REMATES_CONTRA_MOCK = "websSimuladas/el_pais_primera_remates_contra.htm";
-	private static final String EL_PAIS_PRIMERA_TARJETAS_AMARILLAS_MOCK = "websSimuladas/el_pais_primera_tarjetas_amarillas.htm";
-	private static final String EL_PAIS_PRIMERA_TARJETAS_ROJAS_MOCK = "websSimuladas/el_pais_primera_tarjetas_rojas.htm";
-	private static final String EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS_MOCK = "websSimuladas/el_pais_primera_jugadores_utilizados.htm";
-	private static final String EL_PAIS_PRIMERA_PARADAS_PORTERO_MOCK = "websSimuladas/el_pais_primera_paradas_portero.htm";
 	private static final String EL_PAIS_PRIMERA_AF_BALON_PARADO_MOCK = "websSimuladas/el_pais_primera_af_balon_parado.htm";
 	private static final String EL_PAIS_PRIMERA_AF_CABEZA_MOCK = "websSimuladas/el_pais_primera_af_cabeza.htm";
 	private static final String EL_PAIS_PRIMERA_AF_FALTA_DIRECTA_MOCK = "websSimuladas/el_pais_primera_af_falta_directa.htm";
@@ -62,11 +57,16 @@ public class CargadorInformacionWebResultados {
 	private static final String EL_PAIS_PRIMERA_RF_PIE_DERECHO_MOCK = "websSimuladas/el_pais_primera_rf_pie_derecho.htm";
 	private static final String EL_PAIS_PRIMERA_RF_POSTE_MOCK = "websSimuladas/el_pais_primera_rf_poste.htm";
 	private static final String EL_PAIS_PRIMERA_RF_PORTERIA_MOCK = "websSimuladas/el_pais_primera_rf_porteria.htm";
+	private static final String EL_PAIS_PRIMERA_REMATES_CONTRA_MOCK = "websSimuladas/el_pais_primera_remates_contra.htm";
+	private static final String EL_PAIS_PRIMERA_RC_CABEZA_MOCK = "websSimuladas/el_pais_primera_rc_cabeza.htm";
+	private static final String EL_PAIS_PRIMERA_RC_FUERA_MOCK = "websSimuladas/el_pais_primera_rc_fuera.htm";
+	private static final String EL_PAIS_PRIMERA_RC_PORTERIA_MOCK = "websSimuladas/el_pais_primera_rc_porteria.htm";
+	private static final String EL_PAIS_PRIMERA_RC_POSTE_MOCK = "websSimuladas/el_pais_primera_rc_poste.htm";
+	private static final String EL_PAIS_PRIMERA_TARJETAS_AMARILLAS_MOCK = "websSimuladas/el_pais_primera_tarjetas_amarillas.htm";
+	private static final String EL_PAIS_PRIMERA_TARJETAS_ROJAS_MOCK = "websSimuladas/el_pais_primera_tarjetas_rojas.htm";
 
-	private static final String EL_PAIS_PRIMERA_TARJETAS_AMARILLAS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=32";
-	private static final String EL_PAIS_PRIMERA_TARJETAS_ROJAS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=31";
-	private static final String EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=46";
-	private static final String EL_PAIS_PRIMERA_PARADAS_PORTERO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=47";
+	private static final String EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS_MOCK = "websSimuladas/el_pais_primera_jugadores_utilizados.htm";
+	private static final String EL_PAIS_PRIMERA_PARADAS_PORTERO_MOCK = "websSimuladas/el_pais_primera_paradas_portero.htm";
 
 	private static final String EL_PAIS_PRIMERA_AF_BALON_PARADO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=1";
 	private static final String EL_PAIS_PRIMERA_AF_CABEZA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=2";
@@ -83,7 +83,6 @@ public class CargadorInformacionWebResultados {
 	private static final String EL_PAIS_PRIMERA_GOLES_SUPLENTES = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=14";
 	private static final String EL_PAIS_PRIMERA_REMATES_FAVOR = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=15";
 	private static final String EL_PAIS_PRIMERA_RF_BALON_PARADO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=16";
-
 	private static final String EL_PAIS_PRIMERA_RF_CABEZA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=17";
 	private static final String EL_PAIS_PRIMERA_RF_FUERA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=18";
 	private static final String EL_PAIS_PRIMERA_RF_JUGADA_COLECTIVA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=19";
@@ -93,8 +92,16 @@ public class CargadorInformacionWebResultados {
 	private static final String EL_PAIS_PRIMERA_RF_PIE_DERECHO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=23";
 	private static final String EL_PAIS_PRIMERA_RF_POSTE = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=24";
 	private static final String EL_PAIS_PRIMERA_RF_PORTERIA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=25";
-
 	private static final String EL_PAIS_PRIMERA_REMATES_CONTRA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=26";
+	private static final String EL_PAIS_PRIMERA_RC_CABEZA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=27";
+	private static final String EL_PAIS_PRIMERA_RC_FUERA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=28";
+	private static final String EL_PAIS_PRIMERA_RC_PORTERIA = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=29";
+	private static final String EL_PAIS_PRIMERA_RC_POSTE = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=30";
+	private static final String EL_PAIS_PRIMERA_TARJETAS_AMARILLAS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=32";
+	private static final String EL_PAIS_PRIMERA_TARJETAS_ROJAS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=31";
+
+	private static final String EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=46";
+	private static final String EL_PAIS_PRIMERA_PARADAS_PORTERO = "http://www.elpais.com/deportes/estadisticas/equipos/primera/?categoria=47";
 
 	private Temporada temporadaPrimera;
 	private Temporada temporadaSegunda;
@@ -247,6 +254,18 @@ public class CargadorInformacionWebResultados {
 				numJornadaActualPrimera);
 		cargarParamPrimera(ParametroNombre.RF_PORTERIA,
 				EL_PAIS_PRIMERA_RF_PORTERIA_MOCK, EL_PAIS_PRIMERA_RF_PORTERIA,
+				numJornadaActualPrimera);
+		cargarParamPrimera(ParametroNombre.RC_CABEZA,
+				EL_PAIS_PRIMERA_RC_CABEZA_MOCK, EL_PAIS_PRIMERA_RC_CABEZA,
+				numJornadaActualPrimera);
+		cargarParamPrimera(ParametroNombre.RC_FUERA,
+				EL_PAIS_PRIMERA_RC_FUERA_MOCK, EL_PAIS_PRIMERA_RC_FUERA,
+				numJornadaActualPrimera);
+		cargarParamPrimera(ParametroNombre.RC_PORTERIA,
+				EL_PAIS_PRIMERA_RC_PORTERIA_MOCK, EL_PAIS_PRIMERA_RC_PORTERIA,
+				numJornadaActualPrimera);
+		cargarParamPrimera(ParametroNombre.RC_POSTE,
+				EL_PAIS_PRIMERA_RC_POSTE_MOCK, EL_PAIS_PRIMERA_RC_POSTE,
 				numJornadaActualPrimera);
 
 		// // util para red neuronal

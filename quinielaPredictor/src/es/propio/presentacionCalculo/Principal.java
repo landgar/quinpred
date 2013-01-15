@@ -22,6 +22,7 @@ import es.propio.modeladoInfo.Temporada;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.Algoritmo2;
+import es.propio.procesadoInfo.Algoritmo3;
 
 /**
  * @author i3casa
@@ -57,8 +58,10 @@ public class Principal {
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
 
 		// Parametrizador
-		ParametrizadorPartido.cargarParametrosDePartidos(cargador.getTemporadaPrimera());
-		ParametrizadorPartido.cargarParametrosDePartidos(cargador.getTemporadaSegunda());
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador
+				.getTemporadaPrimera());
+		ParametrizadorPartido.cargarParametrosDePartidos(cargador
+				.getTemporadaSegunda());
 
 		System.out
 				.println("PASADO: Comparando algoritmos con datos pasados...");
@@ -67,6 +70,8 @@ public class Principal {
 				.add(new Algoritmo1(temporadaPrimera, temporadaSegunda));
 		algoritmosUsados
 				.add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
+		algoritmosUsados
+				.add(new Algoritmo3(temporadaPrimera, temporadaSegunda));
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda);
 

@@ -42,7 +42,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 15000;
+	private static final Integer NUM_ITERACIONES = 20000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
@@ -204,7 +204,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					}
 				}
 			}
-			System.out.println(pronostico.getPartido().getID() + ": "
+			
+			//TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN DADOS LA VUELTA RESPECTO AL RESULTADO A ESCRIBIR EN EL BOLETO!!!!!.
+			System.out.println(pronostico.getPartido().getID() + " gana la posición "
 					+ pronostico.getResultadoMasProbable());
 		}
 	}
@@ -245,7 +247,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(
 				numberOfNeuronsInLayers);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())
-				.setMaxError(0.02);
+				.setMaxError(0.05);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())
 				.setLearningRate(LEARNING_RATE);
 		((SupervisedLearning) myMlPerceptron.getLearningRule())

@@ -30,8 +30,8 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 		List<PronosticoPartido> lista = getEstimacionJornadaPrimera()
 				.getPronosticoPartidos();
 		for (PronosticoPartido pronostico : lista) {
-			pronostico.setPorcentaje1(0F);
-			pronostico.setPorcentajeX(1F);
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
 			pronostico.setPorcentaje2(0F);
 		}
 	}
@@ -41,8 +41,8 @@ public class Algoritmo1 extends AbstractAlgoritmo {
 		List<PronosticoPartido> lista = getEstimacionJornadaSegunda()
 				.getPronosticoPartidos();
 		for (PronosticoPartido pronostico : lista) {
-			pronostico.setPorcentaje1(0F);
-			pronostico.setPorcentajeX(1F);
+			pronostico.setPorcentaje1(1F);
+			pronostico.setPorcentajeX(0F);
 			pronostico.setPorcentaje2(0F);
 		}
 	}
