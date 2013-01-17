@@ -28,6 +28,7 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
+import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
@@ -45,6 +46,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private static final Integer NUM_ITERACIONES = 20000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
+
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -181,32 +184,76 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				numeroEmpatesEnPrediccion));
 
 		for (PronosticoPartido pronostico : pronosticos) {
+			// Inicialización
+			pronostico.setPorcentaje1(0F);
+			pronostico.setPorcentajeX(0F);
+			pronostico.setPorcentaje2(0F);
 			for (PronosticoPartido pronosticoEmpate : pronosticosConEmpates) {
 				if (pronosticoEmpate.getPartido().getID()
 						.equals(pronostico.getPartido().getID())) {
 					// Se fija el empate
-					pronostico.setPorcentaje1(0F);
 					pronostico.setPorcentajeX(1F);
-					pronostico.setPorcentaje2(0F);
 				} else if (!pronosticosConEmpates.contains(pronostico)) {
 					// No se fija empate. Se toma 1 o 2. El más probable.
+					// Mejora: Si están próximas esas probabilidades, se toma el
+					// equipo con mejor clasificación en la liga.
 					if (pronostico.getPorcentaje1() > pronostico
 							.getPorcentaje2()) {
-						// Se fija un 1
-						pronostico.setPorcentaje1(1F);
-						pronostico.setPorcentajeX(0F);
-						pronostico.setPorcentaje2(0F);
+						if (pronostico.getPorcentaje1() > pronostico
+								.getPorcentaje2()
+								+ VARIABILIDAD_MINIMA_EN_PROBABILIDAD)
+							// Se fija un 1
+							pronostico.setPorcentaje1(1F);
+						else {
+							ParametroEquipo posicionLocal = pronostico
+									.getPartido()
+									.getEquipoLocal()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							ParametroEquipo posicionVisitante = pronostico
+									.getPartido()
+									.getEquipoVisitante()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							// Si está más abajo en la tabla de clasificación,
+							// pierde.
+							if (posicionLocal.getValor() > posicionVisitante
+									.getValor()) {
+								pronostico.setPorcentaje2(1F);
+							}
+						}
 					} else {
-						// Se fija un 2
-						pronostico.setPorcentaje1(0F);
-						pronostico.setPorcentajeX(0F);
-						pronostico.setPorcentaje2(1F);
+						if (pronostico.getPorcentaje2() > pronostico
+								.getPorcentaje1()
+								+ VARIABILIDAD_MINIMA_EN_PROBABILIDAD) {
+							// Se fija un 2
+							pronostico.setPorcentaje2(1F);
+						} else {
+							ParametroEquipo posicionLocal = pronostico
+									.getPartido()
+									.getEquipoLocal()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							ParametroEquipo posicionVisitante = pronostico
+									.getPartido()
+									.getEquipoVisitante()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							// Si está más abajo en la tabla de clasificación,
+							// pierde.
+							if (posicionVisitante.getValor() > posicionLocal
+									.getValor()) {
+								pronostico.setPorcentaje1(1F);
+							}
+						}
 					}
 				}
 			}
-			
-			//TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN DADOS LA VUELTA RESPECTO AL RESULTADO A ESCRIBIR EN EL BOLETO!!!!!.
-			System.out.println(pronostico.getPartido().getID() + " gana la posición "
+
+			// TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN DADOS
+			// LA VUELTA RESPECTO AL RESULTADO A ESCRIBIR EN EL BOLETO!!!!!.
+			System.out.println(pronostico.getPartido().getID()
+					+ " gana la posición "
 					+ pronostico.getResultadoMasProbable());
 		}
 	}

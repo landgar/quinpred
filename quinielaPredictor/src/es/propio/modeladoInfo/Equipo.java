@@ -327,6 +327,18 @@ public class Equipo implements Comparable<Equipo> {
 		this.parametros = parametros;
 	}
 
+	public ParametroEquipo getParametro(final ParametroNombre nombre) {
+		ParametroEquipo parametroSalida = new ParametroEquipo(
+				ParametroNombre.INVALIDO, 0);
+		for (ParametroEquipo parametro : parametros) {
+			if (parametro.equals(nombre)) {
+				parametroSalida = parametro;
+				break;
+			}
+		}
+		return parametroSalida;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
