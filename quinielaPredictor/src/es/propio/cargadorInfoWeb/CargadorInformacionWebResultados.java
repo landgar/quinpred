@@ -115,6 +115,7 @@ public class CargadorInformacionWebResultados {
 	public void cargar() throws Exception {
 		cargarEstructuraTemporadas();
 		int numJornadaActualPrimera = cargarParametrosComunesEquipos();
+		cargarParametrosInternos();
 		cargarParametrosPrimeraEquipos(numJornadaActualPrimera);
 	}
 
@@ -131,6 +132,16 @@ public class CargadorInformacionWebResultados {
 				.extraerDatos(webPrimeraCalendario);
 		temporadaSegunda = HandlerHtmlResultados
 				.extraerDatos(webSegundaCalendario);
+	}
+
+	/**
+	 * En cada temporada, carga parámetros autocalculables con los datos propios
+	 * de los partidos de la temporada. Por ejemplo, los goles acumulados en
+	 * casa, o los partidos ganados en casa, todo para la temporada actual.
+	 */
+	private void cargarParametrosInternos() {
+		temporadaPrimera.cargarParametrosDeJornadaAnterioresYActual();
+		temporadaSegunda.cargarParametrosDeJornadaAnterioresYActual();
 	}
 
 	/**

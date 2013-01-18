@@ -1,6 +1,7 @@
 package es.propio.modeladoInfo;
 
-public class ParametroEquipo implements Comparable<ParametroEquipo> {
+public class ParametroEquipo extends AbstractParametro implements
+		Comparable<ParametroEquipo> {
 
 	private ParametroNombre nombre;
 	private Integer valor;

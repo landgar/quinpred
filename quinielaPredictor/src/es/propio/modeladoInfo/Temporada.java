@@ -294,6 +294,89 @@ public class Temporada {
 		return golesTotales;
 	}
 
+	public void cargarParametrosDeJornadaAnterioresYActual() {
+		Integer numJornadaActual = getNumeroJornadaActual();
+		for (Jornada j : this.getJornadas()) {
+			Integer numeroJornada = j.getNumeroJornada();
+			if (numeroJornada <= numJornadaActual) {
+				for (Partido partido : j.getPartidos()) {
+					// Se añaden los parámetros del partido
+					Equipo local = partido.getEquipoLocal();
+					Equipo visitante = partido.getEquipoVisitante();
+
+					cargarParametrosEquipo(local, numeroJornada);
+					cargarParametrosEquipo(visitante, numeroJornada);
+
+					// Parámetros especiales propios de partido
+					local.getParametros().add(
+							new ParametroEquipo(ParametroNombre.JUEGA_EN_CASA,
+									1));
+					local.getParametros()
+							.add(new ParametroEquipo(
+									ParametroNombre.JUEGA_FUERA, 0));
+					visitante.getParametros().add(
+							new ParametroEquipo(ParametroNombre.JUEGA_EN_CASA,
+									0));
+					visitante.getParametros()
+							.add(new ParametroEquipo(
+									ParametroNombre.JUEGA_FUERA, 1));
+
+				}
+			}
+		}
+	}
+
+	private void cargarParametrosEquipo(Equipo equipo, Integer numeroJornada) {
+		List<ParametroEquipo> parametrosNuevos = new ArrayList<ParametroEquipo>();
+
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PARTIDOS_GANADOS, getNumeroGanadosAnteriores(
+						equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PARTIDOS_EMPATADOS,
+				getNumeroEmpatadosAnteriores(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PARTIDOS_PERDIDOS, getNumeroPerdidosAnteriores(
+						equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.NUMEROJORNADA,
+				numeroJornada));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.NUMERO_UNOS_ANTERIORES,
+				getNumeroUnosAnteriores(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.NUMERO_EQUIS_ANTERIORES,
+				getNumeroEmpatesAnteriores(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.NUMERO_DOSES_ANTERIORES,
+				getNumeroDosesAnteriores(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PUNTOSNORMALES, getPuntosAnterioresA(equipo,
+						numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOSSIMPLES,
+				getPuntosSimplesAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOSSIMPLES,
+				getPuntosSimplesAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESTOTALESAFAVOR,
+				getGolesTotalesAFavorAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESENCASAAFAVOR,
+				getGolesEnCasaAFavorAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESFUERAAFAVOR,
+				getGolesFueraAFavorAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESTOTALESENCONTRA,
+				getGolesTotalesEnContraAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESENCASAENCONTRA,
+				getGolesEnCasaEnContraAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.GOLESFUERAENCONTRA,
+				getGolesFueraEnContraAnterioresA(equipo, numeroJornada)));
+		equipo.getParametros().addAll(parametrosNuevos);
+	}
+
 	/**
 	 * @return the division
 	 */

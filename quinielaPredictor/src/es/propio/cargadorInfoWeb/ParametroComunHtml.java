@@ -3,13 +3,15 @@
  */
 package es.propio.cargadorInfoWeb;
 
+import es.propio.modeladoInfo.AbstractParametro;
+
 /**
  * Parametro comun leido desde Html.
  * 
  * @author carlos.andres
  * 
  */
-public class ParametroComunHtml {
+public class ParametroComunHtml extends AbstractParametro {
 
 	private String nombre; // nombre equipo
 	private Integer posicion;

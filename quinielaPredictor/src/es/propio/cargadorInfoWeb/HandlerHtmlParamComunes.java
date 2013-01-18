@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import es.propio.modeladoInfo.AbstractParametro;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.ParametroNombre;

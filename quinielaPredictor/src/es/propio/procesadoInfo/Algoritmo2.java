@@ -185,9 +185,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 		for (PronosticoPartido pronostico : pronosticos) {
 			// Inicialización
-			pronostico.setPorcentaje1(0F);
-			pronostico.setPorcentajeX(0F);
-			pronostico.setPorcentaje2(0F);
+			// pronostico.setPorcentaje1(0F);
+			// pronostico.setPorcentajeX(0F);
+			// pronostico.setPorcentaje2(0F);
 			for (PronosticoPartido pronosticoEmpate : pronosticosConEmpates) {
 				if (pronosticoEmpate.getPartido().getID()
 						.equals(pronostico.getPartido().getID())) {
@@ -197,7 +197,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// No se fija empate. Se toma 1 o 2. El más probable.
 					// Mejora: Si están próximas esas probabilidades, se toma el
 					// equipo con mejor clasificación en la liga.
-					if (pronostico.getPorcentaje1() > pronostico
+					if (pronostico.getPorcentaje1() >= pronostico
 							.getPorcentaje2()) {
 						if (pronostico.getPorcentaje1() > pronostico
 								.getPorcentaje2()
@@ -248,9 +248,10 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 						}
 					}
 				}
-			}
 
-			// TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN DADOS
+			}
+			// TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN
+			// DADOS
 			// LA VUELTA RESPECTO AL RESULTADO A ESCRIBIR EN EL BOLETO!!!!!.
 			System.out.println(pronostico.getPartido().getID()
 					+ " gana la posición "
