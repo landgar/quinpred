@@ -56,26 +56,26 @@ public class ConversorElPais {
 		} else if (normalizado.trim().equalsIgnoreCase("Granada C.F")) {
 			normalizado = Equipo.P_GRANADA;
 		} else if (normalizado.trim()
-				.equalsIgnoreCase("Deportivo de La Coruña")
+				.equalsIgnoreCase("Deportivo de La CoruÃ±a")
 				|| normalizado.trim()
 						.equalsIgnoreCase("Deportivo de La Coruna")) {
 			normalizado = Equipo.P_DEPORTIVO;
-		} else if (normalizado.trim().equalsIgnoreCase("Málaga")
+		} else if (normalizado.trim().equalsIgnoreCase("MÃ¡laga")
 				|| normalizado.trim().equalsIgnoreCase("Milaga")) {
 			normalizado = Equipo.P_MALAGA;
 		} else if (normalizado.trim().equalsIgnoreCase("At. Madrid")
 				|| normalizado.trim().equalsIgnoreCase("Atlitico")) {
 			normalizado = Equipo.P_ATLETICO;
-		} else if (normalizado.trim().equalsIgnoreCase("Córdoba")
+		} else if (normalizado.trim().equalsIgnoreCase("CÃ³rdoba")
 				|| normalizado.trim().equalsIgnoreCase("Cirdoba")) {
 			normalizado = Equipo.S_CORDOBA;
-		} else if (normalizado.trim().equalsIgnoreCase("Alcorcón")
+		} else if (normalizado.trim().equalsIgnoreCase("AlcorcÃ³n")
 				|| normalizado.trim().equalsIgnoreCase("Alcorcin")) {
 			normalizado = Equipo.S_ALCORCON;
-		} else if (normalizado.trim().equalsIgnoreCase("Hércules")
+		} else if (normalizado.trim().equalsIgnoreCase("HÃ©rcules")
 				|| normalizado.trim().equalsIgnoreCase("Hircules")) {
 			normalizado = Equipo.S_HERCULES;
-		} else if (normalizado.trim().equalsIgnoreCase("Mirandés")
+		} else if (normalizado.trim().equalsIgnoreCase("MirandÃ©s")
 				|| normalizado.trim().equalsIgnoreCase("Mirandis")) {
 			normalizado = Equipo.S_MIRANDES;
 		}

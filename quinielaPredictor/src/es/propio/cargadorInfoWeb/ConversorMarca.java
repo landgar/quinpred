@@ -5,7 +5,7 @@ import java.text.Normalizer;
 import es.propio.modeladoInfo.Equipo;
 
 /**
- * Conversor de los campos que leemos en ww.marca.com
+ * Conversor de los campos que leemos en www.marca.com
  * 
  * @author carlos.andres
  * 
@@ -32,10 +32,10 @@ public class ConversorMarca {
 			salida = Equipo.P_REAL_MADRID;
 		} else if (salida.trim().equalsIgnoreCase("R. Sociedad")) {
 			salida = Equipo.P_REAL_SOCIEDAD;
-		} else if (salida.trim().equalsIgnoreCase("Málaga")
+		} else if (salida.trim().equalsIgnoreCase("MÃ¡laga")
 				|| salida.trim().equalsIgnoreCase("MAlaga")) {
 			salida = Equipo.P_MALAGA;
-		} else if (salida.trim().equalsIgnoreCase("Atlético")
+		} else if (salida.trim().equalsIgnoreCase("AtlÃ©tico")
 				|| salida.trim().equalsIgnoreCase("AtlAtico")) {
 			salida = Equipo.P_ATLETICO;
 		} else if (salida.trim().equalsIgnoreCase("Zaragoza")) {
@@ -46,19 +46,19 @@ public class ConversorMarca {
 			salida = Equipo.S_BARCELONA_B;
 		} else if (salida.trim().equalsIgnoreCase("Las Palmas")) {
 			salida = Equipo.S_LAS_PALMAS;
-		} else if (salida.trim().equalsIgnoreCase("Alcorcón")
+		} else if (salida.trim().equalsIgnoreCase("AlcorcÃ³n")
 				|| salida.trim().equalsIgnoreCase("AlcorcAn")) {
 			salida = Equipo.S_ALCORCON;
-		} else if (salida.trim().equalsIgnoreCase("Almería")
+		} else if (salida.trim().equalsIgnoreCase("AlmerÃ­a")
 				|| salida.trim().equalsIgnoreCase("AlmerAa")) {
 			salida = Equipo.S_ALMERIA;
-		} else if (salida.trim().equalsIgnoreCase("Córdoba")
+		} else if (salida.trim().equalsIgnoreCase("CÃ³rdoba")
 				|| salida.trim().equalsIgnoreCase("CArdoba")) {
 			salida = Equipo.S_CORDOBA;
-		} else if (salida.trim().equalsIgnoreCase("Mirandés")
+		} else if (salida.trim().equalsIgnoreCase("MirandÃ©s")
 				|| salida.trim().equalsIgnoreCase("MirandAs")) {
 			salida = Equipo.S_MIRANDES;
-		} else if (salida.trim().equalsIgnoreCase("Hércules")
+		} else if (salida.trim().equalsIgnoreCase("HÃ©rcules")
 				|| salida.trim().equalsIgnoreCase("HArcules")) {
 			salida = Equipo.S_HERCULES;
 		}

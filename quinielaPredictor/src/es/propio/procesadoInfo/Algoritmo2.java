@@ -43,11 +43,11 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 20000;
+	private static final Integer NUM_ITERACIONES = 10000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
-	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.15F;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -86,7 +86,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	/**
 	 * @param temporada
 	 * @param pronosticos
-	 *            Lista de pronósticos prerrellena en la que sólo falta rellenar
+	 *            Lista de pronï¿½sticos prerrellena en la que sï¿½lo falta rellenar
 	 *            las probabilidades de 1 X 2.
 	 */
 	private void predecir(Temporada temporada,
@@ -118,7 +118,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			rellenarMatricesEntrenamiento(partidosYaJugados, matrixInputs,
 					matrixTargets);
 
-			// Preparación para el uso de redes neuronales
+			// Preparaciï¿½n para el uso de redes neuronales
 			normalizarMatriz(matrixInputs);
 
 			// Creo la red neuronal, la entreno y la uso
@@ -128,14 +128,14 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			// learn the training set
 			entrenarRedNeuronal(matrixInputs, matrixTargets, myMlPerceptron);
 
-			// Predicción de salidas
+			// Predicciï¿½n de salidas
 			Map<String, RealVector> resultados = testNeuralNetwork(
 					myMlPerceptron,
 					rellenarMatricesPrediccion(pronosticos, numeroParametros));
 
-			// Para los resultados obtenidos, se obtendrá una
-			// predicción
-			System.out.println("Pronóstico: " + resultados.toString());
+			// Para los resultados obtenidos, se obtendrï¿½ una
+			// predicciï¿½n
+			System.out.println("Pronï¿½stico: " + resultados.toString());
 			generarPronosticos(resultados, pronosticos, temporada);
 
 		}
@@ -143,9 +143,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	private void generarPronosticos(final Map<String, RealVector> resultados,
 			List<PronosticoPartido> pronosticos, final Temporada temporada) {
-		// Habrá 'x' empates en primera, e 'y' en segunda. Serán los más
+		// Habrï¿½ 'x' empates en primera, e 'y' en segunda. Serï¿½n los mï¿½s
 		// probables
-		// en esa jornada. Para el resto, será 1 ó 2, según su probabilidad de
+		// en esa jornada. Para el resto, serï¿½ 1 ï¿½ 2, segï¿½n su probabilidad de
 		// partido. 'x' e 'y' dependen de la media en la temporada.
 		for (Map.Entry<String, RealVector> entry : resultados.entrySet()) {
 			for (PronosticoPartido pronostico : pronosticos) {
@@ -166,7 +166,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				return o1.getPorcentajeX().compareTo(o2.getPorcentajeX());
 			}
 		}
-		// Pronósticos ordenados por probabilidad de empates
+		// Pronï¿½sticos ordenados por probabilidad de empates
 		Collections.sort(pronosticos,
 				Collections.reverseOrder(new ComparatorX()));
 		List<PronosticoPartido> pronosticosConEmpates = new ArrayList<PronosticoPartido>();
@@ -184,7 +184,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				numeroEmpatesEnPrediccion));
 
 		for (PronosticoPartido pronostico : pronosticos) {
-			// Inicialización
+			// Inicializaciï¿½n
 			// pronostico.setPorcentaje1(0F);
 			// pronostico.setPorcentajeX(0F);
 			// pronostico.setPorcentaje2(0F);
@@ -194,9 +194,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// Se fija el empate
 					pronostico.setPorcentajeX(1F);
 				} else if (!pronosticosConEmpates.contains(pronostico)) {
-					// No se fija empate. Se toma 1 o 2. El más probable.
-					// Mejora: Si están próximas esas probabilidades, se toma el
-					// equipo con mejor clasificación en la liga.
+					// No se fija empate. Se toma 1 o 2. El mï¿½s probable.
+					// Mejora: Si estï¿½n prï¿½ximas esas probabilidades, se toma el
+					// equipo con mejor clasificaciï¿½n en la liga.
 					if (pronostico.getPorcentaje1() >= pronostico
 							.getPorcentaje2()) {
 						if (pronostico.getPorcentaje1() > pronostico
@@ -215,7 +215,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 									.getEquipoVisitante()
 									.getParametro(
 											ParametroNombre.POSICION_EN_CLASIFICACION);
-							// Si está más abajo en la tabla de clasificación,
+							// Si estï¿½ mï¿½s abajo en la tabla de clasificaciï¿½n,
 							// pierde.
 							if (posicionLocal.getValor() > posicionVisitante
 									.getValor()) {
@@ -239,7 +239,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 									.getEquipoVisitante()
 									.getParametro(
 											ParametroNombre.POSICION_EN_CLASIFICACION);
-							// Si está más abajo en la tabla de clasificación,
+							// Si estï¿½ mï¿½s abajo en la tabla de clasificaciï¿½n,
 							// pierde.
 							if (posicionVisitante.getValor() > posicionLocal
 									.getValor()) {
@@ -250,11 +250,11 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				}
 
 			}
-			// TODO: OJO: ¡¡¡¡LOS EQUIPOS Y PRÓNÓSTICO PUEDE QUE SE PINTEN
+			// TODO: OJO: ï¿½ï¿½ï¿½ï¿½LOS EQUIPOS Y PRï¿½Nï¿½STICO PUEDE QUE SE PINTEN
 			// DADOS
 			// LA VUELTA RESPECTO AL RESULTADO A ESCRIBIR EN EL BOLETO!!!!!.
 			System.out.println(pronostico.getPartido().getID()
-					+ " gana la posición "
+					+ " gana la posiciï¿½n "
 					+ pronostico.getResultadoMasProbable());
 		}
 	}
@@ -279,15 +279,15 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 				+ numeroParametros);
 
 		List<Integer> numberOfNeuronsInLayers = new ArrayList<Integer>();
-		// Fijado según indicaciones de:
+		// Fijado segï¿½n indicaciones de:
 		// http://www.heatonresearch.com/node/707
-		// Aumento hasta 2f según:
+		// Aumento hasta 2f segï¿½n:
 		// http://neuroph.sourceforge.net/tutorials/SportsPrediction/Premier%20League%20Prediction.html
 		final float AUMENTO_NEURONAS = 1F;
 		final Integer NUMERO_NEURONAS_HIDDEN_LAYER = Double.valueOf(
 				Math.floor(AUMENTO_NEURONAS * (2 / 3D) * numeroParametros
 						+ matrixTargets.getColumnDimension())).intValue();
-		System.out.println("Número de neuronas de capa oculta: "
+		System.out.println("Nï¿½mero de neuronas de capa oculta: "
 				+ NUMERO_NEURONAS_HIDDEN_LAYER);
 		numberOfNeuronsInLayers.add(matrixInputs.getColumnDimension());
 		numberOfNeuronsInLayers.add(NUMERO_NEURONAS_HIDDEN_LAYER);
@@ -326,7 +326,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			List<Parametro> parametros = partido.getParametros();
 			RealVector fila = matrixInputs.getRowVector(i);
 
-			// Parámetros del partido
+			// Parï¿½metros del partido
 			rellenarFilaVector(parametros, partido, fila);
 
 			matrixInputs.setRowVector(i, fila);
@@ -357,7 +357,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			final List<PronosticoPartido> pronosticos,
 			final Integer numeroParametros) throws Exception {
 
-		System.out.println("Rellenando matrices de predicción...");
+		System.out.println("Rellenando matrices de predicciï¿½n...");
 
 		List<Partido> partidosAPredecir = extraerPartidos(pronosticos);
 		Map<String, RealVector> mapInputsAPredecir = new HashMap<String, RealVector>();
@@ -379,7 +379,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			mapInputsAPredecir.put(partido.getID(), matriz.getRowVector(i));
 			i++;
 		}
-		System.out.println("Matrices de predicción llenas.");
+		System.out.println("Matrices de predicciï¿½n llenas.");
 		return mapInputsAPredecir;
 	}
 
@@ -388,7 +388,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		System.out.println("Normalizando matriz...");
 
 		// http://neuroph.sourceforge.net/tutorials/zoo/classification_of_animal_species_using_neural_network.html
-		// 1º. Normalización por columnas. Se normaliza linealmente entre 0
+		// 1ï¿½. Normalizaciï¿½n por columnas. Se normaliza linealmente entre 0
 		// y 1
 		Double maximo, minimo, valor;
 		for (int col = 0; col < matrixInputs.getColumnDimension(); col++) {
@@ -397,8 +397,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			minimo = columna.getMinValue();
 			Double diferencia = maximo - minimo;
 			if (diferencia == 0) {
-				// Se ha comentado, dado que el número de la jornada es un
-				// parámetro, y siempre es el mismo para los partidos a predecir
+				// Se ha comentado, dado que el nï¿½mero de la jornada es un
+				// parï¿½metro, y siempre es el mismo para los partidos a predecir
 				// throw new Exception(
 				// "No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
 				// + col);
@@ -471,7 +471,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	public void handleLearningEvent(LearningEvent event) {
 		BackPropagation bp = (BackPropagation) event.getSource();
 		if (bp.getCurrentIteration() % 5000 == 0)
-			System.out.println("Iteración: " + bp.getCurrentIteration()
+			System.out.println("Iteraciï¿½n: " + bp.getCurrentIteration()
 					+ ". Error total: " + bp.getTotalNetworkError());
 	}
 
