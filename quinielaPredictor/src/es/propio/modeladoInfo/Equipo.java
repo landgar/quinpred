@@ -140,14 +140,14 @@ public class Equipo implements Comparable<Equipo> {
 	public Division getDivision() {
 		List<String> nombresPrimera = getNombresEquiposPrimera();
 		List<String> nombresSegunda = getNombresEquiposSegunda();
-		// Primera división
+		// Primera divisiï¿½n
 		Division division = Division.INVALIDO;
 		if (nombresPrimera.contains(nombre)) {
 			division = Division.PRIMERA;
 		} else if (nombresSegunda.contains(nombre)) {
 			division = Division.SEGUNDA;
 		} else {
-			logger.error("No se ha podido encontrar una división para el equipo con nombre: "
+			logger.error("No se ha podido encontrar una divisiï¿½n para el equipo con nombre: "
 					+ nombre);
 		}
 		return division;
@@ -290,7 +290,7 @@ public class Equipo implements Comparable<Equipo> {
 			}
 		}
 		if (numerojornadas.equals(0F)) {
-			logger.error("ERROR: ESTIMACIÓN INCORRECTA. Pesos mal calculados, ya que no hay estadísticas para el equipo: "
+			logger.error("ERROR: ESTIMACIï¿½N INCORRECTA. Pesos mal calculados, ya que no hay estadï¿½sticas para el equipo: "
 					+ this.getNombre());
 		} else {
 			pesoGanados = pesoGanados / numerojornadas;

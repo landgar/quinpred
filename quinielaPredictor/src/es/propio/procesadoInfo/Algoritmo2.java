@@ -47,7 +47,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
-	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.15F;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
