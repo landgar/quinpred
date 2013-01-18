@@ -43,11 +43,11 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 20000;
+	private static final Integer NUM_ITERACIONES = 1000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
-	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.15F;
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.25F;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
