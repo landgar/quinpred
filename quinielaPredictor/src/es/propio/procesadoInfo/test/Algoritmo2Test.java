@@ -24,7 +24,7 @@ import es.propio.procesadoInfo.IdAlgoritmoEnum;
  * 
  */
 public class Algoritmo2Test {
-	public static final boolean MODO_MOCK = true;
+	public static final boolean MODO_MOCK = false;
 	/**
 	 * @param args
 	 */
