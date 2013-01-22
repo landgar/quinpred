@@ -13,7 +13,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import es.propio.modeladoInfo.AbstractParametro;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.ParametroNombre;
@@ -83,6 +82,12 @@ public class HandlerHtmlParamComunes {
 				.getNumeroJornada();
 		int numJornadaActualSegunda = temporadaSegunda.getJornadaActual()
 				.getNumeroJornada();
+
+		System.out
+				.println("HandlerHtmlParamComunes.cargarParamsComunes() Jornada_actual_primera="
+						+ numJornadaActualPrimera
+						+ " Jornada_actual_segunda="
+						+ numJornadaActualSegunda);
 
 		rellenarTemporadaActualyAnteriores(temporadaPrimera,
 				numJornadaActualPrimera, parametrosHtmlPrimera);

@@ -21,6 +21,9 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 
 	private CargadorInformacionWebResultados cargador;
 
+	private static int NUM_JORNADA_COMUNES_PRIMERA_MOCK = 21;
+	private static int NUM_JORNADA_COMUNES_SEGUNDA_MOCK = 23;
+
 	@Override
 	protected void setUp() {
 		cargador = new CargadorInformacionWebResultados(true);
@@ -32,7 +35,6 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 			cargador.cargar();
 			evaluarEstructuraTemporadas();
 			evaluarParametrosComunesCargados();
-
 
 		} catch (Exception e) {
 			System.err.println("Error!!!!!!");
@@ -56,20 +58,20 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 
 	private void evaluarParametrosComunesCargados() {
 
-		// En modo mock, los parametros comunes rellenados son de la jornada 2
-		// (en primera y segunda)
 		Jornada jornadaDePrimera = cargador.getTemporadaPrimera()
-				.getJornadaExacta(Integer.valueOf(2));
-		Set<Partido> partidosPrimeraEnJornada2 = jornadaDePrimera.getPartidos();
-		for (Partido p : partidosPrimeraEnJornada2) {
+				.getJornadaExacta(
+						Integer.valueOf(NUM_JORNADA_COMUNES_PRIMERA_MOCK));
+		Set<Partido> partidosPrimeraEnJornada = jornadaDePrimera.getPartidos();
+		for (Partido p : partidosPrimeraEnJornada) {
 			evaluarParamsComunesEnEquipo(p.getEquipoLocal());
 			evaluarParamsComunesEnEquipo(p.getEquipoVisitante());
 		}
 
 		Jornada jornadaDeSegunda = cargador.getTemporadaSegunda()
-				.getJornadaExacta(Integer.valueOf(2));
-		Set<Partido> partidosSegundaEnJornada2 = jornadaDeSegunda.getPartidos();
-		for (Partido p : partidosSegundaEnJornada2) {
+				.getJornadaExacta(
+						Integer.valueOf(NUM_JORNADA_COMUNES_SEGUNDA_MOCK));
+		Set<Partido> partidosSegundaEnJornada = jornadaDeSegunda.getPartidos();
+		for (Partido p : partidosSegundaEnJornada) {
 			evaluarParamsComunesEnEquipo(p.getEquipoLocal());
 			evaluarParamsComunesEnEquipo(p.getEquipoVisitante());
 		}

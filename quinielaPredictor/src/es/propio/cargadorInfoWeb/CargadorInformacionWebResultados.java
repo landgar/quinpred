@@ -59,10 +59,14 @@ public class CargadorInformacionWebResultados {
 	public void cargar() throws Exception {
 		cargarEstructuraTemporadas();
 		int numJornadaActualPrimera = cargarParametrosComunesEquipos();
+
 		cargarParametrosPrimeraEquipos(numJornadaActualPrimera);
 	}
 
 	private void cargarEstructuraTemporadas() throws IOException {
+
+		System.out
+				.println("CargadorInformacionWebResultados.cargarEstructuraTemporadas() Cargando ESTRUCTURA de las temporadas...");
 
 		// LEER WEBS
 		String webPrimeraCalendario = leerContenidoHtml(
@@ -84,6 +88,10 @@ public class CargadorInformacionWebResultados {
 	 * @throws IOException
 	 */
 	private int cargarParametrosComunesEquipos() throws IOException {
+
+		System.out
+				.println("CargadorInformacionWebResultados.cargarParametrosComunesEquipos() Cargando Parametros COMUNES...");
+
 		// LEER WEBS
 		String webPrimeraParamComunes = leerContenidoHtml(
 				MARCA_CLASIFICACION_PRIMERA_MOCK, MARCA_CLASIFICACION_PRIMERA);
@@ -107,6 +115,9 @@ public class CargadorInformacionWebResultados {
 	 */
 	private void cargarParametrosPrimeraEquipos(int numJornadaActualPrimera)
 			throws IOException {
+
+		System.out
+				.println("CargadorInformacionWebResultados.cargarParametrosPrimeraEquipos() Cargando parametros de PRIMERA...");
 
 		cargarParamPrimera(ParametroNombre.REMATES_FAVOR,
 				EL_PAIS_PRIMERA_REMATES_FAVOR_MOCK,

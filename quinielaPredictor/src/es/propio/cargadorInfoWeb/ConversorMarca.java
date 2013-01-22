@@ -27,6 +27,8 @@ public class ConversorMarca {
 		salida = salida.replaceAll("[^\\p{ASCII}]", "");
 		salida = salida.replaceAll("-", "");
 
+		// System.out.println("MARCA entrada=" + salida);
+
 		// Casos raros en Marca.com
 		if (salida.trim().equalsIgnoreCase("R. Madrid")) {
 			salida = Equipo.P_REAL_MADRID;
@@ -63,7 +65,7 @@ public class ConversorMarca {
 			salida = Equipo.S_HERCULES;
 		}
 
-		System.out.println("MARCA " + salida);
+		// System.out.println("MARCA salida=" + salida);
 
 		return salida;
 	}
