@@ -63,7 +63,7 @@ public class ConversorMarca {
 			salida = Equipo.S_HERCULES;
 		}
 
-		// System.out.println("MARCA " + salida);
+		System.out.println("MARCA " + salida);
 
 		return salida;
 	}
