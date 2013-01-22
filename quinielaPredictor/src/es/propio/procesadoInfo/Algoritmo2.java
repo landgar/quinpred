@@ -28,6 +28,7 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
+import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
@@ -42,11 +43,11 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 1000;
+	private static final Integer NUM_ITERACIONES = 20000;
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
-	// private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.25F;
+	 private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -198,53 +199,53 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// equipo con mejor clasificación en la liga.
 					if (pronostico.getPorcentaje1() >= pronostico
 							.getPorcentaje2()) {
-						// if (pronostico.getPorcentaje1() > pronostico
-						// .getPorcentaje2()
-						// + VARIABILIDAD_MINIMA_EN_PROBABILIDAD)
+						 if (pronostico.getPorcentaje1() > pronostico
+						 .getPorcentaje2()
+						 + VARIABILIDAD_MINIMA_EN_PROBABILIDAD)
 						// Se fija un 1
 						pronostico.setPorcentaje1(1F);
-						// else {
-						// ParametroEquipo posicionLocal = pronostico
-						// .getPartido()
-						// .getEquipoLocal()
-						// .getParametro(
-						// ParametroNombre.POSICION_EN_CLASIFICACION);
-						// ParametroEquipo posicionVisitante = pronostico
-						// .getPartido()
-						// .getEquipoVisitante()
-						// .getParametro(
-						// ParametroNombre.POSICION_EN_CLASIFICACION);
-						// // Si está más abajo en la tabla de clasificación,
-						// // pierde.
-						// if (posicionLocal.getValor() > posicionVisitante
-						// .getValor()) {
-						// pronostico.setPorcentaje2(1F);
-						// }
-						// }
+						 else {
+						 ParametroEquipo posicionLocal = pronostico
+						 .getPartido()
+						 .getEquipoLocal()
+						 .getParametro(
+						 ParametroNombre.POSICION_EN_CLASIFICACION);
+						 ParametroEquipo posicionVisitante = pronostico
+						 .getPartido()
+						 .getEquipoVisitante()
+						 .getParametro(
+						 ParametroNombre.POSICION_EN_CLASIFICACION);
+						 // Si está más abajo en la tabla de clasificación,
+						 // pierde.
+						 if (posicionLocal.getValor() > posicionVisitante
+						 .getValor()) {
+						 pronostico.setPorcentaje2(1F);
+						 }
+						 }
 					} else {
-						// if (pronostico.getPorcentaje2() > pronostico
-						// .getPorcentaje1()
-						// + VARIABILIDAD_MINIMA_EN_PROBABILIDAD) {
+						 if (pronostico.getPorcentaje2() > pronostico
+						 .getPorcentaje1()
+						 + VARIABILIDAD_MINIMA_EN_PROBABILIDAD) {
 						// Se fija un 2
 						pronostico.setPorcentaje2(1F);
-						// } else {
-						// ParametroEquipo posicionLocal = pronostico
-						// .getPartido()
-						// .getEquipoLocal()
-						// .getParametro(
-						// ParametroNombre.POSICION_EN_CLASIFICACION);
-						// ParametroEquipo posicionVisitante = pronostico
-						// .getPartido()
-						// .getEquipoVisitante()
-						// .getParametro(
-						// ParametroNombre.POSICION_EN_CLASIFICACION);
-						// // Si está más abajo en la tabla de clasificación,
-						// // pierde.
-						// if (posicionVisitante.getValor() > posicionLocal
-						// .getValor()) {
-						// pronostico.setPorcentaje1(1F);
-						// }
-						// }
+						} else {
+							ParametroEquipo posicionLocal = pronostico
+									.getPartido()
+									.getEquipoLocal()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							ParametroEquipo posicionVisitante = pronostico
+									.getPartido()
+									.getEquipoVisitante()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							// Si está más abajo en la tabla de clasificación,
+							// pierde.
+							if (posicionVisitante.getValor() > posicionLocal
+									.getValor()) {
+								pronostico.setPorcentaje1(1F);
+							}
+						}
 					}
 				}
 
