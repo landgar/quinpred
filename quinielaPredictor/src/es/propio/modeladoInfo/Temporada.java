@@ -76,16 +76,28 @@ public class Temporada {
 				ValorResultadoEquipo.GANADO);
 	}
 
+	public Integer getNumeroEmpatadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) {
+		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
+				ValorResultadoEquipo.EMPATADO);
+	}
+
 	public Integer getNumeroPerdidosAnteriores(final Equipo equipo,
 			final Integer numeroJornada) {
 		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
 				ValorResultadoEquipo.PERDIDO);
 	}
 
-	public Integer getNumeroEmpatadosAnteriores(final Equipo equipo,
-			final Integer numeroJornada) {
-		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
-				ValorResultadoEquipo.EMPATADO);
+	public Integer getNumeroGanadosPonderadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) throws Exception {
+		return getNumeroResultadosEquipoPonderadosAnteriores(equipo,
+				numeroJornada, ValorResultadoEquipo.GANADO);
+	}
+
+	public Integer getNumeroEmpatadosPonderadosAnteriores(final Equipo equipo,
+			final Integer numeroJornada) throws Exception {
+		return getNumeroResultadosEquipoPonderadosAnteriores(equipo,
+				numeroJornada, ValorResultadoEquipo.EMPATADO);
 	}
 
 	private Integer getNumeroResultadosEquipoAnteriores(final Equipo equipo,
@@ -103,6 +115,49 @@ public class Temporada {
 				if (partido.getSeHaJugado()
 						&& resultadoEquipo.equals(resultado)) {
 					salida++;
+				}
+			}
+		}
+		return salida;
+	}
+
+	private Integer getNumeroResultadosEquipoPonderadosAnteriores(
+			final Equipo equipo, final Integer numeroJornada,
+			ValorResultadoEquipo resultado) throws Exception {
+		Integer salida = 0;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
+		Integer multiplicadorPorJugarFuera;
+		Equipo equipoRival;
+		for (int i = 0; i < min; i++) {
+			jornada = jornadas.get(i);
+			Partido partido = jornada.getPartidoDondeJuega(equipo);
+			if (partido != null) {
+				ValorResultadoEquipo resultadoEquipo = partido
+						.getResultadoEquipo(equipo).getValor();
+				if (partido.getSeHaJugado()
+						&& resultadoEquipo.equals(resultado)) {
+					multiplicadorPorJugarFuera = 3;
+					if (partido.getEquipoVisitante().getNombre()
+							.equals(equipo.getNombre())) {
+						multiplicadorPorJugarFuera = 4;
+						equipoRival = partido.getEquipoLocal();
+					} else {
+						equipoRival = partido.getEquipoVisitante();
+					}
+					Integer totalEquipos;
+					if (equipo.getDivision().equals(Division.PRIMERA)) {
+						totalEquipos = NUM_EQUIPOS_PRIMERA;
+					} else if (equipo.getDivision().equals(Division.SEGUNDA)) {
+						totalEquipos = NUM_EQUIPOS_SEGUNDA;
+					} else {
+						throw new Exception("ERROR: División no controlada");
+					}
+					salida += multiplicadorPorJugarFuera
+							* (totalEquipos - equipoRival.getParametro(
+									ParametroNombre.POSICION_EN_CLASIFICACION)
+									.getValor());
 				}
 			}
 		}
@@ -160,6 +215,20 @@ public class Temporada {
 				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
 	}
 
+	/**
+	 * Será el número de ganados o empatados, pero ponderados por el valor del
+	 * rival de cada partido.
+	 * 
+	 * @param equipo
+	 * @param numeroJornada
+	 * @return
+	 */
+	public Integer getPuntosPonderadosAnterioresA(final Equipo equipo,
+			final Integer numeroJornada) throws Exception {
+		return 2 * getNumeroGanadosPonderadosAnteriores(equipo, numeroJornada)
+				+ getNumeroEmpatadosPonderadosAnteriores(equipo, numeroJornada);
+	}
+
 	public List<Jornada> getJornadasPasadas() {
 		List<Jornada> todas = getJornadas();
 		List<Jornada> pasadas = new ArrayList<Jornada>();
@@ -214,6 +283,23 @@ public class Temporada {
 			}
 		}
 		return numeroJornadaActual;
+	}
+
+	public Integer getNumeroJornadaDePartido(final Partido partido) {
+		Integer numeroJornada = -1;
+		List<Jornada> jornadas = getJornadas();
+		Jornada jornada;
+		for (int i = 0; i < jornadas.size(); i++) {
+			jornada = jornadas.get(i);
+			Set<Partido> partidos = jornada.getPartidos();
+			for (Partido partidox : partidos) {
+				if (partidox != null
+						&& partidox.getID().equals(partido.getID())) {
+					numeroJornada = jornada.getNumeroJornada();
+				}
+			}
+		}
+		return numeroJornada;
 	}
 
 	public Integer getGolesTotalesAFavorAnterioresA(final Equipo equipo,

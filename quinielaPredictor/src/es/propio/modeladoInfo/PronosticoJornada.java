@@ -52,7 +52,7 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 	 *            Resultado real de la jornada, para poder comparar con este
 	 *            pronostico.
 	 */
-	public void obtenerNumAciertos(PronosticoJornada resultadoRealJornada) {
+	public Integer obtenerNumAciertos(PronosticoJornada resultadoRealJornada) {
 
 		Integer num = null;
 
@@ -105,7 +105,7 @@ public class PronosticoJornada implements Comparable<PronosticoJornada> {
 		if (num != null) {
 			numeroAciertos = num;
 		}
-
+		return num;
 	}
 
 	public PronosticoJornada ordenarPorPosicionPartido() {

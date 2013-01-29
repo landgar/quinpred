@@ -142,7 +142,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	}
 
 	private void generarPronosticos(final Map<String, RealVector> resultados,
-			List<PronosticoPartido> pronosticos, final Temporada temporada) {
+			List<PronosticoPartido> pronosticos, final Temporada temporada) throws Exception{
 		// Habrá 'x' empates en primera, e 'y' en segunda. Serán los más
 		// probables
 		// en esa jornada. Para el resto, será 1 ó 2, según su probabilidad de
