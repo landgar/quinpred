@@ -40,7 +40,8 @@ public class EntradaAciertosJornadaDto {
 
 					Integer valor = 0;
 					if ((valor = pronosticoj.obtenerNumAciertos(realj)) != null) {
-						aciertosAcumulados += valor;
+						if (pronosticoj.getNumeroJornada() > 9)
+							aciertosAcumulados += valor;
 						System.out
 								.println("*********************************************ALGORITMO "
 										+ pronosticoj
@@ -51,8 +52,10 @@ public class EntradaAciertosJornadaDto {
 				}
 			}
 		}
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados: "
-				+ aciertosAcumulados + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados (desde la jornada 10): "
+						+ aciertosAcumulados
+						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 
 	public Map<Jornada, List<PronosticoJornada>> organizarPronosticosBulkPorJornada() {

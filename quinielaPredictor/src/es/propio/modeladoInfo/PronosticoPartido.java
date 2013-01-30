@@ -53,9 +53,7 @@ public class PronosticoPartido implements Comparable<PronosticoPartido> {
 			mensaje += nombresEquipos;
 		}
 
-		mensaje += "Posicion = " + posicionPartido + porcentajes + " --> "
-				+ "Resultado más probable : "
-				+ getResultadoMasProbable().getValor();
+		mensaje += porcentajes;
 
 		System.out.println(mensaje);
 	}

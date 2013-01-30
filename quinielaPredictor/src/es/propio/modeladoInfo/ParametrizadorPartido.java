@@ -41,7 +41,7 @@ public class ParametrizadorPartido {
 						local, numeroJornadaActual);
 				valorVisitante = temporada.getGolesTotalesEnContraAnterioresA(
 						visitante, numeroJornadaActual);
-				valor = valorVisitante - valorLocal;
+				valor = Math.abs(valorVisitante - valorLocal);
 				parametro = new Parametro(
 						ParametroNombre.DIFERENCIADEGOLESENCONTRA, valor,
 						partido);
@@ -50,9 +50,19 @@ public class ParametrizadorPartido {
 						numeroJornadaActual);
 				valorVisitante = temporada.getGolesTotalesAFavorAnterioresA(
 						visitante, numeroJornadaActual);
-				valor = valorVisitante - valorLocal;
+				valor = Math.abs(valorVisitante - valorLocal);
 				parametro = new Parametro(
 						ParametroNombre.DIFERENCIADEGOLESAFAVOR, valor, partido);
+				parametros.add(parametro);
+
+				valorLocal = temporada.getPuntosAnterioresA(local,
+						numeroJornadaActual);
+				valorVisitante = temporada.getPuntosAnterioresA(visitante,
+						numeroJornadaActual);
+				valor = Math.abs(valorVisitante - valorLocal);
+				parametro = new Parametro(
+						ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION,
+						valor, partido);
 				parametros.add(parametro);
 
 				partido.setParametros(parametros);

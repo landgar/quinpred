@@ -119,6 +119,22 @@ public class Partido {
 		return goles;
 	}
 
+	public Parametro getParametro(final ParametroNombre nombre)
+			throws Exception {
+		Parametro parametroSalida = new Parametro(ParametroNombre.INVALIDO, 0,
+				this);
+		for (Parametro parametro : parametros) {
+			if (parametro.getNombre().equals(nombre)) {
+				parametroSalida = parametro;
+				break;
+			}
+		}
+		if (parametroSalida.getNombre().equals(ParametroNombre.INVALIDO)) {
+			throw new Exception("Parámetro no encontrado");
+		}
+		return parametroSalida;
+	}
+
 	/**
 	 * @return the equipoLocal
 	 * @uml.property name="equipoLocal"
