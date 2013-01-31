@@ -140,7 +140,7 @@ public class CargadorInformacionWebResultados {
 	 * de los partidos de la temporada. Por ejemplo, los goles acumulados en
 	 * casa, o los partidos ganados en casa, todo para la temporada actual.
 	 */
-	private void cargarParametrosInternos() {
+	private void cargarParametrosInternos() throws Exception{
 		temporadaPrimera.cargarParametrosDeJornadaAnterioresYActual();
 		temporadaSegunda.cargarParametrosDeJornadaAnterioresYActual();
 	}

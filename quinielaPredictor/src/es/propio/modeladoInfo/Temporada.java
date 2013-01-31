@@ -380,7 +380,7 @@ public class Temporada {
 		return golesTotales;
 	}
 
-	public void cargarParametrosDeJornadaAnterioresYActual() {
+	public void cargarParametrosDeJornadaAnterioresYActual() throws Exception {
 		Integer numJornadaActual = getNumeroJornadaActual();
 		for (Jornada j : this.getJornadas()) {
 			Integer numeroJornada = j.getNumeroJornada();
@@ -412,7 +412,8 @@ public class Temporada {
 		}
 	}
 
-	private void cargarParametrosEquipo(Equipo equipo, Integer numeroJornada) {
+	private void cargarParametrosEquipo(Equipo equipo, Integer numeroJornada)
+			throws Exception {
 		List<ParametroEquipo> parametrosNuevos = new ArrayList<ParametroEquipo>();
 
 		parametrosNuevos.add(new ParametroEquipo(
@@ -440,8 +441,9 @@ public class Temporada {
 						numeroJornada)));
 		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOSSIMPLES,
 				getPuntosSimplesAnterioresA(equipo, numeroJornada)));
-		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOSSIMPLES,
-				getPuntosSimplesAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PUNTOS_PONDERADOS,
+				getPuntosPonderadosAnterioresA(equipo, numeroJornada)));
 		parametrosNuevos.add(new ParametroEquipo(
 				ParametroNombre.GOLESTOTALESAFAVOR,
 				getGolesTotalesAFavorAnterioresA(equipo, numeroJornada)));

@@ -65,6 +65,31 @@ public class ParametrizadorPartido {
 						valor, partido);
 				parametros.add(parametro);
 
+				valorLocal = temporada.getPuntosPonderadosAnterioresA(local,
+						numeroJornadaActual);
+				valorVisitante = temporada.getPuntosPonderadosAnterioresA(
+						visitante, numeroJornadaActual);
+				valor = Math.abs(valorVisitante - valorLocal);
+				parametro = new Parametro(
+						ParametroNombre.DIFERENCIA_PUNTOS_PONDERADOS, valor,
+						partido);
+				parametros.add(parametro);
+
+				valorLocal = temporada.getPuntosPonderadosAnterioresA(local,
+						numeroJornadaActual);
+				valorVisitante = temporada.getPuntosPonderadosAnterioresA(
+						visitante, numeroJornadaActual);
+				Integer diferencia = valorVisitante - valorLocal;
+				// Hay menos empate (más diferencia) si el local es mejor que el
+				// visitante
+				if (valorLocal > valorVisitante)
+					diferencia = diferencia + 1;
+				valor = Math.abs(diferencia);
+				parametro = new Parametro(
+						ParametroNombre.DIFERENCIA_PUNTOS_PARA_EMPATE, valor,
+						partido);
+				parametros.add(parametro);
+
 				partido.setParametros(parametros);
 
 			}
