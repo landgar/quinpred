@@ -2,8 +2,12 @@ package es.propio.graficos.aciertosjornada;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.PronosticoJornada;
@@ -33,15 +37,20 @@ public class EntradaAciertosJornadaDto {
 	 * pronosticos que acertaron.
 	 */
 	public void marcarAciertos() {
-		Integer aciertosAcumulados = 0;
+		Integer aciertosAcumulados = 0, totalAcumulados = 0;
+		List<Integer> aciertosPorJornada = new ArrayList<Integer>();
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {
 				for (PronosticoJornada pronosticoj : pronosticosJornadaBulk) {
 
 					Integer valor = 0;
 					if ((valor = pronosticoj.obtenerNumAciertos(realj)) != null) {
-						if (pronosticoj.getNumeroJornada() > 9)
+						if (pronosticoj.getNumeroJornada() > 9) {
 							aciertosAcumulados += valor;
+							totalAcumulados += pronosticoj
+									.getPronosticoPartidos().size();
+							aciertosPorJornada.add(valor);
+						}
 						System.out
 								.println("*********************************************ALGORITMO "
 										+ pronosticoj
@@ -52,9 +61,28 @@ public class EntradaAciertosJornadaDto {
 				}
 			}
 		}
+		Mean mediaPorJornada = new Mean();
+		StandardDeviation stdPorJornada = new StandardDeviation();
+		Iterator<Integer> iter = aciertosPorJornada.iterator();
+		Integer aux;
+		while (iter.hasNext()) {
+			aux = iter.next();
+			mediaPorJornada.increment(Double.valueOf(aux.toString()));
+			stdPorJornada.increment(Double.valueOf(aux.toString()));
+		}
 		System.out
 				.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados (desde la jornada 10): "
 						+ aciertosAcumulados
+						+ " / "
+						+ totalAcumulados
+						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Media por jornada: (desde la jornada 10): "
+						+ mediaPorJornada.getResult()
+						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Stddev por jornada: (desde la jornada 10): "
+						+ stdPorJornada.getResult()
 						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 

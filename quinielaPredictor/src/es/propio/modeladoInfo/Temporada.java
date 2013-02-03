@@ -70,94 +70,211 @@ public class Temporada {
 		}
 	}
 
-	public Integer getNumeroGanadosAnteriores(final Equipo equipo,
+	public Integer getNumeroGanadosAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return getNumeroResultadosEquipoAnterioresDeUltimasJornadas(equipo,
+				numeroJornada, ValorResultadoEquipo.GANADO,
+				primeraJornadaAMirar);
+	}
+
+	public Integer getNumeroEmpatadosAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return getNumeroResultadosEquipoAnterioresDeUltimasJornadas(equipo,
+				numeroJornada, ValorResultadoEquipo.EMPATADO,
+				primeraJornadaAMirar);
+	}
+
+	public Integer getNumeroPerdidosAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return getNumeroResultadosEquipoAnterioresDeUltimasJornadas(equipo,
+				numeroJornada, ValorResultadoEquipo.PERDIDO,
+				primeraJornadaAMirar);
+	}
+
+	public Integer getNumeroGanadosPonderadosAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) throws Exception {
+		return getNumeroResultadosEquipoPonderadosAnterioresDeUltimasJornadas(
+				equipo, numeroJornada, ValorResultadoEquipo.GANADO,
+				primeraJornadaAMirar);
+	}
+
+	public Integer getNumeroEmpatadosPonderadosAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) throws Exception {
+		return getNumeroResultadosEquipoPonderadosAnterioresDeUltimasJornadas(
+				equipo, numeroJornada, ValorResultadoEquipo.EMPATADO,
+				primeraJornadaAMirar);
+	}
+
+	private Integer getNumeroResultadosEquipoAnterioresDeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			ValorResultadoEquipo resultado, final Integer primeraJornadaAMirar) {
+		Integer salida = 0;
+		salida += getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+				equipo, numeroJornada, resultado, primeraJornadaAMirar,
+				Boolean.TRUE);
+		salida += getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+				equipo, numeroJornada, resultado, primeraJornadaAMirar,
+				Boolean.FALSE);
+		return salida;
+	}
+
+	/**
+	 * - para el equipo1, toma la distancia al equipo2 en POSICIONES EN
+	 * CLASIFICACIÓN (sin Math.abs) en los partidos en casa del equipo1 con
+	 * tendencia.
+	 * 
+	 * - para el equipo2, toma la distancia al equipo1 en POSICIONES EN
+	 * CLASIFICACIÓN (sin Math.abs) en casa del equipo2 con tendencia.
+	 * 
+	 * @param equipo
+	 * @param numeroJornada
+	 * @param primeraJornadaAMirar
+	 * @param rival
+	 * @return
+	 */
+	public Integer getFortalezaDeUltimasJornadas(final Equipo equipo,
+			final Integer numeroJornada, final Integer primeraJornadaAMirar,
+			final Equipo rival) {
+		Integer valor1 = getDiferenciaPuntosAnterioresADeUltimasJornadasEnCasa(
+				equipo, numeroJornada, primeraJornadaAMirar, rival);
+		Integer valor2 = getDiferenciaPuntosAnterioresADeUltimasJornadasFuera(
+				rival, numeroJornada, primeraJornadaAMirar, equipo);
+		return valor2 - valor1;
+	}
+
+	public Integer getDiferenciaPuntosAnterioresADeUltimasJornadasEnCasa(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar, final Equipo rival) {
+		Integer valor1 = getPuntosAnterioresADeUltimasJornadasEnCasa(equipo,
+				numeroJornada, primeraJornadaAMirar);
+		Integer valor2 = getPuntosAnterioresADeUltimasJornadasEnCasa(rival,
+				numeroJornada, primeraJornadaAMirar);
+		return valor2 - valor1;
+	}
+
+	public Integer getDiferenciaPuntosAnterioresADeUltimasJornadasFuera(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar, final Equipo rival) {
+		Integer valor1 = getPuntosAnterioresADeUltimasJornadasFuera(equipo,
+				numeroJornada, primeraJornadaAMirar);
+		Integer valor2 = getPuntosAnterioresADeUltimasJornadasFuera(rival,
+				numeroJornada, primeraJornadaAMirar);
+		return valor2 - valor1;
+	}
+
+	public Integer getPuntosAnterioresAEnCasa(final Equipo equipo,
 			final Integer numeroJornada) {
-		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
-				ValorResultadoEquipo.GANADO);
+		return getPuntosAnterioresADeUltimasJornadasEnCasa(equipo,
+				numeroJornada, 1);
 	}
 
-	public Integer getNumeroEmpatadosAnteriores(final Equipo equipo,
+	public Integer getPuntosAnterioresAFuera(final Equipo equipo,
 			final Integer numeroJornada) {
-		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
-				ValorResultadoEquipo.EMPATADO);
+		return getPuntosAnterioresADeUltimasJornadasFuera(equipo,
+				numeroJornada, 1);
 	}
 
-	public Integer getNumeroPerdidosAnteriores(final Equipo equipo,
-			final Integer numeroJornada) {
-		return getNumeroResultadosEquipoAnteriores(equipo, numeroJornada,
-				ValorResultadoEquipo.PERDIDO);
+	public Integer getPuntosAnterioresADeUltimasJornadasEnCasa(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return 3
+				* getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+						equipo, numeroJornada, ValorResultadoEquipo.GANADO,
+						primeraJornadaAMirar, Boolean.TRUE)
+				+ getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+						equipo, numeroJornada, ValorResultadoEquipo.EMPATADO,
+						primeraJornadaAMirar, Boolean.TRUE);
 	}
 
-	public Integer getNumeroGanadosPonderadosAnteriores(final Equipo equipo,
-			final Integer numeroJornada) throws Exception {
-		return getNumeroResultadosEquipoPonderadosAnteriores(equipo,
-				numeroJornada, ValorResultadoEquipo.GANADO);
+	public Integer getPuntosAnterioresADeUltimasJornadasFuera(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return 3
+				* getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+						equipo, numeroJornada, ValorResultadoEquipo.GANADO,
+						primeraJornadaAMirar, Boolean.FALSE)
+				+ getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+						equipo, numeroJornada, ValorResultadoEquipo.EMPATADO,
+						primeraJornadaAMirar, Boolean.FALSE);
 	}
 
-	public Integer getNumeroEmpatadosPonderadosAnteriores(final Equipo equipo,
-			final Integer numeroJornada) throws Exception {
-		return getNumeroResultadosEquipoPonderadosAnteriores(equipo,
-				numeroJornada, ValorResultadoEquipo.EMPATADO);
-	}
-
-	private Integer getNumeroResultadosEquipoAnteriores(final Equipo equipo,
-			final Integer numeroJornada, ValorResultadoEquipo resultado) {
+	private Integer getNumeroResultadosEquipoAnterioresDeUltimasJornadasPorLugar(
+			final Equipo equipo, final Integer numeroJornada,
+			ValorResultadoEquipo resultado, final Integer primeraJornadaAMirar,
+			final Boolean enCasa) {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
 		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
 		for (int i = 0; i < min; i++) {
-			jornada = jornadas.get(i);
-			Partido partido = jornada.getPartidoDondeJuega(equipo);
-			if (partido != null) {
-				ValorResultadoEquipo resultadoEquipo = partido
-						.getResultadoEquipo(equipo).getValor();
-				if (partido.getSeHaJugado()
-						&& resultadoEquipo.equals(resultado)) {
-					salida++;
+			if (i >= 0) {
+				jornada = jornadas.get(i);
+				Partido partido = jornada.getPartidoDondeJuega(equipo);
+				if (partido != null) {
+					ValorResultadoEquipo resultadoEquipo = partido
+							.getResultadoEquipo(equipo).getValor();
+					if (partido.getSeHaJugado()
+							&& resultadoEquipo.equals(resultado)) {
+						if (enCasa && partido.getEquipoLocal().equals(equipo)) {
+							salida++;
+						} else if (!enCasa
+								&& partido.getEquipoVisitante().equals(equipo)) {
+							salida++;
+						}
+					}
 				}
 			}
 		}
 		return salida;
 	}
 
-	private Integer getNumeroResultadosEquipoPonderadosAnteriores(
+	private Integer getNumeroResultadosEquipoPonderadosAnterioresDeUltimasJornadas(
 			final Equipo equipo, final Integer numeroJornada,
-			ValorResultadoEquipo resultado) throws Exception {
+			ValorResultadoEquipo resultado, final Integer primeraJornadaAMirar)
+			throws Exception {
 		Integer salida = 0;
 		List<Jornada> jornadas = getJornadas();
 		Jornada jornada;
 		Integer min = Math.min(jornadas.size(), numeroJornada - 1);
 		Integer multiplicadorPorJugarFuera;
 		Equipo equipoRival;
-		for (int i = 0; i < min; i++) {
-			jornada = jornadas.get(i);
-			Partido partido = jornada.getPartidoDondeJuega(equipo);
-			if (partido != null) {
-				ValorResultadoEquipo resultadoEquipo = partido
-						.getResultadoEquipo(equipo).getValor();
-				if (partido.getSeHaJugado()
-						&& resultadoEquipo.equals(resultado)) {
-					multiplicadorPorJugarFuera = 3;
-					if (partido.getEquipoVisitante().getNombre()
-							.equals(equipo.getNombre())) {
-						multiplicadorPorJugarFuera = 4;
-						equipoRival = partido.getEquipoLocal();
-					} else {
-						equipoRival = partido.getEquipoVisitante();
+		for (int i = primeraJornadaAMirar + 1; i < min; i++) {
+			if (i >= 0) {
+				jornada = jornadas.get(i);
+				Partido partido = jornada.getPartidoDondeJuega(equipo);
+				if (partido != null) {
+					ValorResultadoEquipo resultadoEquipo = partido
+							.getResultadoEquipo(equipo).getValor();
+					if (partido.getSeHaJugado()
+							&& resultadoEquipo.equals(resultado)) {
+						multiplicadorPorJugarFuera = 3;
+						if (partido.getEquipoVisitante().getNombre()
+								.equals(equipo.getNombre())) {
+							multiplicadorPorJugarFuera = 4;
+							equipoRival = partido.getEquipoLocal();
+						} else {
+							equipoRival = partido.getEquipoVisitante();
+						}
+						Integer totalEquipos;
+						if (equipo.getDivision().equals(Division.PRIMERA)) {
+							totalEquipos = NUM_EQUIPOS_PRIMERA;
+						} else if (equipo.getDivision()
+								.equals(Division.SEGUNDA)) {
+							totalEquipos = NUM_EQUIPOS_SEGUNDA;
+						} else {
+							throw new Exception("ERROR: División no controlada");
+						}
+						salida += multiplicadorPorJugarFuera
+								* (totalEquipos - equipoRival
+										.getParametro(
+												ParametroNombre.POSICION_EN_CLASIFICACION)
+										.getValor());
 					}
-					Integer totalEquipos;
-					if (equipo.getDivision().equals(Division.PRIMERA)) {
-						totalEquipos = NUM_EQUIPOS_PRIMERA;
-					} else if (equipo.getDivision().equals(Division.SEGUNDA)) {
-						totalEquipos = NUM_EQUIPOS_SEGUNDA;
-					} else {
-						throw new Exception("ERROR: División no controlada");
-					}
-					salida += multiplicadorPorJugarFuera
-							* (totalEquipos - equipoRival.getParametro(
-									ParametroNombre.POSICION_EN_CLASIFICACION)
-									.getValor());
 				}
 			}
 		}
@@ -205,14 +322,42 @@ public class Temporada {
 
 	public Integer getPuntosAnterioresA(final Equipo equipo,
 			final Integer numeroJornada) {
-		return 3 * getNumeroGanadosAnteriores(equipo, numeroJornada)
-				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
+		return getPuntosAnterioresADeUltimasJornadas(equipo, numeroJornada, 1);
 	}
 
 	public Integer getPuntosSimplesAnterioresA(final Equipo equipo,
-			final Integer numeroJornada) {
-		return 2 * getNumeroGanadosAnteriores(equipo, numeroJornada)
-				+ getNumeroEmpatadosAnteriores(equipo, numeroJornada);
+			final Integer numeroJornada, final Integer primeraJornadaAMirar) {
+		return getPuntosSimplesAnterioresADeUltimasJornadas(equipo,
+				numeroJornada, 1);
+	}
+
+	public Integer getPuntosAnterioresADeUltimasJornadas(final Equipo equipo,
+			final Integer numeroJornada, final Integer primeraJornadaAMirar) {
+		return 3
+				* getNumeroGanadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, primeraJornadaAMirar)
+				+ getNumeroEmpatadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, primeraJornadaAMirar);
+	}
+
+	public Integer getPuntosSimplesAnterioresADeUltimasJornadas(
+			final Equipo equipo, final Integer numeroJornada,
+			final Integer primeraJornadaAMirar) {
+		return 2
+				* getNumeroGanadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, primeraJornadaAMirar)
+				+ getNumeroEmpatadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, primeraJornadaAMirar);
+	}
+
+	public Integer getPuntosPonderadosDeUltimasJornadas(final Equipo equipo,
+			final Integer numeroJornada, final Integer primeraJornadaAMirar)
+			throws Exception {
+		return 2
+				* getNumeroGanadosPonderadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, primeraJornadaAMirar)
+				+ getNumeroEmpatadosPonderadosAnterioresDeUltimasJornadas(
+						equipo, numeroJornada, primeraJornadaAMirar);
 	}
 
 	/**
@@ -225,8 +370,7 @@ public class Temporada {
 	 */
 	public Integer getPuntosPonderadosAnterioresA(final Equipo equipo,
 			final Integer numeroJornada) throws Exception {
-		return 2 * getNumeroGanadosPonderadosAnteriores(equipo, numeroJornada)
-				+ getNumeroEmpatadosPonderadosAnteriores(equipo, numeroJornada);
+		return getPuntosPonderadosDeUltimasJornadas(equipo, numeroJornada, 1);
 	}
 
 	public List<Jornada> getJornadasPasadas() {
@@ -417,14 +561,17 @@ public class Temporada {
 		List<ParametroEquipo> parametrosNuevos = new ArrayList<ParametroEquipo>();
 
 		parametrosNuevos.add(new ParametroEquipo(
-				ParametroNombre.PARTIDOS_GANADOS, getNumeroGanadosAnteriores(
-						equipo, numeroJornada)));
+				ParametroNombre.PARTIDOS_GANADOS,
+				getNumeroGanadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, 1)));
 		parametrosNuevos.add(new ParametroEquipo(
 				ParametroNombre.PARTIDOS_EMPATADOS,
-				getNumeroEmpatadosAnteriores(equipo, numeroJornada)));
+				getNumeroEmpatadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, 1)));
 		parametrosNuevos.add(new ParametroEquipo(
-				ParametroNombre.PARTIDOS_PERDIDOS, getNumeroPerdidosAnteriores(
-						equipo, numeroJornada)));
+				ParametroNombre.PARTIDOS_PERDIDOS,
+				getNumeroPerdidosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, 1)));
 		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.NUMEROJORNADA,
 				numeroJornada));
 		parametrosNuevos.add(new ParametroEquipo(
@@ -440,7 +587,8 @@ public class Temporada {
 				ParametroNombre.PUNTOSNORMALES, getPuntosAnterioresA(equipo,
 						numeroJornada)));
 		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOSSIMPLES,
-				getPuntosSimplesAnterioresA(equipo, numeroJornada)));
+				getPuntosSimplesAnterioresADeUltimasJornadas(equipo,
+						numeroJornada, 1)));
 		parametrosNuevos.add(new ParametroEquipo(
 				ParametroNombre.PUNTOS_PONDERADOS,
 				getPuntosPonderadosAnterioresA(equipo, numeroJornada)));
@@ -462,6 +610,16 @@ public class Temporada {
 		parametrosNuevos.add(new ParametroEquipo(
 				ParametroNombre.GOLESFUERAENCONTRA,
 				getGolesFueraEnContraAnterioresA(equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PUNTOS_TENDENCIA,
+				getPuntosPonderadosDeUltimasJornadas(equipo, numeroJornada,
+						numeroJornada - 4)));
+		parametrosNuevos.add(new ParametroEquipo(
+				ParametroNombre.PUNTOS_EN_CASA, getPuntosAnterioresAEnCasa(
+						equipo, numeroJornada)));
+		parametrosNuevos.add(new ParametroEquipo(ParametroNombre.PUNTOS_FUERA,
+				getPuntosAnterioresAFuera(equipo, numeroJornada)));
+
 		equipo.getParametros().addAll(parametrosNuevos);
 	}
 

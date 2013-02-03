@@ -32,13 +32,14 @@ public class TemporadaTest {
 		Equipo equipo = new Equipo("Valladolid");
 		Integer numeroJornada = 20;
 		System.out.println("# ganados: "
-				+ temporada.getNumeroGanadosAnteriores(equipo, numeroJornada));
-		System.out
-				.println("# empatados: "
-						+ temporada.getNumeroEmpatadosAnteriores(equipo,
-								numeroJornada));
+				+ temporada.getNumeroGanadosAnterioresDeUltimasJornadas(equipo,
+						numeroJornada, 1));
+		System.out.println("# empatados: "
+				+ temporada.getNumeroEmpatadosAnterioresDeUltimasJornadas(
+						equipo, numeroJornada, 1));
 		System.out.println("# perdidos: "
-				+ temporada.getNumeroPerdidosAnteriores(equipo, numeroJornada));
+				+ temporada.getNumeroPerdidosAnterioresDeUltimasJornadas(
+						equipo, numeroJornada, 1));
 		System.out.println("#1s: "
 				+ temporada.getNumeroUnosAnteriores(equipo, numeroJornada));
 		System.out.println("#Xs: "
