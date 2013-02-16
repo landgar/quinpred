@@ -1,0 +1,19 @@
+package es.propio.politicasAlgoritmo4
+
+//list any import classes here.
+import es.propio.modeladoInfo.*;
+
+
+//declare any global variables here
+
+
+rule "OrdenPorClasificacion"
+
+    when
+        //conditions
+        pronostico:PronosticoPartido(partido.equipoLocal.getParametro(ParametroNombre.POSICION_EN_CLASIFICACION).valor>partido.equipoVisitante.getParametro(ParametroNombre.POSICION_EN_CLASIFICACION).valor)
+        //partido:Partido(1==1)
+    then
+        //actions
+		pronostico.setPorcentaje1(1F);
+end
