@@ -23,7 +23,6 @@ import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.Algoritmo2;
 import es.propio.procesadoInfo.Algoritmo3;
-import es.propio.procesadoInfo.Algoritmo4;
 import es.propio.procesadoInfo.Algoritmo5;
 
 /**
