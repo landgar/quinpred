@@ -43,7 +43,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE,
+				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.TRUE,
 				pronostico, null);
 	}
 
@@ -73,7 +73,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaSegunda(),
-				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE,
+				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.TRUE,
 				pronostico, null);
 	}
 
@@ -110,23 +110,34 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		pronostico.reseteaPorcentajes();
 		Equipo local = pronostico.getPartido().getEquipoLocal();
 		Equipo visitante = pronostico.getPartido().getEquipoVisitante();
-		Integer valor1, valor2;
+		Float valor1, valor2;
 		if (segundoParametro == null
 				|| segundoParametro.getNombre()
 						.equals(ParametroNombre.INVALIDO)) {
-			valor1 = local.getParametro(parametroDiscriminatorio).getValor();
-			valor2 = visitante.getParametro(parametroDiscriminatorio)
+			valor1 = Float.valueOf(local.getParametro(parametroDiscriminatorio)
+					.getValor());
+			valor2 = Float.valueOf(visitante.getParametro(
+					parametroDiscriminatorio).getValor());
+			if (valor1 <= valor2) {
+				pronostico.setPorcentaje1(mayorEsMejor ? 0F : 1F);
+			} else {
+				pronostico.setPorcentaje2(mayorEsMejor ? 0F : 1F);
+			}
+		} else {
+			Integer a = local.getParametro(parametroDiscriminatorio).getValor();
+			Integer b = visitante.getParametro(parametroDiscriminatorio)
 					.getValor();
+			Integer c = local.getParametro(segundoParametro).getValor();
+			Integer d = visitante.getParametro(segundoParametro).getValor();
+			valor1 = (a - b) / Float.valueOf(Math.max(a, b));
+			valor2 = (d - c) / Float.valueOf(Math.max(c, d));
+			if (valor1 >= valor2) {
+				pronostico.setPorcentaje1(1F);
+			} else {
+				pronostico.setPorcentaje2(1F);
+			}
+		}
 
-		} else {
-			valor1 = local.getParametro(parametroDiscriminatorio).getValor();
-			valor2 = visitante.getParametro(segundoParametro).getValor();
-		}
-		if (valor1 <= valor2) {
-			pronostico.setPorcentaje1(mayorEsMejor ? 0F : 1F);
-		} else {
-			pronostico.setPorcentaje2(mayorEsMejor ? 0F : 1F);
-		}
 	}
 
 	/**
