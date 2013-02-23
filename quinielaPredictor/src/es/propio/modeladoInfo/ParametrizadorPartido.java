@@ -113,8 +113,7 @@ public class ParametrizadorPartido {
 							visitante, numeroJornada_i);
 					Integer diferencia = valorVisitante - valorLocal;
 					// Hay menos empate (más diferencia) si el local es mejor
-					// que el
-					// visitante
+					// que el visitante
 					if (valorLocal > valorVisitante)
 						diferencia = diferencia + 1;
 					valor = Math.abs(diferencia);
@@ -144,6 +143,24 @@ public class ParametrizadorPartido {
 									numeroJornada_i, numeroJornada_i
 											- NUMERO_JORNADAS_TENDENCIA,
 									visitante), partido);
+					parametros.add(parametro);
+
+					// Si un equipo es peor, pero juega en casa, intentará
+					// empatar. El empate óptimo es cuando la separación de los
+					// equipos es X
+					Integer SEPARACION_OPTIMA = 7;
+					valorLocal = local.getParametro(
+							ParametroNombre.POSICION_EN_CLASIFICACION)
+							.getValor();
+					valorVisitante = visitante.getParametro(
+							ParametroNombre.POSICION_EN_CLASIFICACION)
+							.getValor();
+					diferencia = SEPARACION_OPTIMA + valorVisitante
+							- valorLocal;
+					valor = Math.abs(diferencia);
+					parametro = new Parametro(
+							ParametroNombre.PROBABILIDAD_COMPENSAR_PARA_EMPATE,
+							valor, partido);
 					parametros.add(parametro);
 
 					partido.setParametros(parametros);

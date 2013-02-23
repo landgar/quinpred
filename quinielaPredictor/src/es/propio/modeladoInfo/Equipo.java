@@ -323,6 +323,17 @@ public class Equipo implements Comparable<Equipo> {
 		return parametros;
 	}
 
+	public List<ParametroEquipo> getParametros(
+			final List<ParametroNombre> nombresParametros) {
+		List<ParametroEquipo> parametrosADevolver = new ArrayList<ParametroEquipo>();
+		Collections.sort(parametros);
+		for (ParametroEquipo parametroEquipo : parametros) {
+			if (nombresParametros.contains(parametroEquipo.getNombre()))
+				parametrosADevolver.add(parametroEquipo);
+		}
+		return parametrosADevolver;
+	}
+
 	public void setParametros(List<ParametroEquipo> parametros) {
 		this.parametros = parametros;
 	}

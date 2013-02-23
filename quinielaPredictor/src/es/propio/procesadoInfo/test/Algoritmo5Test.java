@@ -15,7 +15,7 @@ public class Algoritmo5Test extends AbstractAlgoritmoTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		setModoMock(true);
+		setModoMock(false);
 		calcula(IdAlgoritmoEnum.ALGORITMO5);
 	}
 

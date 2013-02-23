@@ -260,6 +260,21 @@ public class Partido {
 	}
 
 	/**
+	 * @return the parametros
+	 */
+	public List<Parametro> getParametros(
+			final List<ParametroNombre> nombreParametrosEquipo) {
+		List<Parametro> parametrosADevolver = new ArrayList<Parametro>();
+		Collections.sort(parametros);
+		for (Parametro parametro : parametros) {
+			if (nombreParametrosEquipo.contains(parametro)) {
+				parametrosADevolver.add(parametro);
+			}
+		}
+		return parametrosADevolver;
+	}
+
+	/**
 	 * @param parametros
 	 *            the parametros to set
 	 */

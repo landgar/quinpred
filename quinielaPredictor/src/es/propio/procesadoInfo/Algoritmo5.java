@@ -43,7 +43,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.TRUE,
+				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE,
 				pronostico, null);
 	}
 
@@ -73,7 +73,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaSegunda(),
-				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.TRUE,
+				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE,
 				pronostico, null);
 	}
 
@@ -90,7 +90,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaSegunda().getNumeroJornada(),
 					getTemporadaSegunda(),
-					ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE, 2,
+					ParametroNombre.PROBABILIDAD_COMPENSAR_PARA_EMPATE, 2,
 					lista);
 	}
 

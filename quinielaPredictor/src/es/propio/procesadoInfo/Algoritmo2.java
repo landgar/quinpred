@@ -26,6 +26,7 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Parametro;
 import es.propio.modeladoInfo.ParametroEquipo;
 import es.propio.modeladoInfo.ParametroNombre;
@@ -47,7 +48,67 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	Double LEARNING_RATE = 0.2D;
 	Double MOMENTUM = 0.7D;
 
-	 private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
+
+	private List<ParametroNombre> getParametrosEquipoPrimeraAConsiderar() {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		nombres.add(ParametroNombre.POSICION_EN_CLASIFICACION);
+		nombres.add(ParametroNombre.GANADOS);
+		nombres.add(ParametroNombre.EMPATADOS);
+		nombres.add(ParametroNombre.PERDIDOS);
+		return nombres;
+	}
+
+	private List<ParametroNombre> getParametrosEquipoSegundaAConsiderar() {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		nombres.add(ParametroNombre.POSICION_EN_CLASIFICACION);
+		return nombres;
+	}
+
+	private List<ParametroNombre> getParametrosPartidoPrimeraAConsiderar() {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS);
+		nombres.add(ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION);
+		return nombres;
+	}
+
+	private List<ParametroNombre> getParametrosPartidoSegundaAConsiderar() {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS);
+		return nombres;
+	}
+
+	private List<ParametroNombre> getParametrosEquipoAConsiderar(
+			final Division division) throws Exception {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		;
+		if (division.equals(Division.PRIMERA)) {
+			nombres.addAll(getParametrosEquipoPrimeraAConsiderar());
+		} else if (division.equals(Division.SEGUNDA)) {
+			nombres.addAll(getParametrosEquipoSegundaAConsiderar());
+		} else {
+			throw new Exception(
+					"No se pueden obtener los parámetros de la división: "
+							+ division);
+		}
+		return nombres;
+	}
+
+	private List<ParametroNombre> getParametrosPartidoAConsiderar(
+			final Division division) throws Exception {
+		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
+		;
+		if (division.equals(Division.PRIMERA)) {
+			nombres.addAll(getParametrosPartidoPrimeraAConsiderar());
+		} else if (division.equals(Division.SEGUNDA)) {
+			nombres.addAll(getParametrosPartidoSegundaAConsiderar());
+		} else {
+			throw new Exception(
+					"No se pueden obtener los parámetros de la división: "
+							+ division);
+		}
+		return nombres;
+	}
 
 	public Algoritmo2(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -100,11 +161,19 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		if (!partidosYaJugados.isEmpty()) {
 
 			Partido partidoDeReferencia = partidosYaJugados.get(0);
-			int numParamsPartido = partidoDeReferencia.getParametros().size();
-			int numParamsEquipoLocal = partidoDeReferencia.getEquipoLocal()
-					.getParametros().size();
+			int numParamsPartido = partidoDeReferencia.getParametros(
+					getParametrosPartidoAConsiderar(temporada.getDivision()))
+					.size();
+			int numParamsEquipoLocal = partidoDeReferencia
+					.getEquipoLocal()
+					.getParametros(
+							getParametrosEquipoAConsiderar(temporada
+									.getDivision())).size();
 			int numParamsEquipoVisitante = partidoDeReferencia
-					.getEquipoVisitante().getParametros().size();
+					.getEquipoVisitante()
+					.getParametros(
+							getParametrosEquipoAConsiderar(temporada
+									.getDivision())).size();
 
 			Integer numeroParametros = numParamsPartido + numParamsEquipoLocal
 					+ numParamsEquipoVisitante;
@@ -142,7 +211,8 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	}
 
 	private void generarPronosticos(final Map<String, RealVector> resultados,
-			List<PronosticoPartido> pronosticos, final Temporada temporada) throws Exception{
+			List<PronosticoPartido> pronosticos, final Temporada temporada)
+			throws Exception {
 		// Habrá 'x' empates en primera, e 'y' en segunda. Serán los más
 		// probables
 		// en esa jornada. Para el resto, será 1 ó 2, según su probabilidad de
@@ -199,35 +269,35 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					// equipo con mejor clasificación en la liga.
 					if (pronostico.getPorcentaje1() >= pronostico
 							.getPorcentaje2()) {
-						 if (pronostico.getPorcentaje1() > pronostico
-						 .getPorcentaje2()
-						 + VARIABILIDAD_MINIMA_EN_PROBABILIDAD)
-						// Se fija un 1
-						pronostico.setPorcentaje1(1F);
-						 else {
-						 ParametroEquipo posicionLocal = pronostico
-						 .getPartido()
-						 .getEquipoLocal()
-						 .getParametro(
-						 ParametroNombre.POSICION_EN_CLASIFICACION);
-						 ParametroEquipo posicionVisitante = pronostico
-						 .getPartido()
-						 .getEquipoVisitante()
-						 .getParametro(
-						 ParametroNombre.POSICION_EN_CLASIFICACION);
-						 // Si está más abajo en la tabla de clasificación,
-						 // pierde.
-						 if (posicionLocal.getValor() > posicionVisitante
-						 .getValor()) {
-						 pronostico.setPorcentaje2(1F);
-						 }
-						 }
+						if (pronostico.getPorcentaje1() > pronostico
+								.getPorcentaje2()
+								+ VARIABILIDAD_MINIMA_EN_PROBABILIDAD)
+							// Se fija un 1
+							pronostico.setPorcentaje1(1F);
+						else {
+							ParametroEquipo posicionLocal = pronostico
+									.getPartido()
+									.getEquipoLocal()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							ParametroEquipo posicionVisitante = pronostico
+									.getPartido()
+									.getEquipoVisitante()
+									.getParametro(
+											ParametroNombre.POSICION_EN_CLASIFICACION);
+							// Si está más abajo en la tabla de clasificación,
+							// pierde.
+							if (posicionLocal.getValor() > posicionVisitante
+									.getValor()) {
+								pronostico.setPorcentaje2(1F);
+							}
+						}
 					} else {
-						 if (pronostico.getPorcentaje2() > pronostico
-						 .getPorcentaje1()
-						 + VARIABILIDAD_MINIMA_EN_PROBABILIDAD) {
-						// Se fija un 2
-						pronostico.setPorcentaje2(1F);
+						if (pronostico.getPorcentaje2() > pronostico
+								.getPorcentaje1()
+								+ VARIABILIDAD_MINIMA_EN_PROBABILIDAD) {
+							// Se fija un 2
+							pronostico.setPorcentaje2(1F);
 						} else {
 							ParametroEquipo posicionLocal = pronostico
 									.getPartido()
@@ -318,13 +388,15 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	private void rellenarMatricesEntrenamiento(
 			final List<Partido> partidosYaJugados, RealMatrix matrixInputs,
-			RealMatrix matrixTargets) {
+			RealMatrix matrixTargets) throws Exception {
 
 		System.out.println("Rellenando matrices de entrenamiento...");
 
 		for (int i = 0; i < partidosYaJugados.size(); i++) {
 			Partido partido = partidosYaJugados.get(i);
-			List<Parametro> parametros = partido.getParametros();
+			List<Parametro> parametros = partido
+					.getParametros(getParametrosPartidoAConsiderar(partido
+							.getEquipoLocal().getDivision()));
 			RealVector fila = matrixInputs.getRowVector(i);
 
 			// Parámetros del partido
@@ -368,7 +440,9 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 		RealVector fila;
 		int i = 0;
 		for (Partido partido : partidosAPredecir) {
-			parametros = partido.getParametros();
+			parametros = partido
+					.getParametros(getParametrosPartidoAConsiderar(partido
+							.getEquipoLocal().getDivision()));
 			fila = matriz.getRowVector(i);
 			rellenarFilaVector(parametros, partido, fila);
 			matriz.setRowVector(i, fila);
@@ -422,19 +496,23 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	}
 
 	private void rellenarFilaVector(List<Parametro> parametros,
-			Partido partido, RealVector fila) {
+			Partido partido, RealVector fila) throws Exception {
 		int j;
 		for (j = 0; j < parametros.size(); j++) {
 			fila.addToEntry(j, parametros.get(j).getValor());
 		}
 		for (ParametroEquipo parametroEquipo : partido.getEquipoLocal()
-				.getParametros()) {
+				.getParametros(
+						getParametrosEquipoAConsiderar(partido.getEquipoLocal()
+								.getDivision()))) {
 			Integer valor = parametroEquipo.getValor();
 			fila.addToEntry(j, valor);
 			j++;
 		}
 		for (ParametroEquipo parametroEquipo : partido.getEquipoVisitante()
-				.getParametros()) {
+				.getParametros(
+						getParametrosEquipoAConsiderar(partido
+								.getEquipoVisitante().getDivision()))) {
 			Integer valor = parametroEquipo.getValor();
 			fila.addToEntry(j, valor);
 			j++;
