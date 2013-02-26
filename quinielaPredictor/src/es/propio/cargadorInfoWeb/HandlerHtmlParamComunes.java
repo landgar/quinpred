@@ -83,11 +83,11 @@ public class HandlerHtmlParamComunes {
 		int numJornadaActualSegunda = temporadaSegunda.getJornadaActual()
 				.getNumeroJornada();
 
-		System.out
-				.println("HandlerHtmlParamComunes.cargarParamsComunes() Jornada_actual_primera="
-						+ numJornadaActualPrimera
-						+ " Jornada_actual_segunda="
-						+ numJornadaActualSegunda);
+//		System.out
+//				.println("HandlerHtmlParamComunes.cargarParamsComunes() Jornada_actual_primera="
+//						+ numJornadaActualPrimera
+//						+ " Jornada_actual_segunda="
+//						+ numJornadaActualSegunda);
 
 		rellenarTemporadaActualyAnteriores(temporadaPrimera,
 				numJornadaActualPrimera, parametrosHtmlPrimera);

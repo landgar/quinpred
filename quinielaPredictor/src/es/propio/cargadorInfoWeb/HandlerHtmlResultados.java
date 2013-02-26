@@ -227,16 +227,16 @@ public class HandlerHtmlResultados {
 		if (localGoles != -1 || visitanteGoles != -1) {
 			// Solo para Log (es util para ver si leemos bien la VUELTA)
 			String idaVueltaStr = esResultadoIda ? "IDA" : "VUELTA";
-			System.out
-					.println("HandlerHtmlResultados.procesarResultadoPartido() PARTIDO JUGADO -> "
-							+ idaVueltaStr
-							+ " local="
-							+ nombreEquipo1
-							+ " vis="
-							+ nombreEquipo2
-							+ " -->"
-							+ localGoles
-							+ "-" + visitanteGoles);
+//			System.out
+//					.println("HandlerHtmlResultados.procesarResultadoPartido() PARTIDO JUGADO -> "
+//							+ idaVueltaStr
+//							+ " local="
+//							+ nombreEquipo1
+//							+ " vis="
+//							+ nombreEquipo2
+//							+ " -->"
+//							+ localGoles
+//							+ "-" + visitanteGoles);
 		}
 
 		meterPartidoEnJornada(temporada.getJornadas(), jornada, partido);

@@ -42,12 +42,12 @@ public class AnalizadorDelPasado {
 			final List<AbstractAlgoritmo> algoritmosUsados,
 			final Temporada temporadaPrimera, final Temporada temporadaSegunda)
 			throws Exception {
-		System.out
-				.println("Pintando GRAFICOS para comparar los algoritmos ...");
-		System.out
-				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
-		System.out
-				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
+//		System.out
+//				.println("Pintando GRAFICOS para comparar los algoritmos ...");
+//		System.out
+//				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
+//		System.out
+//				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
 		algoritmos = algoritmosUsados;
 		graficosDivision(temporadaPrimera, Division.PRIMERA);
 		graficosDivision(temporadaSegunda, Division.SEGUNDA);

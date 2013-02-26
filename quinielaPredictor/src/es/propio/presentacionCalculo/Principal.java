@@ -64,8 +64,8 @@ public class Principal {
 		ParametrizadorPartido.cargarParametrosDePartidos(cargador
 				.getTemporadaSegunda());
 
-		System.out
-				.println("PASADO: Comparando algoritmos con datos pasados...");
+//		System.out
+//				.println("PASADO: Comparando algoritmos con datos pasados...");
 		List<AbstractAlgoritmo> algoritmosUsados = new ArrayList<AbstractAlgoritmo>();
 //		algoritmosUsados
 //				.add(new Algoritmo1(temporadaPrimera, temporadaSegunda));

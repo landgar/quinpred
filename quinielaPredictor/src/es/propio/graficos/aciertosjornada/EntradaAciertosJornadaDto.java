@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.omg.CORBA.INTERNAL;
 
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.PronosticoJornada;
@@ -37,26 +38,31 @@ public class EntradaAciertosJornadaDto {
 	 * pronosticos que acertaron.
 	 */
 	public void marcarAciertos() {
+		final Integer NUMERO_JORNADAS_A_CONSIDERAR = 6;
+		
 		Integer aciertosAcumulados = 0, totalAcumulados = 0;
 		List<Integer> aciertosPorJornada = new ArrayList<Integer>();
+		final Integer JORNADA_MAS_ALTA = getNumeroJornadaMasAlta(pronosticosJornadaBulk);
+		final Integer NUMERO_JORNADA_PRIMERA_A_CONSIDERAR = JORNADA_MAS_ALTA
+				- NUMERO_JORNADAS_A_CONSIDERAR;
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {
 				for (PronosticoJornada pronosticoj : pronosticosJornadaBulk) {
 
 					Integer valor = 0;
 					if ((valor = pronosticoj.obtenerNumAciertos(realj)) != null) {
-						if (pronosticoj.getNumeroJornada() > 9) {
+						if (pronosticoj.getNumeroJornada() > NUMERO_JORNADA_PRIMERA_A_CONSIDERAR) {
 							aciertosAcumulados += valor;
 							totalAcumulados += pronosticoj
 									.getPronosticoPartidos().size();
 							aciertosPorJornada.add(valor);
 						}
-						System.out
-								.println("*********************************************ALGORITMO "
-										+ pronosticoj
-												.getIdAlgoritmoPronosticador()
-												.getIdAlgoritmo()
-										+ " *******************************************************");
+//						System.out
+//								.println("*********************************************ALGORITMO "
+//										+ pronosticoj
+//												.getIdAlgoritmoPronosticador()
+//												.getIdAlgoritmo()
+//										+ " *******************************************************");
 					}
 				}
 			}
@@ -71,17 +77,23 @@ public class EntradaAciertosJornadaDto {
 			stdPorJornada.increment(Double.valueOf(aux.toString()));
 		}
 		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados (desde la jornada 10): "
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados (desde la jornada "
+						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
+						+ "): "
 						+ aciertosAcumulados
 						+ " / "
 						+ totalAcumulados
 						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Media por jornada: (desde la jornada 10): "
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Media por jornada: (desde la jornada "
+						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
+						+ "): "
 						+ mediaPorJornada.getResult()
 						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Stddev por jornada: (desde la jornada 10): "
+				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Stddev por jornada: (desde la jornada "
+						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
+						+ "): "
 						+ stdPorJornada.getResult()
 						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
@@ -150,6 +162,17 @@ public class EntradaAciertosJornadaDto {
 		}
 
 		return mapa;
+	}
+
+	public Integer getNumeroJornadaMasAlta(
+			final List<PronosticoJornada> pronosticos) {
+		Integer salida = 0, aux;
+		for (PronosticoJornada pronosticoj : pronosticos) {
+			aux = pronosticoj.getNumeroJornada();
+			if (aux > salida)
+				salida = aux;
+		}
+		return salida;
 	}
 
 	public List<PronosticoJornada> getPronosticosJornadaBulk() {
