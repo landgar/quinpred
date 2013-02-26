@@ -4,7 +4,6 @@
 package es.propio.cargadorInfoWeb;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -236,9 +235,9 @@ public class HandlerHtmlParamPrimera {
 	 * @param partidos
 	 */
 	private void meteParametroEnPartido(ParametroAvanzadoPrimeraHtml paramHtml,
-			Set<Partido> partidos) {
+			List<Partido> partidos) {
 
-		Set<ParametroEquipo> parametrosEquipo = convertirParametro(paramHtml);
+		List<ParametroEquipo> parametrosEquipo = convertirParametro(paramHtml);
 
 		for (Partido p : partidos) {
 			if (p.getEquipoLocal().getNombre()
@@ -253,10 +252,10 @@ public class HandlerHtmlParamPrimera {
 
 	}
 
-	private Set<ParametroEquipo> convertirParametro(
+	private List<ParametroEquipo> convertirParametro(
 			ParametroAvanzadoPrimeraHtml paramHtml) {
 
-		Set<ParametroEquipo> params = new HashSet<ParametroEquipo>();
+		List<ParametroEquipo> params = new ArrayList<ParametroEquipo>();
 
 		if (paramHtml.getRematesContra() != null) {
 			params.add(new ParametroEquipo(ParametroNombre.REMATES_EN_CONTRA,

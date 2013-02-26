@@ -98,30 +98,30 @@ public class EntradaAciertosJornadaDto {
 						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 
-	public Map<Jornada, List<PronosticoJornada>> organizarPronosticosBulkPorJornada() {
-		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
-		if (pronosticosJornadaBulk != null && !pronosticosJornadaBulk.isEmpty()) {
-			mapaJornadaPronosticos = organizarPorJornada(pronosticosJornadaBulk);
-		}
-		return mapaJornadaPronosticos;
-	}
-
-	public Map<Jornada, List<PronosticoJornada>> organizarResultadosRealesPorJornada() {
-		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
-		if (resultadosReales != null && !resultadosReales.isEmpty()) {
-			mapaJornadaPronosticos = organizarPorJornada(resultadosReales);
-		}
-		return mapaJornadaPronosticos;
-	}
-
-	private Map<Jornada, List<PronosticoJornada>> organizarPorJornada(
-			List<PronosticoJornada> lista) {
-		Map<Jornada, List<PronosticoJornada>> mapa = new HashMap<Jornada, List<PronosticoJornada>>();
-		// TODO rellenar el mapa leyendo los pronosticos y ordenando por
-		// idJornada
-
-		return mapa;
-	}
+//	public Map<Jornada, List<PronosticoJornada>> organizarPronosticosBulkPorJornada() {
+//		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
+//		if (pronosticosJornadaBulk != null && !pronosticosJornadaBulk.isEmpty()) {
+//			mapaJornadaPronosticos = organizarPorJornada(pronosticosJornadaBulk);
+//		}
+//		return mapaJornadaPronosticos;
+//	}
+//
+//	public Map<Jornada, List<PronosticoJornada>> organizarResultadosRealesPorJornada() {
+//		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
+//		if (resultadosReales != null && !resultadosReales.isEmpty()) {
+//			mapaJornadaPronosticos = organizarPorJornada(resultadosReales);
+//		}
+//		return mapaJornadaPronosticos;
+//	}
+//
+//	private Map<Jornada, List<PronosticoJornada>> organizarPorJornada(
+//			List<PronosticoJornada> lista) {
+//		Map<Jornada, List<PronosticoJornada>> mapa = new HashMap<Jornada, List<PronosticoJornada>>();
+//		// TODO rellenar el mapa leyendo los pronosticos y ordenando por
+//		// idJornada
+//
+//		return mapa;
+//	}
 
 	public List<IdAlgoritmoEnum> extraerAlgoritmosUsados() {
 		List<IdAlgoritmoEnum> idsAlgoritmos = new ArrayList<IdAlgoritmoEnum>();

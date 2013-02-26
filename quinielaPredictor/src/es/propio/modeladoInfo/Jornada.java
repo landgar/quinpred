@@ -1,8 +1,11 @@
 package es.propio.modeladoInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -15,7 +18,7 @@ public class Jornada {
 	private Integer equises;
 	private Integer doses;
 
-	public Jornada(Set<Partido> partidos, Integer numeroJornada) {
+	public Jornada(List<Partido> partidos, Integer numeroJornada) {
 		super();
 		this.partidos = partidos;
 		this.numeroJornada = numeroJornada;
@@ -23,7 +26,7 @@ public class Jornada {
 
 	public Boolean getSeHaJugado() {
 		Boolean salida = Boolean.FALSE;
-		Set<Partido> partidos = getPartidos();
+		List<Partido> partidos = getPartidos();
 		for (Iterator<Partido> it = partidos.iterator(); it.hasNext();) {
 			Partido f = it.next();
 			salida = f.getSeHaJugado();
@@ -66,7 +69,7 @@ public class Jornada {
 	 * @uml.associationEnd multiplicity="(0 -1)"
 	 *                     elementType="es.propio.modeladoInfo.Partido"
 	 */
-	private Set<Partido> partidos;
+	private List<Partido> partidos;
 	/**
 	 * @uml.property name="numeroJornada"
 	 */
@@ -74,7 +77,7 @@ public class Jornada {
 
 	public Jornada() {
 		super();
-		partidos = new HashSet<Partido>();
+		partidos = new ArrayList<Partido>();
 	}
 
 	/**
@@ -97,7 +100,13 @@ public class Jornada {
 	/**
 	 * @return the partidos
 	 */
-	public Set<Partido> getPartidos() {
+	public List<Partido> getPartidos() {
+		Collections.sort(partidos, new Comparator<Partido>() {
+			@Override
+			public int compare(Partido o1, Partido o2) {
+				return o1.getID().compareTo(o2.getID());
+			}
+		});
 		return partidos;
 	}
 
@@ -105,7 +114,7 @@ public class Jornada {
 	 * @param partidos
 	 *            the partidos to set
 	 */
-	public void setPartidos(Set<Partido> partidos) {
+	public void setPartidos(List<Partido> partidos) {
 		this.partidos = partidos;
 	}
 

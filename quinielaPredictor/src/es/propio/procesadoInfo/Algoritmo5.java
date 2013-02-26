@@ -43,7 +43,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.GOLES_EN_CONTRA, Boolean.FALSE,
+				ParametroNombre.GOLESFUERAAFAVOR, Boolean.TRUE,
 				pronostico, null);
 	}
 

@@ -403,7 +403,7 @@ public class Temporada {
 		List<Jornada> jornadas = getJornadas();
 		for (int i = 0; i < jornadas.size(); i++) {
 			jornada = jornadas.get(i);
-			Set<Partido> partidos = jornada.getPartidos();
+			List<Partido> partidos = jornada.getPartidos();
 			for (Partido partido : partidos) {
 				if (!partido.getSeHaJugado()) {
 					return jornada;
@@ -419,7 +419,7 @@ public class Temporada {
 		Jornada jornada;
 		for (int i = 0; i < jornadas.size(); i++) {
 			jornada = jornadas.get(i);
-			Set<Partido> partidos = jornada.getPartidos();
+			List<Partido> partidos = jornada.getPartidos();
 			for (Partido partido : partidos) {
 				if (partido != null && !partido.getSeHaJugado()) {
 					return jornada.getNumeroJornada();
@@ -435,7 +435,7 @@ public class Temporada {
 		Jornada jornada;
 		for (int i = 0; i < jornadas.size(); i++) {
 			jornada = jornadas.get(i);
-			Set<Partido> partidos = jornada.getPartidos();
+			List<Partido> partidos = jornada.getPartidos();
 			for (Partido partidox : partidos) {
 				if (partidox != null
 						&& partidox.getID().equals(partido.getID())) {
