@@ -53,9 +53,6 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	private List<ParametroNombre> getParametrosEquipoPrimeraAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
 		nombres.add(ParametroNombre.POSICION_EN_CLASIFICACION);
-		nombres.add(ParametroNombre.GANADOS);
-		nombres.add(ParametroNombre.EMPATADOS);
-		nombres.add(ParametroNombre.PERDIDOS);
 		return nombres;
 	}
 
@@ -67,14 +64,13 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	private List<ParametroNombre> getParametrosPartidoPrimeraAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS);
-		nombres.add(ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION);
+		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE);
 		return nombres;
 	}
 
 	private List<ParametroNombre> getParametrosPartidoSegundaAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS);
+		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE);
 		return nombres;
 	}
 

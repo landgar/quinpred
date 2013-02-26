@@ -24,7 +24,7 @@ import es.propio.modeladoInfo.Temporada;
 public class Algoritmo5 extends AbstractAlgoritmo {
 	static final Logger logger = Logger.getLogger(Algoritmo5.class);
 
-	private final Boolean ACTITUD_AGRESIVA = Boolean.TRUE;
+	private final Boolean ACTITUD_AGRESIVA = Boolean.FALSE;
 
 	public Algoritmo5(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda) {
@@ -73,8 +73,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaSegunda(),
-				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE,
-				pronostico, null);
+				ParametroNombre.POSICION_EN_CLASIFICACION, Boolean.FALSE, pronostico,
+				null);
 	}
 
 	/**
@@ -90,8 +90,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaSegunda().getNumeroJornada(),
 					getTemporadaSegunda(),
-					ParametroNombre.PROBABILIDAD_COMPENSAR_PARA_EMPATE, 2,
-					lista);
+					ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE, 2, lista);
 	}
 
 	/**
