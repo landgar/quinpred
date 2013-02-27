@@ -1,7 +1,7 @@
 package es.propio.handlerDatos;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.propio.modeladoInfo.PronosticoJornada;
 
@@ -11,9 +11,9 @@ import es.propio.modeladoInfo.PronosticoJornada;
  */
 public class CargadorDatosPronosticos {
 
-	public static Set<PronosticoJornada> cargarPronosticosJornadas()
+	public static List<PronosticoJornada> cargarPronosticosJornadas()
 			throws Exception {
-		Set<PronosticoJornada> pronosticos = new HashSet<PronosticoJornada>();
+		List<PronosticoJornada> pronosticos = new ArrayList<PronosticoJornada>();
 		// File folder = new File("pronosticos_quinielista/");
 		// for (final File fileEntry : folder.listFiles()) {
 		// HandlerXMLPronosticos lector = new HandlerXMLPronosticos(numJornada,

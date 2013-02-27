@@ -4,9 +4,7 @@
 package es.propio.cargadorInfoWeb;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -83,11 +81,11 @@ public class HandlerHtmlParamComunes {
 		int numJornadaActualSegunda = temporadaSegunda.getJornadaActual()
 				.getNumeroJornada();
 
-//		System.out
-//				.println("HandlerHtmlParamComunes.cargarParamsComunes() Jornada_actual_primera="
-//						+ numJornadaActualPrimera
-//						+ " Jornada_actual_segunda="
-//						+ numJornadaActualSegunda);
+		// System.out
+		// .println("HandlerHtmlParamComunes.cargarParamsComunes() Jornada_actual_primera="
+		// + numJornadaActualPrimera
+		// + " Jornada_actual_segunda="
+		// + numJornadaActualSegunda);
 
 		rellenarTemporadaActualyAnteriores(temporadaPrimera,
 				numJornadaActualPrimera, parametrosHtmlPrimera);
@@ -222,9 +220,9 @@ public class HandlerHtmlParamComunes {
 	 * @param partidos
 	 */
 	private void meteParametroEnPartido(ParametroComunHtml paramHtml,
-			Set<Partido> partidos) {
+			List<Partido> partidos) {
 
-		Set<ParametroEquipo> parametrosEquipo = convertirParametro(paramHtml);
+		List<ParametroEquipo> parametrosEquipo = convertirParametro(paramHtml);
 
 		for (Partido p : partidos) {
 			if (p.getEquipoLocal().getNombre().equals(paramHtml.getNombre())) {
@@ -238,9 +236,10 @@ public class HandlerHtmlParamComunes {
 
 	}
 
-	private Set<ParametroEquipo> convertirParametro(ParametroComunHtml paramHtml) {
+	private List<ParametroEquipo> convertirParametro(
+			ParametroComunHtml paramHtml) {
 
-		Set<ParametroEquipo> params = new HashSet<ParametroEquipo>();
+		List<ParametroEquipo> params = new ArrayList<ParametroEquipo>();
 
 		if (paramHtml.getPosicion() != null) {
 			params.add(new ParametroEquipo(

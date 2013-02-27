@@ -2,9 +2,7 @@ package es.propio.modeladoInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -89,8 +87,8 @@ public class Equipo implements Comparable<Equipo> {
 		return getNombre();
 	}
 
-	public Set<ParametroEquipo> getParametrosComunes() {
-		Set<ParametroEquipo> comunes = new HashSet<ParametroEquipo>();
+	public List<ParametroEquipo> getParametrosComunes() {
+		List<ParametroEquipo> comunes = new ArrayList<ParametroEquipo>();
 		for (ParametroEquipo pe : parametros) {
 			if (pe.getNombre().isParametroComunDeEquipo()) {
 				comunes.add(pe);

@@ -3,7 +3,7 @@
  */
 package es.propio.cargadorInfoWeb.test;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
@@ -61,7 +61,7 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 		Jornada jornadaDePrimera = cargador.getTemporadaPrimera()
 				.getJornadaExacta(
 						Integer.valueOf(NUM_JORNADA_COMUNES_PRIMERA_MOCK));
-		Set<Partido> partidosPrimeraEnJornada = jornadaDePrimera.getPartidos();
+		List<Partido> partidosPrimeraEnJornada = jornadaDePrimera.getPartidos();
 		for (Partido p : partidosPrimeraEnJornada) {
 			evaluarParamsComunesEnEquipo(p.getEquipoLocal());
 			evaluarParamsComunesEnEquipo(p.getEquipoVisitante());
@@ -70,7 +70,7 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 		Jornada jornadaDeSegunda = cargador.getTemporadaSegunda()
 				.getJornadaExacta(
 						Integer.valueOf(NUM_JORNADA_COMUNES_SEGUNDA_MOCK));
-		Set<Partido> partidosSegundaEnJornada = jornadaDeSegunda.getPartidos();
+		List<Partido> partidosSegundaEnJornada = jornadaDeSegunda.getPartidos();
 		for (Partido p : partidosSegundaEnJornada) {
 			evaluarParamsComunesEnEquipo(p.getEquipoLocal());
 			evaluarParamsComunesEnEquipo(p.getEquipoVisitante());
@@ -78,7 +78,7 @@ public class CargadorInformacionWebResultadosTest extends TestCase {
 	}
 
 	private void evaluarParamsComunesEnEquipo(Equipo e) {
-		Set<ParametroEquipo> comunes = e.getParametrosComunes();
+		List<ParametroEquipo> comunes = e.getParametrosComunes();
 		assertFalse(comunes.isEmpty());
 		for (ParametroEquipo pe : comunes) {
 			assertNotNull(pe.getValor());

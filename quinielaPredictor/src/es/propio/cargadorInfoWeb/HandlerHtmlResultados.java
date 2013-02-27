@@ -1,7 +1,6 @@
 package es.propio.cargadorInfoWeb;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -54,7 +53,7 @@ public class HandlerHtmlResultados {
 		// Inicializacion de las jornadas
 		jornadas = new ArrayList<Jornada>(totalJornadas);
 		for (int i = 1; i <= totalJornadas; i++) {
-			Jornada jornada = new Jornada(new HashSet<Partido>(), i);
+			Jornada jornada = new Jornada(new ArrayList<Partido>(), i);
 			jornadas.add(jornada);
 		}
 
@@ -227,16 +226,16 @@ public class HandlerHtmlResultados {
 		if (localGoles != -1 || visitanteGoles != -1) {
 			// Solo para Log (es util para ver si leemos bien la VUELTA)
 			String idaVueltaStr = esResultadoIda ? "IDA" : "VUELTA";
-//			System.out
-//					.println("HandlerHtmlResultados.procesarResultadoPartido() PARTIDO JUGADO -> "
-//							+ idaVueltaStr
-//							+ " local="
-//							+ nombreEquipo1
-//							+ " vis="
-//							+ nombreEquipo2
-//							+ " -->"
-//							+ localGoles
-//							+ "-" + visitanteGoles);
+			// System.out
+			// .println("HandlerHtmlResultados.procesarResultadoPartido() PARTIDO JUGADO -> "
+			// + idaVueltaStr
+			// + " local="
+			// + nombreEquipo1
+			// + " vis="
+			// + nombreEquipo2
+			// + " -->"
+			// + localGoles
+			// + "-" + visitanteGoles);
 		}
 
 		meterPartidoEnJornada(temporada.getJornadas(), jornada, partido);

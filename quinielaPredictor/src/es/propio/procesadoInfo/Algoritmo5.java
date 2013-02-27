@@ -50,7 +50,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.GOLES_EN_CONTRA, pronostico, null);
+				ParametroNombre.GOLESFUERAENCONTRA, pronostico, null);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaPrimera().getNumeroJornada(),
 					getTemporadaPrimera(),
-					ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 1,
+					ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 0,
 					lista);
 	}
 
