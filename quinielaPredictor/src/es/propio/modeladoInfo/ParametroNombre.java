@@ -6,6 +6,7 @@ package es.propio.modeladoInfo;
  */
 public enum ParametroNombre {
 
+	// Para comparar partidos tipo 1/2
 	NUMEROJORNADA("NUMEROJORNADA"), JUEGA_EN_CASA("JUEGA_EN_CASA"), JUEGA_FUERA(
 			"JUEGA_FUERA"), NUMERO_UNOS_ANTERIORES("NUMERO_UNOS_ANTERIORES"), NUMERO_EQUIS_ANTERIORES(
 			"NUMERO_EQUIS_ANTERIORES"), NUMERO_DOSES_ANTERIORES(
@@ -41,15 +42,15 @@ public enum ParametroNombre {
 	PUNTOS_PONDERADOS("PUNTOS_PONDERADOS"), PUNTOS_TENDENCIA("PUNTOS_TENDENCIA"), PUNTOS_EN_CASA(
 			"PUNTOS_EN_CASA"), PUNTOS_FUERA("PUNTOS_FUERA"),
 
+	// Para comparar partidos tipo EMPATES
 	DIFERENCIA_POSICIONES_EN_CLASIFICACION(
 			"DIFERENCIA_POSICIONES_EN_CLASIFICACION"), DIFERENCIA_PUNTOS_PONDERADOS(
 			"DIFERENCIA_PUNTOS_PONDERADOS"), DIFERENCIA_PUNTOS_PARA_EMPATE(
 			"DIFERENCIA_PUNTOS_PARA_EMPATE"), DIFERENCIA_PUNTOS_SIMPLES(
 			"DIFERENCIA_PUNTOS_SIMPLES"), DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE(
 			"DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE"), DIFERENCIA_PUNTOS(
-			"DIFERENCIA_PUNTOS"), FORTALEZA_LUGAR("FORTALEZA_LUGAR"),
-			PROBABILIDAD_COMPENSAR_PARA_EMPATE("PROBABILIDAD_COMPENSAR_PARA_EMPATE"),
-			
+			"DIFERENCIA_PUNTOS"), FORTALEZA_LUGAR("FORTALEZA_LUGAR"), PROBABILIDAD_COMPENSAR_PARA_EMPATE(
+			"PROBABILIDAD_COMPENSAR_PARA_EMPATE"),
 
 	INVALIDO("-");
 
@@ -76,6 +77,134 @@ public enum ParametroNombre {
 		}
 
 		return esComun;
+	}
+
+	/**
+	 * @return True si a mayor cantidad del parametro, es mejor para el equipo.
+	 *         Solo se usa para los PARAMETROS DE EQUIPO, pero no para los de
+	 *         EMPATES
+	 * @throws Exception
+	 */
+	public boolean isPositivo() throws Exception {
+
+		boolean positivo = false;
+
+		if (isTipoEquipoIndividual()) {
+			// Parameros de equipos individuales
+
+			positivo = this.equals(NUMEROJORNADA)
+					|| this.equals(JUEGA_EN_CASA)
+					|| this.equals(NUMERO_UNOS_ANTERIORES)
+					|| this.equals(GOLESENCASAAFAVOR)
+					|| this.equals(GOLESFUERAAFAVOR)
+					|| this.equals(GOLESTOTALESAFAVOR)
+					|| this.equals(PUNTOSSIMPLES)
+					|| this.equals(GANADOS)
+					|| this.equals(PUNTOSNORMALES)
+					|| this.equals(DIFERENCIADEGOLESAFAVOR)
+					|| this.equals(PARTIDOS_JUGADOS)
+					|| this.equals(PARTIDOS_GANADOS)
+					|| this.equals(GOLES_A_FAVOR)
+					// || this.equals(JUGADORES_UTILIZADOS) duda
+					// || this.equals(PARADAS_DEL_PORTERO) duda
+					|| this.equals(AF_BALON_PARADO)
+					|| this.equals(AF_CABEZA)
+					|| this.equals(AF_FALTA_DIRECTA)
+					|| this.equals(AF_JUGADA_COLECTIVA)
+					|| this.equals(AF_JUGADA_INDIVIDUAL)
+					|| this.equals(AF_PENALTY)
+					|| this.equals(AF_PIE_IZQUIERDO)
+					|| this.equals(AF_PIE_DERECHO)
+					|| this.equals(GOLES_TITULAR)
+					|| this.equals(GOLES_SUPLENTES) // duda
+					|| this.equals(REMATES_FAVOR)
+					|| this.equals(RF_BALON_PARADO) || this.equals(RF_CABEZA)
+					|| this.equals(RF_FUERA)
+					|| this.equals(RF_JUGADA_COLECTIVA)
+					|| this.equals(RF_JUGADA_INDIVIDUAL)
+					|| this.equals(RF_PENALTY) || this.equals(RF_PIE_IZQUIERDO)
+					|| this.equals(RF_PIE_DERECHO) || this.equals(RF_POSTE)
+					|| this.equals(RF_PORTERIA)
+					|| this.equals(PUNTOS_PONDERADOS)
+					|| this.equals(PUNTOS_TENDENCIA)
+					|| this.equals(PUNTOS_EN_CASA) || this.equals(PUNTOS_FUERA);
+
+		} else {
+			// //Parametros para comparar empates o invalidos
+			System.err.println();
+			throw new Exception(
+					"Parametro del que no podemos decir si es positivo o negativo a mayor cantidad, ya que es un parametro comparativo o invalido. Parametro: "
+							+ this.getNombre());
+		}
+
+		return positivo;
+	}
+
+	/**
+	 * @return True si es un parametro para definir a un equipo individualmente,
+	 *         sin comparar con otro.
+	 */
+	public boolean isTipoEquipoIndividual() {
+		return this.equals(NUMEROJORNADA) || this.equals(JUEGA_EN_CASA)
+				|| this.equals(JUEGA_FUERA)
+				|| this.equals(NUMERO_UNOS_ANTERIORES)
+				|| this.equals(NUMERO_EQUIS_ANTERIORES)
+				|| this.equals(NUMERO_DOSES_ANTERIORES)
+				|| this.equals(GOLESENCASAAFAVOR)
+				|| this.equals(GOLESENCASAENCONTRA)
+				|| this.equals(GOLESFUERAAFAVOR)
+				|| this.equals(GOLESFUERAENCONTRA)
+				|| this.equals(GOLESTOTALESAFAVOR)
+				|| this.equals(GOLESTOTALESENCONTRA)
+				|| this.equals(PUNTOSSIMPLES) || this.equals(GANADOS)
+				|| this.equals(EMPATADOS) || this.equals(PERDIDOS)
+				|| this.equals(PUNTOSNORMALES)
+				|| this.equals(DIFERENCIADEGOLESENCONTRA)
+				|| this.equals(DIFERENCIADEGOLESAFAVOR)
+				|| this.equals(POSICION_EN_CLASIFICACION)
+				|| this.equals(PARTIDOS_JUGADOS)
+				|| this.equals(PARTIDOS_GANADOS)
+				|| this.equals(PARTIDOS_EMPATADOS)
+				|| this.equals(PARTIDOS_PERDIDOS) || this.equals(GOLES_A_FAVOR)
+				|| this.equals(GOLES_EN_CONTRA)
+				|| this.equals(REMATES_EN_CONTRA)
+				|| this.equals(JUGADORES_UTILIZADOS)
+				|| this.equals(PARADAS_DEL_PORTERO)
+				|| this.equals(AF_BALON_PARADO) || this.equals(AF_CABEZA)
+				|| this.equals(AF_FALTA_DIRECTA)
+				|| this.equals(AF_JUGADA_COLECTIVA)
+				|| this.equals(AF_JUGADA_INDIVIDUAL) || this.equals(AF_PENALTY)
+				|| this.equals(AF_PIE_IZQUIERDO) || this.equals(AF_PIE_DERECHO)
+				|| this.equals(EN_CONTRA) || this.equals(GC_CABEZA)
+				|| this.equals(GC_PENALTY) || this.equals(GOLES_TITULAR)
+				|| this.equals(GOLES_SUPLENTES) || this.equals(REMATES_FAVOR)
+				|| this.equals(RF_BALON_PARADO) || this.equals(RF_CABEZA)
+				|| this.equals(RF_FUERA) || this.equals(RF_JUGADA_COLECTIVA)
+				|| this.equals(RF_JUGADA_INDIVIDUAL) || this.equals(RF_PENALTY)
+				|| this.equals(RF_PIE_IZQUIERDO) || this.equals(RF_PIE_DERECHO)
+				|| this.equals(RF_POSTE) || this.equals(RF_PORTERIA)
+				|| this.equals(RC_CABEZA) || this.equals(RC_FUERA)
+				|| this.equals(RC_PORTERIA) || this.equals(RC_POSTE)
+				|| this.equals(TARJETAS_AMARILLAS)
+				|| this.equals(TARJETAS_ROJAS)
+				|| this.equals(PUNTOS_PONDERADOS)
+				|| this.equals(PUNTOS_TENDENCIA) || this.equals(PUNTOS_EN_CASA)
+				|| this.equals(PUNTOS_FUERA);
+	}
+
+	/**
+	 * @return True si es un parametro de comparacion, para comparar dos
+	 *         equipos.
+	 */
+	public boolean isTipoComparativo() {
+		return this.equals(DIFERENCIA_POSICIONES_EN_CLASIFICACION)
+				|| this.equals(DIFERENCIA_PUNTOS_PONDERADOS)
+				|| this.equals(DIFERENCIA_PUNTOS_PARA_EMPATE)
+				|| this.equals(DIFERENCIA_PUNTOS_SIMPLES)
+				|| this.equals(DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE)
+				|| this.equals(DIFERENCIA_PUNTOS)
+				|| this.equals(FORTALEZA_LUGAR)
+				|| this.equals(PROBABILIDAD_COMPENSAR_PARA_EMPATE);
 	}
 
 	public String getNombre() {
