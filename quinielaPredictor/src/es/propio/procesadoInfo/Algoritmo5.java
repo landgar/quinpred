@@ -42,9 +42,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.GOLESFUERAENCONTRA, Boolean.FALSE,
-				pronostico, null);
+		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAENCONTRA,
+				Boolean.FALSE, pronostico, null);
 	}
 
 	/**
@@ -72,9 +71,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(getTemporadaSegunda(),
-				ParametroNombre.GOLESFUERAAFAVOR, Boolean.TRUE, pronostico,
-				null);
+		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAAFAVOR,
+				Boolean.TRUE, pronostico, null);
 	}
 
 	/**
@@ -102,7 +100,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 * @param pronostico
 	 * @throws Exception
 	 */
-	private void porParametroDiscriminatorio(final Temporada temporada,
+	private void porParametroDiscriminatorio(
 			final ParametroNombre parametroDiscriminatorio,
 			final Boolean mayorEsMejor, PronosticoPartido pronostico,
 			final ParametroNombre segundoParametro) throws Exception {
@@ -119,8 +117,10 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 					parametroDiscriminatorio).getValor());
 			if (valor1 <= valor2) {
 				pronostico.setPorcentaje1(mayorEsMejor ? 0F : 1F);
+				pronostico.setPorcentaje2(mayorEsMejor ? 1F : 0F);
 			} else {
 				pronostico.setPorcentaje2(mayorEsMejor ? 0F : 1F);
+				pronostico.setPorcentaje1(mayorEsMejor ? 1F : 0F);
 			}
 		} else {
 			Integer a = local.getParametro(parametroDiscriminatorio).getValor();
@@ -136,7 +136,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				pronostico.setPorcentaje2(1F);
 			}
 		}
-
+int a=1;
 	}
 
 	/**
