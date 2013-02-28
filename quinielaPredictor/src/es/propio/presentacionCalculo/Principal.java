@@ -16,13 +16,12 @@ import es.propio.cargadorInfoWeb.CargadorWebNombresProximaQuiniela;
 import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.ParametrizadorPartido;
+import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.TuplaParametrosAnalisis;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
-import es.propio.procesadoInfo.Algoritmo1;
-import es.propio.procesadoInfo.Algoritmo2;
-import es.propio.procesadoInfo.Algoritmo3;
 import es.propio.procesadoInfo.Algoritmo5;
 
 /**
@@ -64,19 +63,25 @@ public class Principal {
 		ParametrizadorPartido.cargarParametrosDePartidos(cargador
 				.getTemporadaSegunda());
 
-//		System.out
-//				.println("PASADO: Comparando algoritmos con datos pasados...");
+		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
+				ParametroNombre.GOLES_EN_CONTRA,
+				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION,
+				ParametroNombre.GOLESFUERAAFAVOR,
+				ParametroNombre.DIFERENCIADEGOLESAFAVOR);
+
+		// System.out
+		// .println("PASADO: Comparando algoritmos con datos pasados...");
 		List<AbstractAlgoritmo> algoritmosUsados = new ArrayList<AbstractAlgoritmo>();
-//		algoritmosUsados
-//				.add(new Algoritmo1(temporadaPrimera, temporadaSegunda));
-//		algoritmosUsados
-//				.add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
-//		algoritmosUsados
-//				.add(new Algoritmo3(temporadaPrimera, temporadaSegunda));
-//		algoritmosUsados
-//				.add(new Algoritmo4(temporadaPrimera, temporadaSegunda));
-		algoritmosUsados
-				.add(new Algoritmo5(temporadaPrimera, temporadaSegunda));
+		// algoritmosUsados
+		// .add(new Algoritmo1(temporadaPrimera, temporadaSegunda));
+		// algoritmosUsados
+		// .add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
+		// algoritmosUsados
+		// .add(new Algoritmo3(temporadaPrimera, temporadaSegunda));
+		// algoritmosUsados
+		// .add(new Algoritmo4(temporadaPrimera, temporadaSegunda));
+		algoritmosUsados.add(new Algoritmo5(temporadaPrimera, temporadaSegunda,
+				tupla));
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda);
 

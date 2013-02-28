@@ -9,10 +9,12 @@ import es.propio.cargadorInfoWeb.CargadorInformacionWebResultados;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.Jornada;
 import es.propio.modeladoInfo.ParametrizadorPartido;
+import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.TuplaParametrosAnalisis;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.Algoritmo1;
 import es.propio.procesadoInfo.Algoritmo2;
@@ -33,6 +35,13 @@ public class AbstractAlgoritmoTest {
 		cargador.cargar();
 		Temporada temporadaPrimera = cargador.getTemporadaPrimera();
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
+
+		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
+				ParametroNombre.GOLES_EN_CONTRA,
+				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION,
+				ParametroNombre.GOLESFUERAAFAVOR,
+				ParametroNombre.DIFERENCIADEGOLESAFAVOR);
+
 		AbstractAlgoritmo alg;
 		if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO1)) {
 			alg = new Algoritmo1(temporadaPrimera, temporadaSegunda);
@@ -40,8 +49,8 @@ public class AbstractAlgoritmoTest {
 			alg = new Algoritmo2(temporadaPrimera, temporadaSegunda);
 		} else if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO3)) {
 			alg = new Algoritmo3(temporadaPrimera, temporadaSegunda);
-		}  else if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO5)) {
-			alg = new Algoritmo5(temporadaPrimera, temporadaSegunda);
+		} else if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO5)) {
+			alg = new Algoritmo5(temporadaPrimera, temporadaSegunda, tupla);
 		} else {
 			throw new Exception("Algoritmo no controlado");
 		}

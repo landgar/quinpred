@@ -16,6 +16,7 @@ import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.TuplaParametrosAnalisis;
 
 /**
  * @author i3casa
@@ -26,12 +27,18 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 
 	private final Boolean ACTITUD_AGRESIVA = Boolean.TRUE;
 
+	private final TuplaParametrosAnalisis parametrosAnalisis;
+
 	public Algoritmo5(final Temporada temporadaPrimera,
-			final Temporada temporadaSegunda) {
+			final Temporada temporadaSegunda,
+			final TuplaParametrosAnalisis parametrosAnalisis) {
 		super();
 		setId(IdAlgoritmoEnum.ALGORITMO5);
 		setTemporadaPrimera(temporadaPrimera);
 		setTemporadaSegunda(temporadaSegunda);
+		this.parametrosAnalisis = parametrosAnalisis;
+
+		System.out.println(parametrosAnalisis.toString());
 	}
 
 	/**
@@ -43,7 +50,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAENCONTRA,
-				Boolean.FALSE, pronostico, null);
+				pronostico, null);
 	}
 
 	/**
@@ -72,7 +79,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAAFAVOR,
-				Boolean.TRUE, pronostico, null);
+				pronostico, null);
 	}
 
 	/**
@@ -102,8 +109,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void porParametroDiscriminatorio(
 			final ParametroNombre parametroDiscriminatorio,
-			final Boolean mayorEsMejor, PronosticoPartido pronostico,
-			final ParametroNombre segundoParametro) throws Exception {
+			PronosticoPartido pronostico, final ParametroNombre segundoParametro)
+			throws Exception {
 		pronostico.reseteaPorcentajes();
 		Equipo local = pronostico.getPartido().getEquipoLocal();
 		Equipo visitante = pronostico.getPartido().getEquipoVisitante();
@@ -116,11 +123,19 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 			valor2 = Float.valueOf(visitante.getParametro(
 					parametroDiscriminatorio).getValor());
 			if (valor1 <= valor2) {
-				pronostico.setPorcentaje1(mayorEsMejor ? 0F : 1F);
-				pronostico.setPorcentaje2(mayorEsMejor ? 1F : 0F);
+				pronostico
+						.setPorcentaje1(parametroDiscriminatorio.isPositivo() ? 0F
+								: 1F);
+				pronostico
+						.setPorcentaje2(parametroDiscriminatorio.isPositivo() ? 1F
+								: 0F);
 			} else {
-				pronostico.setPorcentaje2(mayorEsMejor ? 0F : 1F);
-				pronostico.setPorcentaje1(mayorEsMejor ? 1F : 0F);
+				pronostico
+						.setPorcentaje2(parametroDiscriminatorio.isPositivo() ? 0F
+								: 1F);
+				pronostico
+						.setPorcentaje1(parametroDiscriminatorio.isPositivo() ? 1F
+								: 0F);
 			}
 		} else {
 			Integer a = local.getParametro(parametroDiscriminatorio).getValor();
@@ -136,7 +151,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				pronostico.setPorcentaje2(1F);
 			}
 		}
-int a=1;
+		int a = 1;
 	}
 
 	/**
@@ -159,6 +174,7 @@ int a=1;
 		List<Partido> partidosOrdenados = new ArrayList<Partido>(
 				jornada.getPartidos());
 		Collections.sort(partidosOrdenados, new Comparator<Partido>() {
+			@Override
 			public int compare(Partido one, Partido other) {
 				int salida = 0;
 				try {
