@@ -38,7 +38,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		setTemporadaSegunda(temporadaSegunda);
 		this.parametrosAnalisis = parametrosAnalisis;
 
-		System.out.println(parametrosAnalisis.toString());
+		System.out.println("Algoritmo5 --> " + parametrosAnalisis.toString());
 	}
 
 	/**

@@ -42,12 +42,12 @@ public class AnalizadorDelPasado {
 			final List<AbstractAlgoritmo> algoritmosUsados,
 			final Temporada temporadaPrimera, final Temporada temporadaSegunda)
 			throws Exception {
-//		System.out
-//				.println("Pintando GRAFICOS para comparar los algoritmos ...");
-//		System.out
-//				.println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
-//		System.out
-//				.println("Aplicación del algoritmo a todos los ficheros de predicción:");
+		// System.out
+		// .println("Pintando GRAFICOS para comparar los algoritmos ...");
+		// System.out
+		// .println("ENTRADA: Temporada, resultados reales y resultados pronosticados.");
+		// System.out
+		// .println("Aplicación del algoritmo a todos los ficheros de predicción:");
 		algoritmos = algoritmosUsados;
 		graficosDivision(temporadaPrimera, Division.PRIMERA);
 		graficosDivision(temporadaSegunda, Division.SEGUNDA);
@@ -66,6 +66,7 @@ public class AnalizadorDelPasado {
 		List<PronosticoJornada> resultadosReales = obtenerResultadosReales(temporada);
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
 				pronosticosJornadas, resultadosReales);
+
 		graficoNumAciertosVsJornada(inDto, division);
 	}
 
@@ -173,12 +174,9 @@ public class AnalizadorDelPasado {
 
 	private static void graficoNumAciertosVsJornada(
 			EntradaAciertosJornadaDto inDto, Division division) {
-		String titulo = "Comparación de algoritmos en jornadas pasadas: ";
-		titulo += division.equals(Division.PRIMERA) ? "PRIMERA" : "SEGUNDA";
-		titulo += " DIVISION";
 
 		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
-				"GRAFICO Num aciertos vs. Jornada", titulo, inDto);
+				"GRAFICO Num aciertos vs. Jornada", inDto, division);
 		grafico.pack();
 		RefineryUtilities.centerFrameOnScreen(grafico);
 		grafico.setVisible(true);

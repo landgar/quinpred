@@ -24,4 +24,15 @@ public enum Division {
 		this.codigo = codigo;
 	}
 
+	@Override
+	public String toString() {
+		String str = "-";
+		if (this.equals(Division.PRIMERA)) {
+			str = "PRIMERA";
+		} else if (this.equals(Division.SEGUNDA)) {
+			str = "SEGUNDA";
+		}
+		return str;
+	}
+
 };

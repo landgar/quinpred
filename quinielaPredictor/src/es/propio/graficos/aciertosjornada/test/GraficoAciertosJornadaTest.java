@@ -4,6 +4,7 @@ import org.jfree.ui.RefineryUtilities;
 
 import es.propio.graficos.aciertosjornada.EntradaAciertosJornadaDto;
 import es.propio.graficos.aciertosjornada.GraficoAciertosJornada;
+import es.propio.modeladoInfo.Division;
 
 public class GraficoAciertosJornadaTest {
 
@@ -16,9 +17,8 @@ public class GraficoAciertosJornadaTest {
 
 	private static void graficoNumAciertosVsJornada(
 			EntradaAciertosJornadaDto inDto) {
-		String title = "Comparación de algoritmos según resultados pasados";
 		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
-				"GRAFICO Num aciertos vs. Jornada", title, inDto);
+				"GRAFICO Num aciertos vs. Jornada", inDto, Division.PRIMERA);
 		grafico.pack();
 		RefineryUtilities.centerFrameOnScreen(grafico);
 		grafico.setVisible(true);
