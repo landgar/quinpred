@@ -27,18 +27,18 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 
 	private final Boolean ACTITUD_AGRESIVA = Boolean.TRUE;
 
-	private final TuplaParametrosAnalisis parametrosAnalisis;
+	private final TuplaParametrosAnalisis tupla;
 
 	public Algoritmo5(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda,
-			final TuplaParametrosAnalisis parametrosAnalisis) {
+			final TuplaParametrosAnalisis tupla) {
 		super();
 		setId(IdAlgoritmoEnum.ALGORITMO5);
 		setTemporadaPrimera(temporadaPrimera);
 		setTemporadaSegunda(temporadaSegunda);
-		this.parametrosAnalisis = parametrosAnalisis;
+		this.tupla = tupla;
 
-		System.out.println("Algoritmo5 --> " + parametrosAnalisis.toString());
+		System.out.println("Algoritmo5 --> " + tupla.toString());
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaPrimera(),
-				ParametroNombre.GOLESFUERAENCONTRA, pronostico, null);
+				tupla.getParamPrimera12(), pronostico, null);
 	}
 
 	/**
@@ -65,8 +65,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		}
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaPrimera().getNumeroJornada(),
-					getTemporadaPrimera(),
-					ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 0,
+					getTemporadaPrimera(), tupla.getParamPrimeraEmpates(), 0,
 					lista);
 	}
 
@@ -79,7 +78,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
 		porParametroDiscriminatorio(getTemporadaSegunda(),
-				ParametroNombre.GOLESFUERAAFAVOR, pronostico, null);
+				tupla.getParamSegunda12(), pronostico, null);
 	}
 
 	/**
@@ -94,8 +93,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		}
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaSegunda().getNumeroJornada(),
-					getTemporadaSegunda(),
-					ParametroNombre.DIFERENCIADEGOLESAFAVOR, 2, lista);
+					getTemporadaSegunda(), tupla.getParamSegundaEmpates(), 2,
+					lista);
 	}
 
 	/**

@@ -9,17 +9,58 @@ import java.util.List;
  */
 public class GestorParametrosAnalisis {
 
+	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_12 = ParametroNombre.GOLES_EN_CONTRA;
+	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_X = ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_12 = ParametroNombre.GOLESFUERAAFAVOR;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_X = ParametroNombre.DIFERENCIADEGOLESAFAVOR;
+
 	public GestorParametrosAnalisis() {
 	}
 
 	public static TuplaParametrosAnalisis getTuplaDefault() {
 		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
-				ParametroNombre.GOLES_EN_CONTRA,
-				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION,
-				ParametroNombre.GOLESFUERAAFAVOR,
-				ParametroNombre.DIFERENCIADEGOLESAFAVOR);
+				DEFAULT_PARAM_PRIMERA_12, DEFAULT_PARAM_PRIMERA_X,
+				DEFAULT_PARAM_SEGUNDA_12, DEFAULT_PARAM_SEGUNDA_X);
 		return tupla;
+	}
 
+	public static TuplaParametrosAnalisis getTupla(ParametroNombre parametro,
+			int posicion) throws Exception {
+		TuplaParametrosAnalisis tupla = null;
+		if (posicion > 4) {
+			throw new Exception(
+					"La posicion va entre 1 y 4 porque los casos posibles son: primera_1/2, primera_x, segunda_1/2 y segunda_x");
+		} else {
+
+			switch (posicion) {
+			case 1:
+				tupla = new TuplaParametrosAnalisis(parametro,
+						DEFAULT_PARAM_PRIMERA_X, DEFAULT_PARAM_SEGUNDA_12,
+						DEFAULT_PARAM_SEGUNDA_X);
+				break;
+			case 2:
+				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
+						parametro, DEFAULT_PARAM_SEGUNDA_12,
+						DEFAULT_PARAM_SEGUNDA_X);
+				break;
+			case 3:
+				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
+						DEFAULT_PARAM_PRIMERA_X, parametro,
+						DEFAULT_PARAM_SEGUNDA_X);
+				break;
+			case 4:
+				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
+						DEFAULT_PARAM_PRIMERA_X, DEFAULT_PARAM_SEGUNDA_12,
+						parametro);
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
+		return tupla;
 	}
 
 	public static List<ParametroNombre> getParamsTipoIndividual() {

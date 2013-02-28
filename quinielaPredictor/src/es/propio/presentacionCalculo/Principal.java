@@ -17,9 +17,11 @@ import es.propio.modeladoInfo.Boleto;
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.GestorParametrosAnalisis;
 import es.propio.modeladoInfo.ParametrizadorPartido;
+import es.propio.modeladoInfo.ParametroNombre;
 import es.propio.modeladoInfo.Partido;
 import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
+import es.propio.modeladoInfo.TuplaParametrosAnalisis;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
 import es.propio.procesadoInfo.Algoritmo5;
 
@@ -36,6 +38,8 @@ public class Principal {
 	 */
 	public static final boolean MODO_MOCK = true;
 
+	public static final boolean ANALISIS_PARAMETROS_ALGORITMO_5 = false;
+
 	public Principal(String title) {
 		super();
 	}
@@ -48,6 +52,54 @@ public class Principal {
 		Properties logProperties = new Properties();
 		logProperties.load(new FileInputStream(LOG_PROPERTIES_FILE));
 		PropertyConfigurator.configure(logProperties);
+
+		if (ANALISIS_PARAMETROS_ALGORITMO_5) {
+			analizarParametrosEn4grupos();
+		} else {
+			ejecucion(GestorParametrosAnalisis.getTuplaDefault(), true);
+		}
+
+		System.out.println("FIN");
+	}
+
+	private static void analizarParametrosEn4grupos() throws Exception {
+
+		List<ParametroNombre> params12 = GestorParametrosAnalisis
+				.getParamsTipoIndividual();
+		List<ParametroNombre> paramsX = GestorParametrosAnalisis
+				.getParamsTipoComparativo();
+
+		// PRIMERA 1/2
+		for (ParametroNombre parametroNombre : params12) {
+			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+					parametroNombre, 1);
+			ejecucion(tupla, false);
+		}
+
+		// PRIMERA X
+		for (ParametroNombre parametroNombre : paramsX) {
+			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+					parametroNombre, 2);
+			ejecucion(tupla, false);
+		}
+
+		// SEGUNDA 1/2
+		for (ParametroNombre parametroNombre : params12) {
+			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+					parametroNombre, 3);
+			ejecucion(tupla, false);
+		}
+
+		// SEGUNDA X
+		for (ParametroNombre parametroNombre : paramsX) {
+			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+					parametroNombre, 4);
+			ejecucion(tupla, false);
+		}
+	}
+
+	private static void ejecucion(TuplaParametrosAnalisis tupla,
+			boolean graficosVisibles) throws Exception {
 
 		// Relleno el universo Temporada
 		CargadorInformacionWebResultados cargador = new CargadorInformacionWebResultados(
@@ -74,16 +126,15 @@ public class Principal {
 		// algoritmosUsados
 		// .add(new Algoritmo4(temporadaPrimera, temporadaSegunda));
 		algoritmosUsados.add(new Algoritmo5(temporadaPrimera, temporadaSegunda,
-				GestorParametrosAnalisis.getTuplaDefault()));
+				tupla));
 
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
-				temporadaPrimera, temporadaSegunda);
+				temporadaPrimera, temporadaSegunda, graficosVisibles);
 
 		// System.out.println("FUTURO: PREDICCION DEL BOLETO ACTUAL...");
 		// PredictorDelFuturo.analizarJornadaActual(temporadaPrimera,
 		// temporadaSegunda);
 
-		System.out.println("FIN");
 	}
 
 	public static List<PronosticoPartido> obtenerPartidos(Division division,

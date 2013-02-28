@@ -40,8 +40,8 @@ public class AnalizadorDelPasado {
 	 */
 	public static void estudiarJornadasPasadas(
 			final List<AbstractAlgoritmo> algoritmosUsados,
-			final Temporada temporadaPrimera, final Temporada temporadaSegunda)
-			throws Exception {
+			final Temporada temporadaPrimera, final Temporada temporadaSegunda,
+			boolean graficoVisible) throws Exception {
 		// System.out
 		// .println("Pintando GRAFICOS para comparar los algoritmos ...");
 		// System.out
@@ -49,12 +49,12 @@ public class AnalizadorDelPasado {
 		// System.out
 		// .println("Aplicación del algoritmo a todos los ficheros de predicción:");
 		algoritmos = algoritmosUsados;
-		graficosDivision(temporadaPrimera, Division.PRIMERA);
-		graficosDivision(temporadaSegunda, Division.SEGUNDA);
+		graficosDivision(temporadaPrimera, Division.PRIMERA, graficoVisible);
+		graficosDivision(temporadaSegunda, Division.SEGUNDA, graficoVisible);
 	}
 
-	private static void graficosDivision(Temporada temporada, Division division)
-			throws Exception {
+	private static void graficosDivision(Temporada temporada,
+			Division division, boolean graficoVisible) throws Exception {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
 		for (Jornada jornada : temporada.getJornadasPasadas()) {
@@ -67,7 +67,7 @@ public class AnalizadorDelPasado {
 		EntradaAciertosJornadaDto inDto = new EntradaAciertosJornadaDto(
 				pronosticosJornadas, resultadosReales);
 
-		graficoNumAciertosVsJornada(inDto, division);
+		graficoNumAciertosVsJornada(inDto, division, graficoVisible);
 	}
 
 	/**
@@ -173,13 +173,14 @@ public class AnalizadorDelPasado {
 	}
 
 	private static void graficoNumAciertosVsJornada(
-			EntradaAciertosJornadaDto inDto, Division division) {
+			EntradaAciertosJornadaDto inDto, Division division,
+			boolean graficoVisible) {
 
 		GraficoAciertosJornada grafico = new GraficoAciertosJornada(
 				"GRAFICO Num aciertos vs. Jornada", inDto, division);
 		grafico.pack();
 		RefineryUtilities.centerFrameOnScreen(grafico);
-		grafico.setVisible(true);
+		grafico.setVisible(graficoVisible);
 	}
 
 	/**
