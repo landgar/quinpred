@@ -11,23 +11,29 @@ public class TuplaParametrosAnalisis {
 
 	private ParametroNombre paramPrimera12, paramPrimeraEmpates,
 			paramSegunda12, paramSegundaEmpates;
+	private Integer numEmpatesPrimera, numEmpatesSegunda;
 
 	public TuplaParametrosAnalisis(ParametroNombre paramPrimera12,
-			ParametroNombre paramPrimeraEmpates,
-			ParametroNombre paramSegunda12, ParametroNombre paramSegundaEmpates) {
+			ParametroNombre paramPrimeraEmpates, Integer numEmpatesPrimera,
+			ParametroNombre paramSegunda12,
+			ParametroNombre paramSegundaEmpates, Integer numEmpatesSegunda) {
 		super();
 		this.paramPrimera12 = paramPrimera12;
 		this.paramPrimeraEmpates = paramPrimeraEmpates;
 		this.paramSegunda12 = paramSegunda12;
 		this.paramSegundaEmpates = paramSegundaEmpates;
+		this.numEmpatesPrimera = numEmpatesPrimera;
+		this.numEmpatesSegunda = numEmpatesSegunda;
 	}
 
 	@Override
 	public String toString() {
 		String str = "Primera_12 = " + paramPrimera12.getNombre() + "   "
 				+ "Primera_X = " + paramPrimeraEmpates.getNombre() + "   "
+				+ "Primera_X_# = " + numEmpatesPrimera + "   "
 				+ "Segunda_12 = " + paramSegunda12.getNombre() + "   "
-				+ "Segunda_X = " + paramSegundaEmpates.getNombre();
+				+ "Segunda_X = " + paramSegundaEmpates.getNombre() + "   "
+				+ "Segunda_X_# = " + numEmpatesSegunda + "   ";
 		return str;
 
 	}
@@ -62,6 +68,36 @@ public class TuplaParametrosAnalisis {
 
 	public void setParamSegundaEmpates(ParametroNombre paramSegundaEmpates) {
 		this.paramSegundaEmpates = paramSegundaEmpates;
+	}
+
+	/**
+	 * @return the numEmpatesPrimera
+	 */
+	public Integer getNumEmpatesPrimera() {
+		return numEmpatesPrimera;
+	}
+
+	/**
+	 * @param numEmpatesPrimera
+	 *            the numEmpatesPrimera to set
+	 */
+	public void setNumEmpatesPrimera(Integer numEmpatesPrimera) {
+		this.numEmpatesPrimera = numEmpatesPrimera;
+	}
+
+	/**
+	 * @return the numEmpatesSegunda
+	 */
+	public Integer getNumEmpatesSegunda() {
+		return numEmpatesSegunda;
+	}
+
+	/**
+	 * @param numEmpatesSegunda
+	 *            the numEmpatesSegunda to set
+	 */
+	public void setNumEmpatesSegunda(Integer numEmpatesSegunda) {
+		this.numEmpatesSegunda = numEmpatesSegunda;
 	}
 
 }

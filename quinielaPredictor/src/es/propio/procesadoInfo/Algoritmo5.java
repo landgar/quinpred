@@ -49,7 +49,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAENCONTRA,
+		porParametroDiscriminatorio(parametrosAnalisis.getParamPrimera12(),
 				pronostico, null);
 	}
 
@@ -66,8 +66,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaPrimera().getNumeroJornada(),
 					getTemporadaPrimera(),
-					ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 1,
-					lista);
+					parametrosAnalisis.getParamPrimeraEmpates(),
+					parametrosAnalisis.getNumEmpatesPrimera(), lista);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(ParametroNombre.POSICION_EN_CLASIFICACION,
+		porParametroDiscriminatorio(parametrosAnalisis.getParamSegunda12(),
 				pronostico, null);
 	}
 
@@ -95,7 +95,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaSegunda().getNumeroJornada(),
 					getTemporadaSegunda(),
-					ParametroNombre.DIFERENCIADEGOLESAFAVOR, 2, lista);
+					parametrosAnalisis.getParamSegundaEmpates(),
+					parametrosAnalisis.getNumEmpatesSegunda(), lista);
 	}
 
 	/**
@@ -201,5 +202,12 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return the parametrosAnalisis
+	 */
+	public TuplaParametrosAnalisis getParametrosAnalisis() {
+		return parametrosAnalisis;
 	}
 }
