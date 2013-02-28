@@ -1,5 +1,6 @@
 package es.propio.graficos.aciertosjornada;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,9 +9,8 @@ import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-import org.omg.CORBA.INTERNAL;
 
-import es.propio.modeladoInfo.Jornada;
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -37,14 +37,17 @@ public class EntradaAciertosJornadaDto {
 	 * Compara los pronosticos bulk y los resultados reales y marca los
 	 * pronosticos que acertaron.
 	 */
-	public void marcarAciertos() {
+	public void marcarAciertos(Division division) {
 		final Integer NUMERO_JORNADAS_A_CONSIDERAR = 6;
-		
+
 		Integer aciertosAcumulados = 0, totalAcumulados = 0;
 		List<Integer> aciertosPorJornada = new ArrayList<Integer>();
 		final Integer JORNADA_MAS_ALTA = getNumeroJornadaMasAlta(pronosticosJornadaBulk);
+
+		// Considero la jornada actual y algunas de las anteriores
 		final Integer NUMERO_JORNADA_PRIMERA_A_CONSIDERAR = JORNADA_MAS_ALTA
 				- NUMERO_JORNADAS_A_CONSIDERAR;
+
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {
 				for (PronosticoJornada pronosticoj : pronosticosJornadaBulk) {
@@ -57,12 +60,13 @@ public class EntradaAciertosJornadaDto {
 									.getPronosticoPartidos().size();
 							aciertosPorJornada.add(valor);
 						}
-//						System.out
-//								.println("*********************************************ALGORITMO "
-//										+ pronosticoj
-//												.getIdAlgoritmoPronosticador()
-//												.getIdAlgoritmo()
-//										+ " *******************************************************");
+						// System.out
+						// .println("*********************************************ALGORITMO "
+						// + pronosticoj
+						// .getIdAlgoritmoPronosticador()
+						// .getIdAlgoritmo()
+						// +
+						// " *******************************************************");
 					}
 				}
 			}
@@ -76,52 +80,49 @@ public class EntradaAciertosJornadaDto {
 			mediaPorJornada.increment(Double.valueOf(aux.toString()));
 			stdPorJornada.increment(Double.valueOf(aux.toString()));
 		}
-		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Aciertos acumulados (desde la jornada "
-						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
-						+ "): "
-						+ aciertosAcumulados
-						+ " / "
-						+ totalAcumulados
-						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Media por jornada: (desde la jornada "
-						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
-						+ "): "
-						+ mediaPorJornada.getResult()
-						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out
-				.println(">>>>>>>>>>>>>>>>>>>>>>>>>Stddev por jornada: (desde la jornada "
-						+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR
-						+ "): "
-						+ stdPorJornada.getResult()
-						+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+		DecimalFormat df = new DecimalFormat("0.0000");
+
+		System.out.println(division.toString() + "\t>>> Desde la jornada "
+				+ NUMERO_JORNADA_PRIMERA_A_CONSIDERAR + " --> "
+				+ "\tAciertos acumulados = " + aciertosAcumulados + " / "
+				+ totalAcumulados + "\t<<< " + "Media por jornada = "
+				+ df.format(mediaPorJornada.getResult()) + "\t<<< "
+				+ "Stddev por jornada = "
+				+ df.format(stdPorJornada.getResult()));
+
 	}
 
-//	public Map<Jornada, List<PronosticoJornada>> organizarPronosticosBulkPorJornada() {
-//		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
-//		if (pronosticosJornadaBulk != null && !pronosticosJornadaBulk.isEmpty()) {
-//			mapaJornadaPronosticos = organizarPorJornada(pronosticosJornadaBulk);
-//		}
-//		return mapaJornadaPronosticos;
-//	}
-//
-//	public Map<Jornada, List<PronosticoJornada>> organizarResultadosRealesPorJornada() {
-//		Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new HashMap<Jornada, List<PronosticoJornada>>();
-//		if (resultadosReales != null && !resultadosReales.isEmpty()) {
-//			mapaJornadaPronosticos = organizarPorJornada(resultadosReales);
-//		}
-//		return mapaJornadaPronosticos;
-//	}
-//
-//	private Map<Jornada, List<PronosticoJornada>> organizarPorJornada(
-//			List<PronosticoJornada> lista) {
-//		Map<Jornada, List<PronosticoJornada>> mapa = new HashMap<Jornada, List<PronosticoJornada>>();
-//		// TODO rellenar el mapa leyendo los pronosticos y ordenando por
-//		// idJornada
-//
-//		return mapa;
-//	}
+	// public Map<Jornada, List<PronosticoJornada>>
+	// organizarPronosticosBulkPorJornada() {
+	// Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new
+	// HashMap<Jornada, List<PronosticoJornada>>();
+	// if (pronosticosJornadaBulk != null && !pronosticosJornadaBulk.isEmpty())
+	// {
+	// mapaJornadaPronosticos = organizarPorJornada(pronosticosJornadaBulk);
+	// }
+	// return mapaJornadaPronosticos;
+	// }
+	//
+	// public Map<Jornada, List<PronosticoJornada>>
+	// organizarResultadosRealesPorJornada() {
+	// Map<Jornada, List<PronosticoJornada>> mapaJornadaPronosticos = new
+	// HashMap<Jornada, List<PronosticoJornada>>();
+	// if (resultadosReales != null && !resultadosReales.isEmpty()) {
+	// mapaJornadaPronosticos = organizarPorJornada(resultadosReales);
+	// }
+	// return mapaJornadaPronosticos;
+	// }
+	//
+	// private Map<Jornada, List<PronosticoJornada>> organizarPorJornada(
+	// List<PronosticoJornada> lista) {
+	// Map<Jornada, List<PronosticoJornada>> mapa = new HashMap<Jornada,
+	// List<PronosticoJornada>>();
+	// // TODO rellenar el mapa leyendo los pronosticos y ordenando por
+	// // idJornada
+	//
+	// return mapa;
+	// }
 
 	public List<IdAlgoritmoEnum> extraerAlgoritmosUsados() {
 		List<IdAlgoritmoEnum> idsAlgoritmos = new ArrayList<IdAlgoritmoEnum>();

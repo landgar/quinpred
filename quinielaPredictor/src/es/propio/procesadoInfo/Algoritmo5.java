@@ -38,7 +38,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		setTemporadaSegunda(temporadaSegunda);
 		this.parametrosAnalisis = parametrosAnalisis;
 
-		System.out.println(parametrosAnalisis.toString());
+		System.out.println("Algoritmo5 --> " + parametrosAnalisis.toString());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(ParametroNombre.GOLESFUERAAFAVOR,
+		porParametroDiscriminatorio(ParametroNombre.POSICION_EN_CLASIFICACION,
 				pronostico, null);
 	}
 
@@ -151,7 +151,6 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				pronostico.setPorcentaje2(1F);
 			}
 		}
-		int a = 1;
 	}
 
 	/**

@@ -23,6 +23,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.experimental.chart.plot.CombinedCategoryPlot;
 import org.jfree.ui.ApplicationFrame;
 
+import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
@@ -45,11 +46,15 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 
 	public static EntradaAciertosJornadaDto inDto;
 
-	public GraficoAciertosJornada(String tituloVentana, String tituloGraficos,
-			EntradaAciertosJornadaDto inDto) {
+	public GraficoAciertosJornada(String tituloVentana,
+			EntradaAciertosJornadaDto inDto, Division division) {
 		super(tituloVentana);
 		GraficoAciertosJornada.inDto = inDto;
-		JPanel chartPanel = createDemoPanel(tituloGraficos);
+
+		String tituloGraficos = "Comparación de algoritmos en jornadas pasadas: "
+				+ division.toString() + " DIVISION";
+
+		JPanel chartPanel = createDemoPanel(tituloGraficos, division);
 		chartPanel.setPreferredSize(DIMENSION_GRAFICO);
 		setContentPane(chartPanel);
 	}
@@ -59,8 +64,9 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	 * 
 	 * @return A panel.
 	 */
-	public static JPanel createDemoPanel(String tituloGraficos) {
-		JFreeChart chart = createChart(tituloGraficos);
+	public static JPanel createDemoPanel(String tituloGraficos,
+			Division division) {
+		JFreeChart chart = createChart(tituloGraficos, division);
 		return new ChartPanel(chart);
 	}
 
@@ -69,19 +75,20 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	 * 
 	 * @return A chart.
 	 */
-	private static JFreeChart createChart(String tituloGraficos) {
+	private static JFreeChart createChart(String tituloGraficos,
+			Division division) {
 
 		CategoryAxis domainAxis = new CategoryAxis("Num jornada");
 		CombinedCategoryPlot plot = new CombinedCategoryPlot(domainAxis,
 				new NumberAxis("Num aciertos"));
-		plot.add(crearSubplotLineas(), 1);
+		plot.add(crearSubplotLineas(division), 1);
 
 		JFreeChart tabla = new JFreeChart(tituloGraficos, LETRA, plot, true);
 		return tabla;
 	}
 
-	private static CategoryPlot crearSubplotLineas() {
-		CategoryDataset dataset = createDataset();
+	private static CategoryPlot crearSubplotLineas(Division division) {
+		CategoryDataset dataset = createDataset(division);
 		NumberAxis rangeAxis = new NumberAxis("Value");
 		rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		LineAndShapeRenderer renderer = new LineAndShapeRenderer();
@@ -97,11 +104,11 @@ public class GraficoAciertosJornada extends ApplicationFrame {
 	 * 
 	 * @return A dataset.
 	 */
-	public static CategoryDataset createDataset() {
+	public static CategoryDataset createDataset(Division division) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 		// ESTO es PESADO, pero facilita el cálculo posterior
-		inDto.marcarAciertos();
+		inDto.marcarAciertos(division);
 
 		Map<IdAlgoritmoEnum, List<PronosticoJornada>> mapa = inDto
 				.organizarPorAlgoritmo();
