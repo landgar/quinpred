@@ -3,24 +3,25 @@ package es.propio.modeladoInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.propio.presentacionCalculo.Principal;
+
 /**
  * Gestor de los parámetros para usarlos en el análisis.
  * 
  */
 public class GestorParametrosAnalisis {
 
-	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_12 = ParametroNombre.GOLES_EN_CONTRA;
-	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_X = ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION;
-	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_12 = ParametroNombre.GOLESFUERAAFAVOR;
-	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_X = ParametroNombre.DIFERENCIADEGOLESAFAVOR;
-
 	public GestorParametrosAnalisis() {
 	}
 
 	public static TuplaParametrosAnalisis getTuplaDefault() {
 		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
-				DEFAULT_PARAM_PRIMERA_12, DEFAULT_PARAM_PRIMERA_X,
-				DEFAULT_PARAM_SEGUNDA_12, DEFAULT_PARAM_SEGUNDA_X);
+				Principal.DEFAULT_PARAM_PRIMERA_12,
+				Principal.DEFAULT_PARAM_PRIMERA_X,
+				Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+				Principal.DEFAULT_PARAM_SEGUNDA_12,
+				Principal.DEFAULT_PARAM_SEGUNDA_X,
+				Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
 		return tupla;
 	}
 
@@ -32,26 +33,41 @@ public class GestorParametrosAnalisis {
 					"La posicion va entre 1 y 4 porque los casos posibles son: primera_1/2, primera_x, segunda_1/2 y segunda_x");
 		} else {
 
+			Integer empatesEnCasos12 = Integer.valueOf(0);
+
 			switch (posicion) {
 			case 1:
+				// PRIMERA 1/2
 				tupla = new TuplaParametrosAnalisis(parametro,
-						DEFAULT_PARAM_PRIMERA_X, DEFAULT_PARAM_SEGUNDA_12,
-						DEFAULT_PARAM_SEGUNDA_X);
+						Principal.DEFAULT_PARAM_PRIMERA_X, empatesEnCasos12,
+						Principal.DEFAULT_PARAM_SEGUNDA_12,
+						Principal.DEFAULT_PARAM_SEGUNDA_X, empatesEnCasos12);
 				break;
 			case 2:
-				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
-						parametro, DEFAULT_PARAM_SEGUNDA_12,
-						DEFAULT_PARAM_SEGUNDA_X);
+				// PRIMERA X
+				tupla = new TuplaParametrosAnalisis(
+						Principal.DEFAULT_PARAM_PRIMERA_12, parametro,
+						Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+						Principal.DEFAULT_PARAM_SEGUNDA_12,
+						Principal.DEFAULT_PARAM_SEGUNDA_X,
+						Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
 				break;
 			case 3:
-				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
-						DEFAULT_PARAM_PRIMERA_X, parametro,
-						DEFAULT_PARAM_SEGUNDA_X);
+				// SEGUNDA 1/2
+				tupla = new TuplaParametrosAnalisis(
+						Principal.DEFAULT_PARAM_PRIMERA_12,
+						Principal.DEFAULT_PARAM_PRIMERA_X, empatesEnCasos12,
+						parametro, Principal.DEFAULT_PARAM_SEGUNDA_X,
+						empatesEnCasos12);
 				break;
 			case 4:
-				tupla = new TuplaParametrosAnalisis(DEFAULT_PARAM_PRIMERA_12,
-						DEFAULT_PARAM_PRIMERA_X, DEFAULT_PARAM_SEGUNDA_12,
-						parametro);
+				// SEGUNDA X
+				tupla = new TuplaParametrosAnalisis(
+						Principal.DEFAULT_PARAM_PRIMERA_12,
+						Principal.DEFAULT_PARAM_PRIMERA_X,
+						Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+						Principal.DEFAULT_PARAM_SEGUNDA_12, parametro,
+						Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
 				break;
 
 			default:
@@ -78,21 +94,28 @@ public class GestorParametrosAnalisis {
 		lista.add(ParametroNombre.GOLESTOTALESAFAVOR);
 		lista.add(ParametroNombre.GOLESTOTALESENCONTRA);
 		lista.add(ParametroNombre.PUNTOSSIMPLES);
-		lista.add(ParametroNombre.GANADOS);
-		lista.add(ParametroNombre.EMPATADOS);
-		lista.add(ParametroNombre.PERDIDOS);
+		lista.add(ParametroNombre.GANADOS); // datos no disponibles en mock
+		lista.add(ParametroNombre.EMPATADOS); // datos no disponibles en mock
+		lista.add(ParametroNombre.PERDIDOS); // datos no disponibles en mock
 		lista.add(ParametroNombre.PUNTOSNORMALES);
-		lista.add(ParametroNombre.DIFERENCIADEGOLESENCONTRA);
-		lista.add(ParametroNombre.DIFERENCIADEGOLESAFAVOR);
+		lista.add(ParametroNombre.DIFERENCIADEGOLESENCONTRA); // datos no
+																// disponibles
+																// en mock
+		lista.add(ParametroNombre.DIFERENCIADEGOLESAFAVOR); // datos no
+															// disponibles en
+															// mock
 		lista.add(ParametroNombre.POSICION_EN_CLASIFICACION);
-		lista.add(ParametroNombre.PARTIDOS_JUGADOS);
+		lista.add(ParametroNombre.PARTIDOS_JUGADOS); // datos no disponibles en
+														// mock
 		lista.add(ParametroNombre.PARTIDOS_GANADOS);
 		lista.add(ParametroNombre.PARTIDOS_EMPATADOS);
 		lista.add(ParametroNombre.PARTIDOS_PERDIDOS);
 		lista.add(ParametroNombre.GOLES_A_FAVOR);
 		lista.add(ParametroNombre.GOLES_EN_CONTRA);
-		lista.add(ParametroNombre.REMATES_EN_CONTRA);
-		lista.add(ParametroNombre.JUGADORES_UTILIZADOS);
+		lista.add(ParametroNombre.REMATES_EN_CONTRA);// datos no disponibles en
+														// mock para segunda
+		lista.add(ParametroNombre.JUGADORES_UTILIZADOS);// no hay mock para
+														// segunda 1/2
 		lista.add(ParametroNombre.PARADAS_DEL_PORTERO);
 		lista.add(ParametroNombre.AF_BALON_PARADO);
 		lista.add(ParametroNombre.AF_CABEZA);
@@ -102,8 +125,8 @@ public class GestorParametrosAnalisis {
 		lista.add(ParametroNombre.AF_PENALTY);
 		lista.add(ParametroNombre.AF_PIE_IZQUIERDO);
 		lista.add(ParametroNombre.AF_PIE_DERECHO);
-		lista.add(ParametroNombre.EN_CONTRA);
-		lista.add(ParametroNombre.GC_CABEZA);
+		lista.add(ParametroNombre.EN_CONTRA); // datos no disponibles en mock
+		lista.add(ParametroNombre.GC_CABEZA); // datos no disponibles en mock
 		lista.add(ParametroNombre.GC_PENALTY);
 		lista.add(ParametroNombre.GOLES_TITULAR);
 		lista.add(ParametroNombre.GOLES_SUPLENTES);

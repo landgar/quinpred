@@ -38,7 +38,27 @@ public class Principal {
 	 */
 	public static final boolean MODO_MOCK = true;
 
+	public static final boolean MOSTRAR_GRAFICOS = true;
+
+	/**
+	 * Cuando queremos obtener los 4 parametros optimos para algoritmo 5. Hay
+	 * ciertos parametros para los que no hay mock, asi que hay que comentarlos
+	 * en GestorParametrosAnalisis para no usarlos y que no falle. Por ejemplo,
+	 * los Parametros Avanzados de Primera solo existen para primera, pero
+	 * cuando lo ejecute con Segunda, saltará excepción porque no tenemos datos
+	 * de parametros avanzados en Segunda.
+	 */
 	public static final boolean ANALISIS_PARAMETROS_ALGORITMO_5 = false;
+
+	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_12 = ParametroNombre.PARTIDOS_PERDIDOS;
+	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_X = ParametroNombre.DIFERENCIA_PUNTOS;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_12 = ParametroNombre.PUNTOSNORMALES;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_X = ParametroNombre.DIFERENCIA_PUNTOS;
+
+	public static final Integer DEFAULT_NUM_EMPATES_PRIMERA = Integer
+			.valueOf(2);
+	public static final Integer DEFAULT_NUM_EMPATES_SEGUNDA = Integer
+			.valueOf(3);
 
 	public Principal(String title) {
 		super();
@@ -56,7 +76,8 @@ public class Principal {
 		if (ANALISIS_PARAMETROS_ALGORITMO_5) {
 			analizarParametrosEn4grupos();
 		} else {
-			ejecucion(GestorParametrosAnalisis.getTuplaDefault(), true);
+			ejecucion(GestorParametrosAnalisis.getTuplaDefault(),
+					MOSTRAR_GRAFICOS);
 		}
 
 		System.out.println("FIN");
@@ -70,18 +91,25 @@ public class Principal {
 				.getParamsTipoComparativo();
 
 		// PRIMERA 1/2
-		for (ParametroNombre parametroNombre : params12) {
-			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-					parametroNombre, 1);
-			ejecucion(tupla, false);
-		}
+		// for (ParametroNombre parametroNombre : params12) {
+		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+		// parametroNombre, 1);
+		// ejecucion(tupla, false);
+		// }
 
 		// PRIMERA X
-		for (ParametroNombre parametroNombre : paramsX) {
-			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-					parametroNombre, 2);
-			ejecucion(tupla, false);
-		}
+		// for (ParametroNombre parametroNombre : paramsX) {
+		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+		// parametroNombre, 2);
+		// ejecucion(tupla, false);
+		// }
+
+		// SEGUNDA X
+		// for (ParametroNombre parametroNombre : paramsX) {
+		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
+		// parametroNombre, 4);
+		// ejecucion(tupla, false);
+		// }
 
 		// SEGUNDA 1/2
 		for (ParametroNombre parametroNombre : params12) {
@@ -90,12 +118,6 @@ public class Principal {
 			ejecucion(tupla, false);
 		}
 
-		// SEGUNDA X
-		for (ParametroNombre parametroNombre : paramsX) {
-			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-					parametroNombre, 4);
-			ejecucion(tupla, false);
-		}
 	}
 
 	private static void ejecucion(TuplaParametrosAnalisis tupla,

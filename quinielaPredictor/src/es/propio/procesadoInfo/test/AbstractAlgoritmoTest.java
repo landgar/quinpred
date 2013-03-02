@@ -38,9 +38,9 @@ public class AbstractAlgoritmoTest {
 
 		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
 				ParametroNombre.GOLES_EN_CONTRA,
-				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION,
+				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 1,
 				ParametroNombre.GOLESFUERAAFAVOR,
-				ParametroNombre.DIFERENCIADEGOLESAFAVOR);
+				ParametroNombre.DIFERENCIADEGOLESAFAVOR, 2);
 
 		AbstractAlgoritmo alg;
 		if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO1)) {

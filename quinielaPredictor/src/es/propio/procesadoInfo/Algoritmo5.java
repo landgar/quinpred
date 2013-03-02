@@ -27,18 +27,18 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 
 	private final Boolean ACTITUD_AGRESIVA = Boolean.TRUE;
 
-	private final TuplaParametrosAnalisis tupla;
+	private final TuplaParametrosAnalisis parametrosAnalisis;
 
 	public Algoritmo5(final Temporada temporadaPrimera,
 			final Temporada temporadaSegunda,
-			final TuplaParametrosAnalisis tupla) {
+			final TuplaParametrosAnalisis parametrosAnalisis) {
 		super();
 		setId(IdAlgoritmoEnum.ALGORITMO5);
 		setTemporadaPrimera(temporadaPrimera);
 		setTemporadaSegunda(temporadaSegunda);
-		this.tupla = tupla;
+		this.parametrosAnalisis = parametrosAnalisis;
 
-		System.out.println("Algoritmo5 --> " + tupla.toString());
+		System.out.println("Algoritmo5 --> " + parametrosAnalisis.toString());
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoPrimera(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(getTemporadaPrimera(),
-				tupla.getParamPrimera12(), pronostico, null);
+		porParametroDiscriminatorio(parametrosAnalisis.getParamPrimera12(),
+				pronostico, null);
 	}
 
 	/**
@@ -65,8 +65,9 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		}
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaPrimera().getNumeroJornada(),
-					getTemporadaPrimera(), tupla.getParamPrimeraEmpates(), 0,
-					lista);
+					getTemporadaPrimera(),
+					parametrosAnalisis.getParamPrimeraEmpates(),
+					parametrosAnalisis.getNumEmpatesPrimera(), lista);
 	}
 
 	/**
@@ -77,8 +78,8 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 */
 	private void calcularPronosticoSegunda(PronosticoPartido pronostico)
 			throws Exception {
-		porParametroDiscriminatorio(getTemporadaSegunda(),
-				tupla.getParamSegunda12(), pronostico, null);
+		porParametroDiscriminatorio(parametrosAnalisis.getParamSegunda12(),
+				pronostico, null);
 	}
 
 	/**
@@ -93,8 +94,9 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		}
 		if (ACTITUD_AGRESIVA)
 			anadirEmpates(getEstimacionJornadaSegunda().getNumeroJornada(),
-					getTemporadaSegunda(), tupla.getParamSegundaEmpates(), 2,
-					lista);
+					getTemporadaSegunda(),
+					parametrosAnalisis.getParamSegundaEmpates(),
+					parametrosAnalisis.getNumEmpatesSegunda(), lista);
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 	 * @param pronostico
 	 * @throws Exception
 	 */
-	private void porParametroDiscriminatorio(final Temporada temporada,
+	private void porParametroDiscriminatorio(
 			final ParametroNombre parametroDiscriminatorio,
 			PronosticoPartido pronostico, final ParametroNombre segundoParametro)
 			throws Exception {
@@ -125,10 +127,16 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				pronostico
 						.setPorcentaje1(parametroDiscriminatorio.isPositivo() ? 0F
 								: 1F);
+				pronostico
+						.setPorcentaje2(parametroDiscriminatorio.isPositivo() ? 1F
+								: 0F);
 			} else {
 				pronostico
 						.setPorcentaje2(parametroDiscriminatorio.isPositivo() ? 0F
 								: 1F);
+				pronostico
+						.setPorcentaje1(parametroDiscriminatorio.isPositivo() ? 1F
+								: 0F);
 			}
 		} else {
 			Integer a = local.getParametro(parametroDiscriminatorio).getValor();
@@ -144,7 +152,6 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				pronostico.setPorcentaje2(1F);
 			}
 		}
-
 	}
 
 	/**
@@ -195,5 +202,12 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return the parametrosAnalisis
+	 */
+	public TuplaParametrosAnalisis getParametrosAnalisis() {
+		return parametrosAnalisis;
 	}
 }
