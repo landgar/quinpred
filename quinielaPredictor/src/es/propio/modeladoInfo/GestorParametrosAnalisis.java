@@ -94,28 +94,21 @@ public class GestorParametrosAnalisis {
 		lista.add(ParametroNombre.GOLESTOTALESAFAVOR);
 		lista.add(ParametroNombre.GOLESTOTALESENCONTRA);
 		lista.add(ParametroNombre.PUNTOSSIMPLES);
-		lista.add(ParametroNombre.GANADOS); // datos no disponibles en mock
-		lista.add(ParametroNombre.EMPATADOS); // datos no disponibles en mock
-		lista.add(ParametroNombre.PERDIDOS); // datos no disponibles en mock
+		lista.add(ParametroNombre.GANADOS);
+		lista.add(ParametroNombre.EMPATADOS);
+		lista.add(ParametroNombre.PERDIDOS);
 		lista.add(ParametroNombre.PUNTOSNORMALES);
-		lista.add(ParametroNombre.DIFERENCIADEGOLESENCONTRA); // datos no
-																// disponibles
-																// en mock
-		lista.add(ParametroNombre.DIFERENCIADEGOLESAFAVOR); // datos no
-															// disponibles en
-															// mock
+		lista.add(ParametroNombre.DIFERENCIADEGOLESENCONTRA);
+		lista.add(ParametroNombre.DIFERENCIADEGOLESAFAVOR);
 		lista.add(ParametroNombre.POSICION_EN_CLASIFICACION);
-		lista.add(ParametroNombre.PARTIDOS_JUGADOS); // datos no disponibles en
-														// mock
+		lista.add(ParametroNombre.PARTIDOS_JUGADOS);
 		lista.add(ParametroNombre.PARTIDOS_GANADOS);
 		lista.add(ParametroNombre.PARTIDOS_EMPATADOS);
 		lista.add(ParametroNombre.PARTIDOS_PERDIDOS);
 		lista.add(ParametroNombre.GOLES_A_FAVOR);
 		lista.add(ParametroNombre.GOLES_EN_CONTRA);
-		lista.add(ParametroNombre.REMATES_EN_CONTRA);// datos no disponibles en
-														// mock para segunda
-		lista.add(ParametroNombre.JUGADORES_UTILIZADOS);// no hay mock para
-														// segunda 1/2
+		lista.add(ParametroNombre.REMATES_EN_CONTRA);
+		lista.add(ParametroNombre.JUGADORES_UTILIZADOS);
 		lista.add(ParametroNombre.PARADAS_DEL_PORTERO);
 		lista.add(ParametroNombre.AF_BALON_PARADO);
 		lista.add(ParametroNombre.AF_CABEZA);
@@ -125,8 +118,8 @@ public class GestorParametrosAnalisis {
 		lista.add(ParametroNombre.AF_PENALTY);
 		lista.add(ParametroNombre.AF_PIE_IZQUIERDO);
 		lista.add(ParametroNombre.AF_PIE_DERECHO);
-		lista.add(ParametroNombre.EN_CONTRA); // datos no disponibles en mock
-		lista.add(ParametroNombre.GC_CABEZA); // datos no disponibles en mock
+		lista.add(ParametroNombre.EN_CONTRA);
+		lista.add(ParametroNombre.GC_CABEZA);
 		lista.add(ParametroNombre.GC_PENALTY);
 		lista.add(ParametroNombre.GOLES_TITULAR);
 		lista.add(ParametroNombre.GOLES_SUPLENTES);
@@ -166,5 +159,58 @@ public class GestorParametrosAnalisis {
 		lista.add(ParametroNombre.PROBABILIDAD_COMPENSAR_PARA_EMPATE);
 		return lista;
 	}
+
+	// public static List<ParametroNombre> getParamsTipoIndividual(
+	// Division division) {
+	// List<ParametroNombre> paramsIndividual = getParamsTipoIndividual();
+	// List<ParametroNombre> paramsIndividualDivision = new
+	// ArrayList<ParametroNombre>();
+	// for (ParametroNombre p : paramsIndividual) {
+	//
+	// if (division.equals(Division.PRIMERA)) {
+	//
+	// // quito de los que no tenemos datos
+	// if (!p.equals(ParametroNombre.GANADOS)
+	// && !p.equals(ParametroNombre.EMPATADOS)
+	// && !p.equals(ParametroNombre.PERDIDOS)
+	// && !p.equals(ParametroNombre.DIFERENCIADEGOLESENCONTRA)
+	// && !p.equals(ParametroNombre.DIFERENCIADEGOLESAFAVOR)
+	// && !p.equals(ParametroNombre.PARTIDOS_JUGADOS)
+	// && !p.equals(ParametroNombre.PARTIDOS_GANADOS)
+	// && !p.equals(ParametroNombre.PARTIDOS_EMPATADOS)
+	// && !p.equals(ParametroNombre.PARTIDOS_PERDIDOS)
+	// && !p.equals(ParametroNombre.GOLES_A_FAVOR)
+	// && !p.equals(ParametroNombre.GOLES_EN_CONTRA)) {
+	// paramsIndividualDivision.add(p);
+	// }
+	//
+	// } else if (division.equals(Division.SEGUNDA)) {
+	// paramsIndividualDivision.add(p);
+	//
+	// }
+	//
+	// }
+	// return paramsIndividualDivision;
+	// }
+	//
+	// public static List<ParametroNombre> getParamsTipoComparativo(
+	// Division division) {
+	// List<ParametroNombre> paramsComparativo = getParamsTipoComparativo();
+	// List<ParametroNombre> paramsComparativoDivision = new
+	// ArrayList<ParametroNombre>();
+	// for (ParametroNombre p : paramsComparativo) {
+	//
+	// if (division.equals(Division.PRIMERA)) {
+	//
+	// paramsComparativoDivision.add(p);
+	//
+	// } else if (division.equals(Division.SEGUNDA)) {
+	// paramsComparativoDivision.add(p);
+	//
+	// }
+	//
+	// }
+	// return paramsComparativoDivision;
+	// }
 
 }

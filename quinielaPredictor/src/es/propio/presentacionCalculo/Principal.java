@@ -85,37 +85,61 @@ public class Principal {
 
 	private static void analizarParametrosEn4grupos() throws Exception {
 
-		List<ParametroNombre> params12 = GestorParametrosAnalisis
-				.getParamsTipoIndividual();
-		List<ParametroNombre> paramsX = GestorParametrosAnalisis
-				.getParamsTipoComparativo();
-
 		// PRIMERA 1/2
-		// for (ParametroNombre parametroNombre : params12) {
-		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-		// parametroNombre, 1);
-		// ejecucion(tupla, false);
-		// }
+		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
+				.getParamsTipoIndividual()) {
+
+			try {
+				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
+						.getTupla(parametroNombre, 1);
+				ejecucion(tupla, false);
+			} catch (Exception ex) {
+				System.out.println("ERROR TIPO=1/2 Division="
+						+ Division.PRIMERA.toString() + " Parametro="
+						+ parametroNombre);
+			}
+		}
 
 		// PRIMERA X
-		// for (ParametroNombre parametroNombre : paramsX) {
-		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-		// parametroNombre, 2);
-		// ejecucion(tupla, false);
-		// }
+		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
+				.getParamsTipoComparativo()) {
+			try {
+				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
+						.getTupla(parametroNombre, 2);
+				ejecucion(tupla, false);
+			} catch (Exception ex) {
+				System.out.println("ERROR TIPO=X Division="
+						+ Division.PRIMERA.toString() + " Parametro="
+						+ parametroNombre);
+			}
+		}
 
 		// SEGUNDA X
-		// for (ParametroNombre parametroNombre : paramsX) {
-		// TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-		// parametroNombre, 4);
-		// ejecucion(tupla, false);
-		// }
+		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
+				.getParamsTipoComparativo()) {
+			try {
+				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
+						.getTupla(parametroNombre, 4);
+				ejecucion(tupla, false);
+			} catch (Exception ex) {
+				System.out.println("ERROR TIPO=X Division="
+						+ Division.SEGUNDA.toString() + " Parametro="
+						+ parametroNombre);
+			}
+		}
 
 		// SEGUNDA 1/2
-		for (ParametroNombre parametroNombre : params12) {
-			TuplaParametrosAnalisis tupla = GestorParametrosAnalisis.getTupla(
-					parametroNombre, 3);
-			ejecucion(tupla, false);
+		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
+				.getParamsTipoIndividual()) {
+			try {
+				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
+						.getTupla(parametroNombre, 3);
+				ejecucion(tupla, false);
+			} catch (Exception ex) {
+				System.out.println("ERROR TIPO=1/2 Division="
+						+ Division.SEGUNDA.toString() + " Parametro="
+						+ parametroNombre);
+			}
 		}
 
 	}
