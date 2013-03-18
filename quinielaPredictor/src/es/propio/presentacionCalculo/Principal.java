@@ -50,10 +50,15 @@ public class Principal {
 	 */
 	public static final boolean ANALISIS_PARAMETROS_ALGORITMO_5 = false;
 
-	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_12 = ParametroNombre.PARTIDOS_PERDIDOS;
+	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_12 = ParametroNombre.RF_JUGADA_COLECTIVA;
 	public static final ParametroNombre DEFAULT_PARAM_PRIMERA_X = ParametroNombre.DIFERENCIA_PUNTOS;
-	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_12 = ParametroNombre.PUNTOSNORMALES;
-	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_X = ParametroNombre.DIFERENCIA_PUNTOS;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_12 = ParametroNombre.POSICION_EN_CLASIFICACION;
+	public static final ParametroNombre DEFAULT_PARAM_SEGUNDA_X = ParametroNombre.DIFERENCIA_PUNTOS_PONDERADOS;
+
+	/**
+	 * Numero de jornadas previas que tiene en cuenta el algoritmo.
+	 */
+	public static final Integer NUMERO_JORNADAS_A_CONSIDERAR = 9;
 
 	public static final Integer DEFAULT_NUM_EMPATES_PRIMERA = Integer
 			.valueOf(2);
@@ -86,9 +91,10 @@ public class Principal {
 	private static void analizarParametrosEn4grupos() throws Exception {
 
 		// PRIMERA 1/2
+		System.out
+				.println("\n\n\n ###############  PRIMERA 1/2 ############### ");
 		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
 				.getParamsTipoIndividual()) {
-
 			try {
 				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
 						.getTupla(parametroNombre, 1);
@@ -101,6 +107,8 @@ public class Principal {
 		}
 
 		// PRIMERA X
+		System.out
+				.println("\n\n\n ###############  PRIMERA X ############### ");
 		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
 				.getParamsTipoComparativo()) {
 			try {
@@ -114,21 +122,9 @@ public class Principal {
 			}
 		}
 
-		// SEGUNDA X
-		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
-				.getParamsTipoComparativo()) {
-			try {
-				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
-						.getTupla(parametroNombre, 4);
-				ejecucion(tupla, false);
-			} catch (Exception ex) {
-				System.out.println("ERROR TIPO=X Division="
-						+ Division.SEGUNDA.toString() + " Parametro="
-						+ parametroNombre);
-			}
-		}
-
 		// SEGUNDA 1/2
+		System.out
+				.println("\n\n\n ###############  SEGUNDA 1/2 ############### ");
 		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
 				.getParamsTipoIndividual()) {
 			try {
@@ -137,6 +133,22 @@ public class Principal {
 				ejecucion(tupla, false);
 			} catch (Exception ex) {
 				System.out.println("ERROR TIPO=1/2 Division="
+						+ Division.SEGUNDA.toString() + " Parametro="
+						+ parametroNombre);
+			}
+		}
+
+		// SEGUNDA X
+		System.out
+				.println("\n\n\n ###############  SEGUNDA X  ############### ");
+		for (ParametroNombre parametroNombre : GestorParametrosAnalisis
+				.getParamsTipoComparativo()) {
+			try {
+				TuplaParametrosAnalisis tupla = GestorParametrosAnalisis
+						.getTupla(parametroNombre, 4);
+				ejecucion(tupla, false);
+			} catch (Exception ex) {
+				System.out.println("ERROR TIPO=X Division="
 						+ Division.SEGUNDA.toString() + " Parametro="
 						+ parametroNombre);
 			}

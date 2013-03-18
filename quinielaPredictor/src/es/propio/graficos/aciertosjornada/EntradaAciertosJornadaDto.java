@@ -12,6 +12,7 @@ import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import es.propio.modeladoInfo.Division;
 import es.propio.modeladoInfo.PronosticoJornada;
+import es.propio.presentacionCalculo.Principal;
 import es.propio.procesadoInfo.IdAlgoritmoEnum;
 
 /**
@@ -38,7 +39,6 @@ public class EntradaAciertosJornadaDto {
 	 * pronosticos que acertaron.
 	 */
 	public void marcarAciertos(Division division) {
-		final Integer NUMERO_JORNADAS_A_CONSIDERAR = 6;
 
 		Integer aciertosAcumulados = 0, totalAcumulados = 0;
 		List<Integer> aciertosPorJornada = new ArrayList<Integer>();
@@ -46,7 +46,7 @@ public class EntradaAciertosJornadaDto {
 
 		// Considero la jornada actual y algunas de las anteriores
 		final Integer NUMERO_JORNADA_PRIMERA_A_CONSIDERAR = JORNADA_MAS_ALTA
-				- NUMERO_JORNADAS_A_CONSIDERAR;
+				- Principal.NUMERO_JORNADAS_A_CONSIDERAR;
 
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {
