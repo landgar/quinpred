@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import es.propio.cargadorInfoWeb.ActualizadorInfoMock;
 import es.propio.modeladoInfo.GestorParametrosAnalisis;
 import es.propio.modeladoInfo.ParametroNombre;
 
@@ -55,6 +56,9 @@ public class Principal {
 		if (accion.equals(Accion.PREDICCION_QUINIELA)) {
 			PrincipalCore.ejecucion(GestorParametrosAnalisis.getTuplaDefault(),
 					MOSTRAR_GRAFICOS);
+
+		} else if (accion.equals(Accion.ACTUALIZAR_MOCKS)) {
+			ActualizadorInfoMock.actualizarTodasPaginasMock();
 
 		} else if (accion.equals(Accion.ANALISIS_ALGORITMO_5)) {
 			PrincipalCore.analizarParametrosEn4grupos();

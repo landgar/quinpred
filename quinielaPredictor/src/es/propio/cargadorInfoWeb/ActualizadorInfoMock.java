@@ -16,25 +16,12 @@ import java.net.URL;
  */
 public class ActualizadorInfoMock {
 
-	/**
-	 * Actualiza los ficheros con las paginas de datos mock.
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-
+	public static boolean actualizarTodasPaginasMock() throws Exception {
 		System.out.println("Actualizando Paginas de mock ...");
-		actualizarTodasPaginasMock();
-		System.out.println("Paginas de mock actualizadas");
-	}
-
-	private static boolean actualizarTodasPaginasMock() throws Exception {
-
 		actualizarPaginasTemporadaMock();
 		actualizarPaginasParamsComunesMock();
 		actualizarPaginasParamsAvanzadosPrimeraMock();
-
+		System.out.println("Paginas de mock actualizadas");
 		return true;
 	}
 
