@@ -69,7 +69,7 @@ public class PredictorDelFuturo {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
 
-		List<PronosticoPartido> partidos = Principal.obtenerPartidos(
+		List<PronosticoPartido> partidos = PrincipalCore.obtenerPartidos(
 				Division.PRIMERA, numBoleto);
 
 		// ALGORITMO 1
@@ -87,7 +87,7 @@ public class PredictorDelFuturo {
 
 		List<PronosticoJornada> pronosticosJornadas = new ArrayList<PronosticoJornada>();
 
-		List<PronosticoPartido> partidos = Principal.obtenerPartidos(
+		List<PronosticoPartido> partidos = PrincipalCore.obtenerPartidos(
 				Division.SEGUNDA, numBoleto);
 
 		// ALGORITMO 1

@@ -45,8 +45,10 @@ public class EntradaAciertosJornadaDto {
 		final Integer JORNADA_MAS_ALTA = getNumeroJornadaMasAlta(pronosticosJornadaBulk);
 
 		// Considero la jornada actual y algunas de las anteriores
+		Integer numJornadasConsideradas = division.equals(Division.PRIMERA) ? Principal.NUMERO_JORNADAS_A_CONSIDERAR_PRIMERA
+				: Principal.NUMERO_JORNADAS_A_CONSIDERAR_SEGUNDA;
 		final Integer NUMERO_JORNADA_PRIMERA_A_CONSIDERAR = JORNADA_MAS_ALTA
-				- Principal.NUMERO_JORNADAS_A_CONSIDERAR;
+				- numJornadasConsideradas;
 
 		if (pronosticosJornadaBulk != null && resultadosReales != null) {
 			for (PronosticoJornada realj : resultadosReales) {

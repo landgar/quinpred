@@ -18,10 +18,10 @@ public class GestorParametrosAnalisis {
 		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
 				Principal.DEFAULT_PARAM_PRIMERA_12,
 				Principal.DEFAULT_PARAM_PRIMERA_X,
-				Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+				Principal.NUM_EMPATES_PRIMERA,
 				Principal.DEFAULT_PARAM_SEGUNDA_12,
 				Principal.DEFAULT_PARAM_SEGUNDA_X,
-				Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
+				Principal.NUM_EMPATES_SEGUNDA);
 		return tupla;
 	}
 
@@ -47,10 +47,10 @@ public class GestorParametrosAnalisis {
 				// PRIMERA X
 				tupla = new TuplaParametrosAnalisis(
 						Principal.DEFAULT_PARAM_PRIMERA_12, parametro,
-						Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+						Principal.NUM_EMPATES_PRIMERA,
 						Principal.DEFAULT_PARAM_SEGUNDA_12,
 						Principal.DEFAULT_PARAM_SEGUNDA_X,
-						Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
+						Principal.NUM_EMPATES_SEGUNDA);
 				break;
 			case 3:
 				// SEGUNDA 1/2
@@ -65,9 +65,9 @@ public class GestorParametrosAnalisis {
 				tupla = new TuplaParametrosAnalisis(
 						Principal.DEFAULT_PARAM_PRIMERA_12,
 						Principal.DEFAULT_PARAM_PRIMERA_X,
-						Principal.DEFAULT_NUM_EMPATES_PRIMERA,
+						Principal.NUM_EMPATES_PRIMERA,
 						Principal.DEFAULT_PARAM_SEGUNDA_12, parametro,
-						Principal.DEFAULT_NUM_EMPATES_SEGUNDA);
+						Principal.NUM_EMPATES_SEGUNDA);
 				break;
 
 			default:
