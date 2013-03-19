@@ -23,7 +23,7 @@ public class Principal {
 	/**
 	 * Accion que vamos a ejecutar.
 	 */
-	public static final Accion accion = Accion.PREDICCION_QUINIELA;
+	public static final Accion accion = Accion.PREDECIR_QUINIELA;
 
 	/**
 	 * MUY IMPORTANTE
@@ -53,17 +53,17 @@ public class Principal {
 		logProperties.load(new FileInputStream(LOG_PROPERTIES_FILE));
 		PropertyConfigurator.configure(logProperties);
 
-		if (accion.equals(Accion.PREDICCION_QUINIELA)) {
+		if (accion.equals(Accion.PREDECIR_QUINIELA)) {
 			PrincipalCore.ejecucion(GestorParametrosAnalisis.getTuplaDefault(),
 					MOSTRAR_GRAFICOS);
 
 		} else if (accion.equals(Accion.ACTUALIZAR_MOCKS)) {
 			ActualizadorInfoMock.actualizarTodasPaginasMock();
 
-		} else if (accion.equals(Accion.ANALISIS_ALGORITMO_5)) {
+		} else if (accion.equals(Accion.ANALIZAR_ALGORITMO_5)) {
 			PrincipalCore.analizarParametrosEn4grupos();
 
-		} else if (accion.equals(Accion.ANALISIS_EMPATES)) {
+		} else if (accion.equals(Accion.ANALIZAR_EMPATES)) {
 			PrincipalCore.analizarNumeroDeEmpates();
 		}
 
