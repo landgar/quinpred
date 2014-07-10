@@ -103,7 +103,7 @@ public class HandlerWebBoleto {
 
 	private static String conversionNombreEquipos(String nombreEquipoWeb) {
 		String salida;
-		// Primera división
+
 		if (nombreEquipoWeb.equals("Celta")) {
 			salida = "Celta";
 		} else if (nombreEquipoWeb.equals("Málaga")) {
@@ -160,7 +160,7 @@ public class HandlerWebBoleto {
 			salida = "R-Sociedad";
 
 		}
-		// Segunda división
+
 		else if (nombreEquipoWeb.equals("Racing de Santander")) {
 			salida = "Racing";
 
@@ -226,6 +226,18 @@ public class HandlerWebBoleto {
 
 		} else if (nombreEquipoWeb.equals("Numancia")) {
 			salida = "Numancia";
+
+		} else if (nombreEquipoWeb.equals("Eibar")) {
+			salida = "Eibar";
+
+		} else if (nombreEquipoWeb.equals("Tenerife")) {
+			salida = "Tenerife";
+
+		} else if (nombreEquipoWeb.equals("Alavés")) {
+			salida = "Alaves";
+
+		} else if (nombreEquipoWeb.equals("Real Jaen")) {
+			salida = "R-Jaen";
 
 		} else {
 			salida = "";

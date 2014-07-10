@@ -265,10 +265,12 @@ public class Partido {
 	public List<Parametro> getParametros(
 			final List<ParametroNombre> nombreParametrosEquipo) {
 		List<Parametro> parametrosADevolver = new ArrayList<Parametro>();
-		Collections.sort(parametros);
-		for (Parametro parametro : parametros) {
-			if (nombreParametrosEquipo.contains(parametro)) {
-				parametrosADevolver.add(parametro);
+		if (parametros != null) {
+			Collections.sort(parametros);
+			for (Parametro parametro : parametros) {
+				if (nombreParametrosEquipo.contains(parametro)) {
+					parametrosADevolver.add(parametro);
+				}
 			}
 		}
 		return parametrosADevolver;

@@ -17,6 +17,7 @@ public class ParametroAvanzadoPrimeraHtml {
 	private Integer rematesContra;
 	private Integer jugadoresUtilizados;
 	private Integer paradasPortero;
+	private Integer aFavor;
 	private Integer afBalonParado;
 	private Integer afCabeza;
 	private Integer afFaltaDirecta;
@@ -47,6 +48,21 @@ public class ParametroAvanzadoPrimeraHtml {
 	private Integer rcPoste;
 	private Integer tarjetasAmarillas;
 	private Integer tarjetasRojas;
+	private Integer intervenciones;
+	private Integer faltasCometidas;
+	private Integer faltasRecibidas;
+	private Integer penaltyFavor;
+	private Integer penaltyContra;
+	private Integer fueraJuegoFavor;
+	private Integer fueraJuegoContra;
+	private Integer balonesRecuperados;
+	private Integer balonesPerdidos;
+	private Integer pasesBuenos;
+	private Integer pasesTotales;
+	private Integer centrosArea;
+	private Integer asistencias;
+	private Integer asistenciaConGol;
+	
 	
 
 	@Override
@@ -513,6 +529,216 @@ public class ParametroAvanzadoPrimeraHtml {
 	 */
 	public void setRcPoste(Integer rcPoste) {
 		this.rcPoste = rcPoste;
+	}
+
+	/**
+	 * @return the aFavor
+	 */
+	public Integer getaFavor() {
+		return aFavor;
+	}
+
+	/**
+	 * @param aFavor the aFavor to set
+	 */
+	public void setaFavor(Integer aFavor) {
+		this.aFavor = aFavor;
+	}
+
+	/**
+	 * @return the intervenciones
+	 */
+	public Integer getIntervenciones() {
+		return intervenciones;
+	}
+
+	/**
+	 * @param intervenciones the intervenciones to set
+	 */
+	public void setIntervenciones(Integer intervenciones) {
+		this.intervenciones = intervenciones;
+	}
+
+	/**
+	 * @return the faltasCometidas
+	 */
+	public Integer getFaltasCometidas() {
+		return faltasCometidas;
+	}
+
+	/**
+	 * @param faltasCometidas the faltasCometidas to set
+	 */
+	public void setFaltasCometidas(Integer faltasCometidas) {
+		this.faltasCometidas = faltasCometidas;
+	}
+
+	/**
+	 * @return the faltasRecibidas
+	 */
+	public Integer getFaltasRecibidas() {
+		return faltasRecibidas;
+	}
+
+	/**
+	 * @param faltasRecibidas the faltasRecibidas to set
+	 */
+	public void setFaltasRecibidas(Integer faltasRecibidas) {
+		this.faltasRecibidas = faltasRecibidas;
+	}
+
+	/**
+	 * @return the penaltyFavor
+	 */
+	public Integer getPenaltyFavor() {
+		return penaltyFavor;
+	}
+
+	/**
+	 * @param penaltyFavor the penaltyFavor to set
+	 */
+	public void setPenaltyFavor(Integer penaltyFavor) {
+		this.penaltyFavor = penaltyFavor;
+	}
+
+	/**
+	 * @return the penaltyContra
+	 */
+	public Integer getPenaltyContra() {
+		return penaltyContra;
+	}
+
+	/**
+	 * @param penaltyContra the penaltyContra to set
+	 */
+	public void setPenaltyContra(Integer penaltyContra) {
+		this.penaltyContra = penaltyContra;
+	}
+
+	/**
+	 * @return the fueraJuegoFavor
+	 */
+	public Integer getFueraJuegoFavor() {
+		return fueraJuegoFavor;
+	}
+
+	/**
+	 * @param fueraJuegoFavor the fueraJuegoFavor to set
+	 */
+	public void setFueraJuegoFavor(Integer fueraJuegoFavor) {
+		this.fueraJuegoFavor = fueraJuegoFavor;
+	}
+
+	/**
+	 * @return the fueraJuegoContra
+	 */
+	public Integer getFueraJuegoContra() {
+		return fueraJuegoContra;
+	}
+
+	/**
+	 * @param fueraJuegoContra the fueraJuegoContra to set
+	 */
+	public void setFueraJuegoContra(Integer fueraJuegoContra) {
+		this.fueraJuegoContra = fueraJuegoContra;
+	}
+
+	/**
+	 * @return the balonesRecuperados
+	 */
+	public Integer getBalonesRecuperados() {
+		return balonesRecuperados;
+	}
+
+	/**
+	 * @param balonesRecuperados the balonesRecuperados to set
+	 */
+	public void setBalonesRecuperados(Integer balonesRecuperados) {
+		this.balonesRecuperados = balonesRecuperados;
+	}
+
+	/**
+	 * @return the balonesPerdidos
+	 */
+	public Integer getBalonesPerdidos() {
+		return balonesPerdidos;
+	}
+
+	/**
+	 * @param balonesPerdidos the balonesPerdidos to set
+	 */
+	public void setBalonesPerdidos(Integer balonesPerdidos) {
+		this.balonesPerdidos = balonesPerdidos;
+	}
+
+	/**
+	 * @return the pasesBuenos
+	 */
+	public Integer getPasesBuenos() {
+		return pasesBuenos;
+	}
+
+	/**
+	 * @param pasesBuenos the pasesBuenos to set
+	 */
+	public void setPasesBuenos(Integer pasesBuenos) {
+		this.pasesBuenos = pasesBuenos;
+	}
+
+	/**
+	 * @return the pasesTotales
+	 */
+	public Integer getPasesTotales() {
+		return pasesTotales;
+	}
+
+	/**
+	 * @param pasesTotales the pasesTotales to set
+	 */
+	public void setPasesTotales(Integer pasesTotales) {
+		this.pasesTotales = pasesTotales;
+	}
+
+	/**
+	 * @return the centrosArea
+	 */
+	public Integer getCentrosArea() {
+		return centrosArea;
+	}
+
+	/**
+	 * @param centrosArea the centrosArea to set
+	 */
+	public void setCentrosArea(Integer centrosArea) {
+		this.centrosArea = centrosArea;
+	}
+
+	/**
+	 * @return the asistencias
+	 */
+	public Integer getAsistencias() {
+		return asistencias;
+	}
+
+	/**
+	 * @param asistencias the asistencias to set
+	 */
+	public void setAsistencias(Integer asistencias) {
+		this.asistencias = asistencias;
+	}
+
+	/**
+	 * @return the asistenciaConGol
+	 */
+	public Integer getAsistenciaConGol() {
+		return asistenciaConGol;
+	}
+
+	/**
+	 * @param asistenciaConGol the asistenciaConGol to set
+	 */
+	public void setAsistenciaConGol(Integer asistenciaConGol) {
+		this.asistenciaConGol = asistenciaConGol;
 	}
 
 

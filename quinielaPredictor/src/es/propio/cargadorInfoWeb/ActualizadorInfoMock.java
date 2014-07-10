@@ -51,6 +51,9 @@ public class ActualizadorInfoMock {
 	private static boolean actualizarPaginasParamsAvanzadosPrimeraMock()
 			throws Exception {
 		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_A_FAVOR,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_A_FAVOR_MOCK);
+		actualizarUnaPaginaMock(
 				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_AF_BALON_PARADO,
 				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_AF_BALON_PARADO_MOCK);
 
@@ -177,6 +180,51 @@ public class ActualizadorInfoMock {
 		actualizarUnaPaginaMock(
 				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PARADAS_PORTERO,
 				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PARADAS_PORTERO_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_INTERVENCIONES,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_INTERVENCIONES_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FALTAS_COMETIDAS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FALTAS_COMETIDAS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FALTAS_RECIBIDAS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FALTAS_RECIBIDAS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PENALTY_FAVOR,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PENALTY_FAVOR_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PENALTY_CONTRA,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PENALTY_CONTRA_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FUERA_JUEGO_FAVOR,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FUERA_JUEGO_FAVOR_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FUERA_JUEGO_CONTRA,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_FUERA_JUEGO_CONTRA_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_BALONES_RECUPERADOS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_BALONES_RECUPERADOS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_BALONES_PERDIDOS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_BALONES_PERDIDOS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PASES_BUENOS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PASES_BUENOS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PASES_TOTALES,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_PASES_TOTALES_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_CENTROS_AREA,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_CENTROS_AREA_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_ASISTENCIAS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_ASISTENCIAS_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_ASISTENCIA_CON_GOL,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_ASISTENCIA_CON_GOL_MOCK);
+		actualizarUnaPaginaMock(
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS,
+				CargadorInformacionWebResultados.EL_PAIS_PRIMERA_JUGADORES_UTILIZADOS_MOCK);
 
 		return true;
 

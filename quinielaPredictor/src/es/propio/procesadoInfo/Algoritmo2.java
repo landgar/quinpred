@@ -44,40 +44,47 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 
 	static final Logger logger = Logger.getLogger(Algoritmo2.class);
 
-	private static final Integer NUM_ITERACIONES = 20000;
-	Double LEARNING_RATE = 0.2D;
+	private static final Integer NUM_ITERACIONES = 1000;
+	Double LEARNING_RATE = 0.3D;
 	Double MOMENTUM = 0.7D;
 
-	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.05F;
+	private static final Float VARIABILIDAD_MINIMA_EN_PROBABILIDAD = 0.04F;
 
 	private List<ParametroNombre> getParametrosEquipoPrimeraAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.POSICION_EN_CLASIFICACION);
+		nombres.add(ParametroNombre.GOLES_A_FAVOR);
+		nombres.add(ParametroNombre.GOLES_EN_CONTRA);
+		nombres.add(ParametroNombre.PUNTOSNORMALES);
+		Collections.sort(nombres);
 		return nombres;
 	}
 
 	private List<ParametroNombre> getParametrosEquipoSegundaAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.POSICION_EN_CLASIFICACION);
+		nombres.add(ParametroNombre.GOLES_A_FAVOR);
+		nombres.add(ParametroNombre.GOLES_EN_CONTRA);
+		nombres.add(ParametroNombre.PUNTOSNORMALES);
+		Collections.sort(nombres);
 		return nombres;
 	}
 
 	private List<ParametroNombre> getParametrosPartidoPrimeraAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE);
+		nombres.add(ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION);
+		Collections.sort(nombres);
 		return nombres;
 	}
 
 	private List<ParametroNombre> getParametrosPartidoSegundaAConsiderar() {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		nombres.add(ParametroNombre.DIFERENCIA_PUNTOS_TENDENCIA_PARA_EMPATE);
+		nombres.add(ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION);
+		Collections.sort(nombres);
 		return nombres;
 	}
 
 	private List<ParametroNombre> getParametrosEquipoAConsiderar(
 			final Division division) throws Exception {
 		List<ParametroNombre> nombres = new ArrayList<ParametroNombre>();
-		;
 		if (division.equals(Division.PRIMERA)) {
 			nombres.addAll(getParametrosEquipoPrimeraAConsiderar());
 		} else if (division.equals(Division.SEGUNDA)) {
@@ -87,6 +94,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					"No se pueden obtener los parámetros de la división: "
 							+ division);
 		}
+		Collections.sort(nombres);
 		return nombres;
 	}
 
@@ -103,6 +111,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 					"No se pueden obtener los parámetros de la división: "
 							+ division);
 		}
+		Collections.sort(nombres);
 		return nombres;
 	}
 
@@ -467,22 +476,23 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			maximo = columna.getMaxValue();
 			minimo = columna.getMinValue();
 			Double diferencia = maximo - minimo;
-			if (diferencia == 0) {
-				// Se ha comentado, dado que el número de la jornada es un
-				// parámetro, y siempre es el mismo para los partidos a predecir
-				// throw new Exception(
-				// "No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
-				// + col);
-				for (int z = 0; z < columna.getDimension(); z++) {
-					columna.setEntry(z, 1);
-				}
-			} else {
-				// Se normalizan todos sus valores
-				for (int z = 0; z < columna.getDimension(); z++) {
-					valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
-					columna.setEntry(z, valor);
-				}
+			// if (diferencia == 0) {
+			// // Se ha comentado, dado que el número de la jornada es un
+			// // parámetro, y siempre es el mismo para los partidos a predecir
+			// // throw new Exception(
+			// //
+			// "No se pueden normalizar estos datos de la red neuronal, porque todos son iguales. Columna de matrixInputs col="
+			// // + col);
+			// for (int z = 0; z < columna.getDimension(); z++) {
+			// columna.setEntry(z, 1);
+			// }
+			// } else {
+			// Se normalizan todos sus valores
+			for (int z = 0; z < columna.getDimension(); z++) {
+				valor = 0 + (columna.getEntry(z) - minimo) / diferencia;
+				columna.setEntry(z, valor);
 			}
+			// }
 			// Se reemplaza la columna poniendo la columna normalizada
 			matrixInputs.setColumnVector(col, columna);
 		}
@@ -513,6 +523,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 			fila.addToEntry(j, valor);
 			j++;
 		}
+		int a = 0;
 	}
 
 	/**
@@ -545,7 +556,7 @@ public class Algoritmo2 extends AbstractAlgoritmo implements
 	@Override
 	public void handleLearningEvent(LearningEvent event) {
 		BackPropagation bp = (BackPropagation) event.getSource();
-		if (bp.getCurrentIteration() % 5000 == 0)
+		if (bp.getCurrentIteration() % 100 == 0)
 			System.out.println("Iteración: " + bp.getCurrentIteration()
 					+ ". Error total: " + bp.getTotalNetworkError());
 	}

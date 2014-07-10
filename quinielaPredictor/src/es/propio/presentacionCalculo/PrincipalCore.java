@@ -21,7 +21,7 @@ import es.propio.modeladoInfo.PronosticoPartido;
 import es.propio.modeladoInfo.Temporada;
 import es.propio.modeladoInfo.TuplaParametrosAnalisis;
 import es.propio.procesadoInfo.AbstractAlgoritmo;
-import es.propio.procesadoInfo.Algoritmo5;
+import es.propio.procesadoInfo.Algoritmo2;
 
 public class PrincipalCore {
 
@@ -179,14 +179,14 @@ public class PrincipalCore {
 		List<AbstractAlgoritmo> algoritmosUsados = new ArrayList<AbstractAlgoritmo>();
 		// algoritmosUsados
 		// .add(new Algoritmo1(temporadaPrimera, temporadaSegunda));
-		// algoritmosUsados
-		// .add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
+		 algoritmosUsados
+		 .add(new Algoritmo2(temporadaPrimera, temporadaSegunda));
 		// algoritmosUsados
 		// .add(new Algoritmo3(temporadaPrimera, temporadaSegunda));
 		// algoritmosUsados
 		// .add(new Algoritmo4(temporadaPrimera, temporadaSegunda));
-		algoritmosUsados.add(new Algoritmo5(temporadaPrimera, temporadaSegunda,
-				tupla));
+//		algoritmosUsados.add(new Algoritmo5(temporadaPrimera, temporadaSegunda,
+//				tupla));
 
 		AnalizadorDelPasado.estudiarJornadasPasadas(algoritmosUsados,
 				temporadaPrimera, temporadaSegunda, graficosVisibles);

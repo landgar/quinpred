@@ -54,6 +54,16 @@ public class Equipo implements Comparable<Equipo> {
 	public static final String S_GIRONA = "Girona";
 	public static final String S_NUMANCIA = "Numancia";
 
+	public static final String S_EIBAR = "Eibar";
+	public static final String S_TENERIFE = "Tenerife";
+	public static final String S_ALAVES = "Alaves";
+	public static final String S_R_JAEN = "Real Jaen";
+	public static final String S_ALBACETE = "Albacete";
+	public static final String S_LLAGOSTERA = "Llagostera";
+	public static final String S_LEGANES = "Leganes";
+	
+	
+
 	/**
 	 * @uml.property name="valor"
 	 * @uml.associationEnd multiplicity="(1 1)"
@@ -100,28 +110,31 @@ public class Equipo implements Comparable<Equipo> {
 	public Equipo(final Division division, final List<String> posiblesNombres) {
 		super();
 		parametros = new ArrayList<ParametroEquipo>();// elementos no repetidos
-
-		List<String> nombresPrimera = getNombresEquiposPrimera();
-		List<String> nombresSegunda = getNombresEquiposSegunda();
-		String nombreEncontrado = "invalido";
-		for (String posibleNombre : posiblesNombres) {
-			if (division.equals((Division.PRIMERA))) {
-				for (String nombrePrimera : nombresPrimera) {
-					if (nombrePrimera.equals(posibleNombre)) {
-						nombreEncontrado = nombrePrimera;
-						break;
+		try {
+			List<String> nombresPrimera = getNombresEquiposPrimera();
+			List<String> nombresSegunda = getNombresEquiposSegunda();
+			String nombreEncontrado = "invalido";
+			for (String posibleNombre : posiblesNombres) {
+				if (division.equals((Division.PRIMERA))) {
+					for (String nombrePrimera : nombresPrimera) {
+						if (nombrePrimera.equals(posibleNombre)) {
+							nombreEncontrado = nombrePrimera;
+							break;
+						}
 					}
-				}
-			} else if (division.equals((Division.SEGUNDA))) {
-				for (String nombreSegunda : nombresSegunda) {
-					if (nombreSegunda.equals(posibleNombre)) {
-						nombreEncontrado = nombreSegunda;
-						break;
+				} else if (division.equals((Division.SEGUNDA))) {
+					for (String nombreSegunda : nombresSegunda) {
+						if (nombreSegunda.equals(posibleNombre)) {
+							nombreEncontrado = nombreSegunda;
+							break;
+						}
 					}
 				}
 			}
+			this.nombre = nombreEncontrado;
+		} catch (Exception e) {
+			// TODO: manage exception
 		}
-		this.nombre = nombreEncontrado;
 	}
 
 	@Override
@@ -136,70 +149,186 @@ public class Equipo implements Comparable<Equipo> {
 	}
 
 	public Division getDivision() {
-		List<String> nombresPrimera = getNombresEquiposPrimera();
-		List<String> nombresSegunda = getNombresEquiposSegunda();
-		// Primera divisiï¿½n
 		Division division = Division.INVALIDO;
-		if (nombresPrimera.contains(nombre)) {
-			division = Division.PRIMERA;
-		} else if (nombresSegunda.contains(nombre)) {
-			division = Division.SEGUNDA;
-		} else {
-			logger.error("No se ha podido encontrar una divisiï¿½n para el equipo con nombre: "
-					+ nombre);
+		try {
+			List<String> nombresPrimera = getNombresEquiposPrimera();
+			List<String> nombresSegunda = getNombresEquiposSegunda();
+
+			// Primera divisiï¿½n
+
+			if (nombresPrimera.contains(nombre)) {
+				division = Division.PRIMERA;
+			} else if (nombresSegunda.contains(nombre)) {
+				division = Division.SEGUNDA;
+			} else {
+				logger.error("No se ha podido encontrar una divisiï¿½n para el equipo con nombre: "
+						+ nombre);
+			}
+
+		} catch (Exception e) {
+			// TODO: manage exception
 		}
 		return division;
 	}
 
-	public static List<String> getNombresEquiposPrimera() {
+	public static List<String> getNombresEquiposPrimera() throws Exception {
 		List<String> nombresPrimera = new ArrayList<>();
-		nombresPrimera.add(P_CELTA);
-		nombresPrimera.add(P_MALAGA);
-		nombresPrimera.add(P_ZARAGOZA);
-		nombresPrimera.add(P_VALLADOLID);
-		nombresPrimera.add(P_RAYO);
-		nombresPrimera.add(P_GRANADA);
-		nombresPrimera.add(P_REAL_MADRID);
-		nombresPrimera.add(P_VALENCIA);
-		nombresPrimera.add(P_LEVANTE);
-		nombresPrimera.add(P_ATLETICO);
-		nombresPrimera.add(P_DEPORTIVO);
-		nombresPrimera.add(P_OSASUNA);
-		nombresPrimera.add(P_MALLORCA);
-		nombresPrimera.add(P_ESPANYOL);
-		nombresPrimera.add(P_SEVILLA);
-		nombresPrimera.add(P_GETAFE);
-		nombresPrimera.add(P_ATHLETIC);
-		nombresPrimera.add(P_BETIS);
-		nombresPrimera.add(P_BARCELONA);
-		nombresPrimera.add(P_REAL_SOCIEDAD);
+
+		if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1213) {
+			nombresPrimera.add(P_BARCELONA);
+			nombresPrimera.add(P_REAL_MADRID);
+			nombresPrimera.add(P_ATLETICO);
+			nombresPrimera.add(P_REAL_SOCIEDAD);
+			nombresPrimera.add(P_VALENCIA);
+			nombresPrimera.add(P_MALAGA);
+			nombresPrimera.add(P_BETIS);
+			nombresPrimera.add(P_RAYO);
+			nombresPrimera.add(P_SEVILLA);
+			nombresPrimera.add(P_GETAFE);
+			nombresPrimera.add(P_LEVANTE);
+			nombresPrimera.add(P_ATHLETIC);
+			nombresPrimera.add(P_ESPANYOL);
+			nombresPrimera.add(P_VALLADOLID);
+			nombresPrimera.add(P_GRANADA);
+			nombresPrimera.add(P_OSASUNA);
+			nombresPrimera.add(P_CELTA);
+			nombresPrimera.add(P_MALLORCA);
+			nombresPrimera.add(P_DEPORTIVO);
+			nombresPrimera.add(P_ZARAGOZA);
+		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1314) {
+			nombresPrimera.add(P_ATLETICO);
+			nombresPrimera.add(P_BARCELONA);
+			nombresPrimera.add(P_REAL_MADRID);
+			nombresPrimera.add(P_ATHLETIC);
+			nombresPrimera.add(P_SEVILLA);
+			nombresPrimera.add(S_VILLAREAL);
+			nombresPrimera.add(P_REAL_SOCIEDAD);
+			nombresPrimera.add(P_VALENCIA);
+			nombresPrimera.add(P_CELTA);
+			nombresPrimera.add(P_LEVANTE);
+			nombresPrimera.add(P_MALAGA);
+			nombresPrimera.add(P_RAYO);
+			nombresPrimera.add(P_GETAFE);
+			nombresPrimera.add(P_ESPANYOL);
+			nombresPrimera.add(P_GRANADA);
+			nombresPrimera.add(S_ELCHE);
+			nombresPrimera.add(S_ALMERIA);
+			nombresPrimera.add(P_OSASUNA);
+			nombresPrimera.add(P_VALLADOLID);
+			nombresPrimera.add(P_BETIS);
+		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1415) {
+			nombresPrimera.add(P_ATLETICO);
+			nombresPrimera.add(P_BARCELONA);
+			nombresPrimera.add(P_REAL_MADRID);
+			nombresPrimera.add(P_ATHLETIC);
+			nombresPrimera.add(P_SEVILLA);
+			nombresPrimera.add(S_VILLAREAL);
+			nombresPrimera.add(P_REAL_SOCIEDAD);
+			nombresPrimera.add(P_VALENCIA);
+			nombresPrimera.add(P_CELTA);
+			nombresPrimera.add(P_LEVANTE);
+			nombresPrimera.add(P_MALAGA);
+			nombresPrimera.add(P_RAYO);
+			nombresPrimera.add(P_GETAFE);
+			nombresPrimera.add(P_ESPANYOL);
+			nombresPrimera.add(P_GRANADA);
+			nombresPrimera.add(S_ELCHE);
+			nombresPrimera.add(S_ALMERIA);
+			nombresPrimera.add(S_EIBAR);
+			nombresPrimera.add(P_DEPORTIVO);
+			nombresPrimera.add(S_CORDOBA);
+		}
+
+		if (nombresPrimera.size() != Temporada.NUM_EQUIPOS_PRIMERA) {
+			throw new Exception(
+					"El número de equipos añadidos a la lista de equipos de primera es "
+							+ nombresPrimera.size() + ", pero se esperaban "
+							+ Temporada.NUM_EQUIPOS_PRIMERA + " equipos");
+		}
+
 		return nombresPrimera;
 	}
 
-	public static List<String> getNombresEquiposSegunda() {
+	public static List<String> getNombresEquiposSegunda() throws Exception {
 		List<String> nombresSegunda = new ArrayList<>();
-		nombresSegunda.add(S_RACING);
-		nombresSegunda.add(S_LAS_PALMAS);
-		nombresSegunda.add(S_MIRANDES);
-		nombresSegunda.add(S_HUESCA);
-		nombresSegunda.add(S_LUGO);
-		nombresSegunda.add(S_HERCULES);
-		nombresSegunda.add(S_JEREZ);
-		nombresSegunda.add(S_RECREATIVO);
-		nombresSegunda.add(S_VILLAREAL);
-		nombresSegunda.add(S_RM_CASTILLA);
-		nombresSegunda.add(S_BARCELONA_B);
-		nombresSegunda.add(S_ALMERIA);
-		nombresSegunda.add(S_ELCHE);
-		nombresSegunda.add(S_CORDOBA);
-		nombresSegunda.add(S_SPORTING);
-		nombresSegunda.add(S_MURCIA);
-		nombresSegunda.add(S_ALCORCON);
-		nombresSegunda.add(S_GUADALAJARA);
-		nombresSegunda.add(S_PONFERRADINA);
-		nombresSegunda.add(S_SABADELL);
-		nombresSegunda.add(S_GIRONA);
-		nombresSegunda.add(S_NUMANCIA);
+		if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1213) {
+			nombresSegunda.add(S_ELCHE);
+			nombresSegunda.add(S_VILLAREAL);
+			nombresSegunda.add(S_ALMERIA);
+			nombresSegunda.add(S_GIRONA);
+			nombresSegunda.add(S_ALCORCON);
+			nombresSegunda.add(S_LAS_PALMAS);
+			nombresSegunda.add(S_PONFERRADINA);
+			nombresSegunda.add(S_RM_CASTILLA);
+			nombresSegunda.add(S_BARCELONA_B);
+			nombresSegunda.add(S_SPORTING);
+			nombresSegunda.add(S_LUGO);
+			nombresSegunda.add(S_NUMANCIA);
+			nombresSegunda.add(S_RECREATIVO);
+			nombresSegunda.add(S_CORDOBA);
+			nombresSegunda.add(S_MIRANDES);
+			nombresSegunda.add(S_SABADELL);
+			nombresSegunda.add(S_HERCULES);
+			nombresSegunda.add(S_GUADALAJARA);
+			nombresSegunda.add(S_MURCIA);
+			nombresSegunda.add(S_RACING);
+			nombresSegunda.add(S_HUESCA);
+			nombresSegunda.add(S_JEREZ);
+		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1314) {
+			nombresSegunda.add(S_EIBAR);
+			nombresSegunda.add(P_DEPORTIVO);
+			nombresSegunda.add(S_BARCELONA_B);
+			nombresSegunda.add(S_MURCIA);
+			nombresSegunda.add(S_SPORTING);
+			nombresSegunda.add(S_LAS_PALMAS);
+			nombresSegunda.add(S_CORDOBA);
+			nombresSegunda.add(S_RECREATIVO);
+			nombresSegunda.add(S_ALCORCON);
+			nombresSegunda.add(S_SABADELL);
+			nombresSegunda.add(S_TENERIFE);
+			nombresSegunda.add(S_LUGO);
+			nombresSegunda.add(S_NUMANCIA);
+			nombresSegunda.add(P_ZARAGOZA);
+			nombresSegunda.add(S_PONFERRADINA);
+			nombresSegunda.add(S_GIRONA);
+			nombresSegunda.add(P_MALLORCA);
+			nombresSegunda.add(S_ALAVES);
+			nombresSegunda.add(S_MIRANDES);
+			nombresSegunda.add(S_RM_CASTILLA);
+			nombresSegunda.add(S_R_JAEN);
+			nombresSegunda.add(S_HERCULES);
+		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1415) {
+			nombresSegunda.add(S_EIBAR);
+			nombresSegunda.add(P_DEPORTIVO);
+			nombresSegunda.add(S_BARCELONA_B);
+			nombresSegunda.add(S_MURCIA);
+			nombresSegunda.add(S_SPORTING);
+			nombresSegunda.add(S_LAS_PALMAS);
+			nombresSegunda.add(S_CORDOBA);
+			nombresSegunda.add(S_RECREATIVO);
+			nombresSegunda.add(S_ALCORCON);
+			nombresSegunda.add(S_SABADELL);
+			nombresSegunda.add(S_TENERIFE);
+			nombresSegunda.add(S_LUGO);
+			nombresSegunda.add(S_NUMANCIA);
+			nombresSegunda.add(P_ZARAGOZA);
+			nombresSegunda.add(S_PONFERRADINA);
+			nombresSegunda.add(S_GIRONA);
+			nombresSegunda.add(P_MALLORCA);
+			nombresSegunda.add(S_ALAVES);
+			nombresSegunda.add(S_ALBACETE);
+			nombresSegunda.add(S_RACING);
+			nombresSegunda.add(S_LLAGOSTERA);
+			nombresSegunda.add(S_LEGANES);
+		}
+
+		if (nombresSegunda.size() != Temporada.NUM_EQUIPOS_SEGUNDA) {
+			throw new Exception(
+					"El número de equipos añadidos a la lista de equipos de segunda es "
+							+ nombresSegunda.size() + ", pero se esperaban "
+							+ Temporada.NUM_EQUIPOS_SEGUNDA + " equipos");
+		}
+
 		return nombresSegunda;
 	}
 

@@ -37,10 +37,10 @@ public class AbstractAlgoritmoTest {
 		Temporada temporadaSegunda = cargador.getTemporadaSegunda();
 
 		TuplaParametrosAnalisis tupla = new TuplaParametrosAnalisis(
-				ParametroNombre.GOLES_EN_CONTRA,
+				ParametroNombre.POSICION_EN_CLASIFICACION,
 				ParametroNombre.DIFERENCIA_POSICIONES_EN_CLASIFICACION, 1,
-				ParametroNombre.GOLESFUERAAFAVOR,
-				ParametroNombre.DIFERENCIADEGOLESAFAVOR, 2);
+				ParametroNombre.POSICION_EN_CLASIFICACION,
+				ParametroNombre.DIFERENCIA_PUNTOS_PARA_EMPATE, 2);
 
 		AbstractAlgoritmo alg;
 		if (idAlgoritmo.equals(IdAlgoritmoEnum.ALGORITMO1)) {

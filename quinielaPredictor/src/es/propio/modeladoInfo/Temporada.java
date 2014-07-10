@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -23,6 +22,21 @@ public class Temporada {
 
 	public static Integer NUM_EQUIPOS_PRIMERA = 20;
 	public static Integer NUM_EQUIPOS_SEGUNDA = 22;
+
+	public static Integer TEMPORADA1213 = 1213;
+	public static Integer TEMPORADA1314 = 1314;
+	public static Integer TEMPORADA1415 = 1415;
+	public static Integer TEMPORADA1516 = 1516;
+	public static Integer TEMPORADA1617 = 1617;
+	public static Integer TEMPORADA1718 = 1718;
+	public static Integer TEMPORADA1819 = 1819;
+
+	/**
+	 * ATENCIÓN: variables a cambiar si se considera otra temporada
+	 */
+	public static Integer temporadaAConsiderar = TEMPORADA1314;
+	public static final String TEMPORADA_PAIS_MOCK = "2013_2014";
+	public static final String TEMPORADA_MARCA_ACTUAL = "2013_14";
 
 	/**
 	 * @uml.property name="jornadas"

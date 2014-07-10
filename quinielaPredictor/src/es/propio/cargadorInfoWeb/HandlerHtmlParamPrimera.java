@@ -186,6 +186,38 @@ public class HandlerHtmlParamPrimera {
 			param.setRcPorteria(Integer.valueOf(total));
 		} else if (tipoParametro.equals(ParametroNombre.RC_POSTE)) {
 			param.setRcPoste(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.A_FAVOR)) {
+			param.setaFavor(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.INTERVENCIONES)) {
+			param.setIntervenciones(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.FALTAS_COMETIDAS)) {
+			param.setFaltasCometidas(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.FALTAS_RECIBIDAS)) {
+			param.setFaltasRecibidas(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.PENALTY_FAVOR)) {
+			param.setPenaltyFavor(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.PENALTY_CONTRA)) {
+			param.setPenaltyContra(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.FUERA_JUEGO_FAVOR)) {
+			param.setFueraJuegoFavor(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.FUERA_JUEGO_CONTRA)) {
+			param.setFueraJuegoContra(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.BALONES_RECUPERADOS)) {
+			param.setBalonesRecuperados(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.BALONES_PERDIDOS)) {
+			param.setBalonesPerdidos(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.PASES_BUENOS)) {
+			param.setPasesBuenos(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.PASES_TOTALES)) {
+			param.setPasesTotales(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.CENTROS_AREA)) {
+			param.setCentrosArea(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.ASISTENCIAS)) {
+			param.setAsistencias(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.ASISTENCIA_CON_GOL)) {
+			param.setAsistenciaConGol(Integer.valueOf(total));
+		} else if (tipoParametro.equals(ParametroNombre.JUGADORES_UTILIZADOS)) {
+			param.setJugadoresUtilizados(Integer.valueOf(total));
 		}
 
 		// System.out.println(param.toString());

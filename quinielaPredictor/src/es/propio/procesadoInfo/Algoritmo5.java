@@ -173,6 +173,7 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 		Jornada jornada = temporada.getJornadaExacta(numeroJornada);
 		List<Partido> partidosOrdenados = new ArrayList<Partido>(
 				jornada.getPartidos());
+		final Integer numeroJornadaAux = jornada.getNumeroJornada();
 		Collections.sort(partidosOrdenados, new Comparator<Partido>() {
 			@Override
 			public int compare(Partido one, Partido other) {
@@ -185,8 +186,13 @@ public class Algoritmo5 extends AbstractAlgoritmo {
 									other.getParametro(parametroDiscriminatorio)
 											.getValor());
 				} catch (Exception e) {
-					System.out
-							.println("ERROR AL COMPARAR DOS PARTIDOS POR PARÁMETRO");
+					System.out.println("ERROR en la jornada "
+							+ numeroJornadaAux + " al comparar los partidos "
+							+ one.getEquipoLocal().getNombre() + " - "
+							+ one.getEquipoVisitante().getNombre() + " y "
+							+ other.getEquipoLocal().getNombre() + " - "
+							+ other.getEquipoVisitante().getNombre()
+							+ " por el parámetro: " + parametroDiscriminatorio);
 				}
 				return salida;
 			}
