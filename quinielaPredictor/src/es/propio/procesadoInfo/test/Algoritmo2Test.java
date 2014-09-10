@@ -15,7 +15,7 @@ public class Algoritmo2Test extends AbstractAlgoritmoTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		setModoMock(Boolean.TRUE);
+		setModoMock(Boolean.FALSE);
 		calcula(IdAlgoritmoEnum.ALGORITMO2);
 	}
 

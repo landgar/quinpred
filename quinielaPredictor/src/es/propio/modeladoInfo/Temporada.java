@@ -34,9 +34,9 @@ public class Temporada {
 	/**
 	 * ATENCIÓN: variables a cambiar si se considera otra temporada
 	 */
-	public static Integer temporadaAConsiderar = TEMPORADA1314;
-	public static final String TEMPORADA_PAIS_MOCK = "2013_2014";
-	public static final String TEMPORADA_MARCA_ACTUAL = "2013_14";
+	public static Integer temporadaAConsiderar = TEMPORADA1415;
+	public static final String TEMPORADA_PAIS_MOCK = "2014_2015";
+	public static final String TEMPORADA_MARCA_ACTUAL = "2014_15";
 
 	/**
 	 * @uml.property name="jornadas"

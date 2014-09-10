@@ -217,26 +217,26 @@ public class Equipo implements Comparable<Equipo> {
 			nombresPrimera.add(P_VALLADOLID);
 			nombresPrimera.add(P_BETIS);
 		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1415) {
+			nombresPrimera.add(S_ALMERIA);
+			nombresPrimera.add(P_ATHLETIC);
 			nombresPrimera.add(P_ATLETICO);
 			nombresPrimera.add(P_BARCELONA);
-			nombresPrimera.add(P_REAL_MADRID);
-			nombresPrimera.add(P_ATHLETIC);
-			nombresPrimera.add(P_SEVILLA);
-			nombresPrimera.add(S_VILLAREAL);
-			nombresPrimera.add(P_REAL_SOCIEDAD);
-			nombresPrimera.add(P_VALENCIA);
 			nombresPrimera.add(P_CELTA);
+			nombresPrimera.add(S_CORDOBA);
+			nombresPrimera.add(P_DEPORTIVO);
+			nombresPrimera.add(S_EIBAR);
+			nombresPrimera.add(S_ELCHE);
+			nombresPrimera.add(P_ESPANYOL);
+			nombresPrimera.add(P_GETAFE);
+			nombresPrimera.add(P_GRANADA);
 			nombresPrimera.add(P_LEVANTE);
 			nombresPrimera.add(P_MALAGA);
+			nombresPrimera.add(P_REAL_MADRID);
+			nombresPrimera.add(P_REAL_SOCIEDAD);
 			nombresPrimera.add(P_RAYO);
-			nombresPrimera.add(P_GETAFE);
-			nombresPrimera.add(P_ESPANYOL);
-			nombresPrimera.add(P_GRANADA);
-			nombresPrimera.add(S_ELCHE);
-			nombresPrimera.add(S_ALMERIA);
-			nombresPrimera.add(S_EIBAR);
-			nombresPrimera.add(P_DEPORTIVO);
-			nombresPrimera.add(S_CORDOBA);
+			nombresPrimera.add(P_SEVILLA);
+			nombresPrimera.add(P_VALENCIA);
+			nombresPrimera.add(S_VILLAREAL);
 		}
 
 		if (nombresPrimera.size() != Temporada.NUM_EQUIPOS_PRIMERA) {
@@ -298,28 +298,28 @@ public class Equipo implements Comparable<Equipo> {
 			nombresSegunda.add(S_R_JAEN);
 			nombresSegunda.add(S_HERCULES);
 		} else if (Temporada.temporadaAConsiderar == Temporada.TEMPORADA1415) {
-			nombresSegunda.add(S_EIBAR);
-			nombresSegunda.add(P_DEPORTIVO);
-			nombresSegunda.add(S_BARCELONA_B);
-			nombresSegunda.add(S_MURCIA);
-			nombresSegunda.add(S_SPORTING);
-			nombresSegunda.add(S_LAS_PALMAS);
-			nombresSegunda.add(S_CORDOBA);
-			nombresSegunda.add(S_RECREATIVO);
-			nombresSegunda.add(S_ALCORCON);
-			nombresSegunda.add(S_SABADELL);
-			nombresSegunda.add(S_TENERIFE);
-			nombresSegunda.add(S_LUGO);
-			nombresSegunda.add(S_NUMANCIA);
-			nombresSegunda.add(P_ZARAGOZA);
-			nombresSegunda.add(S_PONFERRADINA);
-			nombresSegunda.add(S_GIRONA);
-			nombresSegunda.add(P_MALLORCA);
 			nombresSegunda.add(S_ALAVES);
 			nombresSegunda.add(S_ALBACETE);
-			nombresSegunda.add(S_RACING);
-			nombresSegunda.add(S_LLAGOSTERA);
+			nombresSegunda.add(S_ALCORCON);
+			nombresSegunda.add(S_BARCELONA_B);
+			nombresSegunda.add(S_GIRONA);
+			nombresSegunda.add(S_LAS_PALMAS);
 			nombresSegunda.add(S_LEGANES);
+			nombresSegunda.add(S_LLAGOSTERA);
+			nombresSegunda.add(S_LUGO);
+			nombresSegunda.add(P_MALLORCA);
+			nombresSegunda.add(S_MIRANDES);
+			nombresSegunda.add(S_NUMANCIA);
+			nombresSegunda.add(P_OSASUNA);
+			nombresSegunda.add(S_PONFERRADINA);
+			nombresSegunda.add(P_BETIS);
+			nombresSegunda.add(S_RACING);
+			nombresSegunda.add(S_RECREATIVO);
+			nombresSegunda.add(S_SABADELL);
+			nombresSegunda.add(S_SPORTING);
+			nombresSegunda.add(S_TENERIFE);
+			nombresSegunda.add(P_VALLADOLID);
+			nombresSegunda.add(P_ZARAGOZA);
 		}
 
 		if (nombresSegunda.size() != Temporada.NUM_EQUIPOS_SEGUNDA) {
